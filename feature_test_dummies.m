@@ -6,7 +6,7 @@
 dummy = zeros(40,40);
 M = 40;     
 
-for i = 1:M             % creation of the 2d- "Amerikaner"- structure
+for i = 1:M         % creation of the 2d- "Amerikaner"- structure
     for k=1:20
         dummy(k,i) = 1;
     end
@@ -31,7 +31,7 @@ Nz = Nx;
 [xi, yi] = ndgrid(1 : Nx, 1 : Ny);
 own_dummy_caro = sin(2 * pi * f * xi) .* sin(2 * pi * f * yi) > 0;
 
-imshow(dummy_caro);    % if you want to see the image before 3d- stacking
+imshow(own_dummy_caro);    % if you want to see the image before 3d- stacking
 
 own_dummy_caro = repmat(own_dummy_caro,1,1,period/2);
 own_dummy_caro(:,:,period/2+1:period) = ~own_dummy_caro;
