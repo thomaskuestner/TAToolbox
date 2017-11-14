@@ -8,17 +8,17 @@ M = 40;
 
 for i = 1:M         % creation of the 2d- "Amerikaner"- structure
     for k=1:20
-        dummy(k,i) = 1;
+        dummy(k,i) = 0.1;
     end
 end
 
-% imshow(dummy);    % if you want to see the image before 3d- stacking 
+imshow(dummy);    % if you want to see the image before 3d- stacking 
                     % (all layers in z- direction are exact copies of this image)
 dummy = repmat(dummy,1,1,M);
 own_dummy = dummy;
 save('amerikaner.mat','own_dummy');
 
-% %%
+%%
 % "Schachbrett" Copie of Jana L.'s realisation of the checkersboard for freely selectable
 % periods
 % This is the opposite sample/ dummy - probe if one will - for maximal entropy (entropie = 1)

@@ -1823,7 +1823,7 @@ drawnow expose
             
             % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
             % Calculate new image index and make sure it's not out of bounds
-            iNewImgInd = SData(iSeriesInd).iActiveImage + iCnt;
+            iNewImgInd = SData(iSeriesInd).iActiveImage + iCnt.VerticalScrollCount;
             iNewImgInd = max([iNewImgInd, 1]);
             iNewImgInd = min([iNewImgInd, size(SData(iSeriesInd).dImg, 3)]);
             SData(iSeriesInd).iActiveImage = iNewImgInd;
