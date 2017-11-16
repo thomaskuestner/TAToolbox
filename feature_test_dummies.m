@@ -41,4 +41,5 @@ save('dummy_checkersboard.mat','own_dummy_caro');
 %%
 
 %%
-%Testkommentar
+% Testkommentar
+% Gustav Gans ist eine COmicfigur
