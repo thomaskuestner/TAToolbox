@@ -15,7 +15,7 @@ clear features;
 % -----------------------------
 handles.f = figure('Visible','Off','units','pixel','Position',[0 50 1300 570]);
 handles.f.Name = 'MainGUI';
-% create tabs
+% create the three main tabs %%% Here we can insert our augmentations
 handles.tgroup = uitabgroup('Parent', handles.f);
 handles.tab1 = uitab('Parent',handles.tgroup, 'Title', 'Settings');
 handles.tab2 = uitab('Parent',handles.tgroup, 'Title', 'Subsets');

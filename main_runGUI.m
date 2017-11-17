@@ -4,11 +4,9 @@ function main_runGUI()
 tmp = matlab.desktop.editor.getActive;
 cd(fileparts(tmp.Filename));
 
-currpath = fileparts(mfilename('fullpath'));
-if(isempty(currpath))
-    currpath = pwd;
-end
-addpath(genpath(currpath));
+
+addpath(genpath(cd));
+addpath(genpath('/net/linse8-sn/home/s1216/doc/matlab_scripts'));
 
 global comp_strct
 comp_strct = struct('No',[],'features',[],'featureNames',[],'idxEndPORTS',[],'ROI',[],'ROINames',[],'data',[],'plots',[]);
@@ -18,7 +16,7 @@ global handles
 global bekannteStudien
 
 
-choice = questdlg('Sollen bekannte Studien eingeladen werden?','bekannteStudien laden','Ja','Nein, ist schon im Workspace','Nein, ist schon im Workspace');
+choice = questdlg('Sollen bekannte Studien eingeladen werden?','bekannteStudien laden','Ja','Nein, ist schon im Workspace','Exit');
 switch choice
     case 'Ja'
         [file,path] = uigetfile('*.mat','Lade alle bekannten Studien','MultiSelect', 'on');
