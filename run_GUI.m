@@ -453,15 +453,22 @@ function get_listboxSelection(object,~)
 end
 
 function getfolder(varargin)
-    global handles
-    folder_name = uigetdir(handles.list_data1.String{1});
-    dirs = regexp(genpath(folder_name),'[^:]*','match');
-   
-    hLoad = showWaitbar_loadData([],1);
-    % check if folders contain dicom images
-%     if no: don't display them in listbox
-    SFiles = [];
-    cNames = [];
+    global handles                  %opens OS interface tool of matlab
+    folder_name = uigetdir(handles.list_data1.String{1});   % opens OS window folder open
+    %Select right OS-PathCode
+        if ismac
+        msgbox('Operating System is not supported');return;     % toDo!
+        elseif isunix
+        dirs = regexp(genpath(folder_name),'[^:]*','match');
+        elseif ispc
+        dirs = regexp(genpath(folder_name),'[^;]*','match');
+        else
+        msgbox('Operating System is not supported');return;
+        end   
+    hLoad = showWaitbar_loadData([],1); %shows loadwindow 
+    % check if folders contain dicom images - if not: don't display them in listbox
+    SFiles = [];    %
+    cNames = [];    %contentNames
     for i=1:numel(dirs)
         SFiles{i} = dir(dirs{i});
         cNames{i} = {SFiles{i}(:).name};
@@ -479,7 +486,6 @@ function getfolder(varargin)
     out = list;
     h = findobj(handles.f,'Tag','list_data2');
     h.String = [h.String; out];
-
     get_listboxSelection(h,[]);
     showWaitbar_loadData(hLoad,0);
 end
@@ -499,8 +505,8 @@ end
 function load_Extern3Dmask(varargin)
     global handles
     warning('Achte auf die Masken-Orientierung. Musss sie gedreht/gespiegelt werden?')
-    path_img = '/net/linse8-sn/no_backup_00/med_data/Texture/TA_Muscle/MSStudie/';
-    [file_mask, pathname] = uigetfile({'*.mha;*.mhd','Meta-Images'; '*.*','All Files'},'Select mask file',path_img,'MultiSelect','on');
+    path_img = '/net/linse8-sn/no_backup_00/med_data/Texture/TA_Muscle/MSStudie/'; %hard coded? why?
+    [file_mask, pathname] = uigetfile({'*.mha;*.mhd','Meta-Images'; '*.*','All Files'},'Select mask file',path_img,'MultiSelect','on'); %no differnece of different os's
     if isequal(pathname,0)
         return;
     end
