@@ -16,9 +16,9 @@ global handles
 global bekannteStudien
 
 
-choice = questdlg('Sollen bekannte Studien eingeladen werden?','bekannteStudien laden','Ja','Nein, ist schon im Workspace','Exit');
+choice = questdlg('Welche Daten möchten Sie verabeiten?','Start TFCV TexturFeature Calculator and Viewer','DICOM Daten und zugehörige Masken','Schon mit TFCV berechnete Datensätze','Exit');
 switch choice
-    case 'Ja'
+    case 'Schon mit TFCV berechnete Datensätze'
         [file,path] = uigetfile('*.mat','Lade alle bekannten Studien','MultiSelect', 'on');
         dir = fullfile(path,file);
         if ~iscell(dir) % then only 1 input
@@ -34,6 +34,10 @@ switch choice
         emptyIndex = find(arrayfun(@(x) isempty(x.ROI),bekannteStudien));
         bekannteStudien(emptyIndex) = [];
         showWaitbar_loadData(hLoad,0);
+    case 'DICOM Daten und zugehörige Masken'
+        %msgbox('Bitte fügen Sie über .. Button im Windows-Explorer die Datein hinzu');
+    case ''
+        return;
     otherwise
 end
 
