@@ -23,7 +23,7 @@ switch choice
     case 'Schon mit TFCV berechnete Datensätze'
         [file,path] = uigetfile('*.mat','Lade alle bekannten Studien','MultiSelect', 'on');
         dir = fullfile(path,file);
-        if length(dir(1))<2
+        if numel(dir)<4
             return;
         elseif ~iscell(dir) % then only 1 input
             dir = cellstr(dir);
