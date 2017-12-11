@@ -15,13 +15,17 @@ comp_strct.featureNames = struct('PORTS',[],'radiomics',[]);
 global handles
 global bekannteStudien
 
-
-choice = questdlg('Welche Daten möchten Sie verabeiten?','Start TFCV TexturFeature Calculator and Viewer','DICOM Daten und zugehörige Masken','Schon mit TFCV berechnete Datensätze','Exit');
+%Creating First Dialoge Window
+textButton_from_scratch='DICOM Daten und zugehörige Masken';textButton_continue_work='Schon mit TFCV berechnete Datensätze';
+options.Interpreter = 'tex'; options.Default = textButton_continue_work;
+choice = questdlg('Welche Daten möchten Sie verabeiten?','Start TFCV - TexturFeature Calculator and Viewer',textButton_from_scratch,textButton_continue_work,options);
 switch choice
     case 'Schon mit TFCV berechnete Datensätze'
         [file,path] = uigetfile('*.mat','Lade alle bekannten Studien','MultiSelect', 'on');
         dir = fullfile(path,file);
-        if ~iscell(dir) % then only 1 input
+        if length(dir(1))<2
+            return;
+        elseif ~iscell(dir) % then only 1 input
             dir = cellstr(dir);
         end
         hLoad = showWaitbar_loadData([],1,'Lade "bekannteStudien.mat" ...');
