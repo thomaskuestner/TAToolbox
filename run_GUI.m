@@ -33,14 +33,12 @@ handles.tgroup_data = uitabgroup('Parent', handles.tab1,'units','pixel','Positio
 handles.tab_SpezData = uitab('Parent',handles.tgroup_data, 'Title', 'bekannte Studien');
 handles.tab_Alldata = uitab('Parent',handles.tgroup_data, 'Title', '+');
 handles.txt_info = uicontrol('Parent',handles.tab1,'Style','text','Position',[150 525 300 15],'HorizontalAlignment','left','ForegroundColor','red','String','Items abwaehlen mit Strg','FontSize',10);
+handles.p_loadStudies = uicontrol('Parent',handles.tab_SpezData,'Style','pushbutton','units','normalized','String','<html>Lade weitere<br>Studien ein','Position',[0.01 0.05 0.3 0.1],'Callback',@loadStudy);
 try
     handles.popup_studies = uicontrol('Parent',handles.tab_SpezData,'Style','popupmenu','units','normalized','Position',[0.01 0.9 0.3 0.07],'String',{bekannteStudien.name},'Callback', @set_StudyData);
-    handles.p_loadStudies = uicontrol('Parent',handles.tab_SpezData,'Style','pushbutton','units','normalized','String','<html>Lade weitere<br>Studien ein','Position',[0.01 0.05 0.3 0.1],'Callback',@loadStudy);
 catch
     handles.popup_studies = []; %try to catch the error
-    handles.p_loadStudies = []; %try to catch the error
 end
-
 handles.bg_dataMS = uibuttongroup('Parent',handles.tab_SpezData,'Position',[0 0.4 0.3 0.4]);    
 handles.r_dataAll = uicontrol('Parent',handles.bg_dataMS,'Style','radiobutton','units','normalized','String','alle','Position',[0 0.8 1 0.2],'Callback' , @select_allData);
 handles.r_dataSpez = uicontrol('Parent',handles.bg_dataMS,'Style','radiobutton','units','normalized','String','Spezifische','Position',[0 0.6 1 0.2],'Callback' , @select_spezData);
@@ -60,7 +58,6 @@ catch
     handles.list_data1.Value =  []; % 1:numel(handles.list_data1.String);   %try to catch the error
     handles.list_data1.UserData = [];                                       %try to catch the error
 end
-
 handles.p_data = uicontrol('Parent',handles.tab_Alldata,'Style','pushbutton','units','normalized','String','Wähle die gewünschten Datensaetze aus','Position',[0.1 0.88 0.8 0.1],'Callback',@getfolder);
 handles.list_data2 = uicontrol('Parent',handles.tab_Alldata,'Style','listbox','units','normalized','Position',[0.1 0.15 0.8 0.69],'String',[],'Value', [], 'Min',0,'Max',50,'Tag','list_data2','Callback',@get_listboxSelection);
 handles.p_clearlist = uicontrol('Parent',handles.tab_Alldata,'Style','pushbutton','units','normalized','String','Listbox leeren','Position',[0.1 0.1 0.8 0.05],'Callback',{@clearlist,handles.list_data2});
@@ -78,7 +75,7 @@ handles.list_ROI1 = uicontrol('Parent',handles.tab_muscle,'Style','listbox','uni
 try
     handles.list_ROI1.String = unique( vertcat(bekannteStudien(1).ROInames{:}));
 catch
-        handles.list_ROI1.String = []; %try to catch the error
+    handles.list_ROI1.String = []; %try to catch the error
 end
 
 handles.list_ROI1.UserData = handles.list_ROI1.String;
