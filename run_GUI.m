@@ -15,6 +15,7 @@ clear features;
 % -----------------------------
 handles.f = figure('Visible','Off','units','pixel','Position',[0 50 1300 570]);
 handles.f.Name = 'MainGUI';
+handles.f.CloseRequestFcn = @saveclosereq;
 % create the three main tabs %%% Here we can insert our augmentations
 handles.tgroup = uitabgroup('Parent', handles.f);
 handles.tab1 = uitab('Parent',handles.tgroup, 'Title', 'Settings');
@@ -39,7 +40,6 @@ catch
     handles.popup_studies = []; %try to catch the error
     handles.p_loadStudies = []; %try to catch the error
 end
-
 
 handles.bg_dataMS = uibuttongroup('Parent',handles.tab_SpezData,'Position',[0 0.4 0.3 0.4]);    
 handles.r_dataAll = uicontrol('Parent',handles.bg_dataMS,'Style','radiobutton','units','normalized','String','alle','Position',[0 0.8 1 0.2],'Callback' , @select_allData);
@@ -240,6 +240,20 @@ end
 % * * = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 % * * 
 % = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+% 
+function my_closereq(src,callbackdata)
+% Close request function 
+% to display a question dialog box 
+   selection = questdlg('Close This Figure?',...
+      'MainGUI',...
+      'Yes','No','Yes'); 
+   switch selection
+      case 'Yes'
+         delete(gcf)
+      case 'No'
+      return 
+   end
+end
 
 function set_StudyData(hObject,~)
     global bekannteStudien
@@ -823,7 +837,7 @@ function calculateFeature(varargin)
     data_tab = handles.tgroup_data.SelectedTab;         
     str_data = char(data_tab.Title);
     data = findobj(data_tab,'Style','listbox');
-    data_array = [handles.list_data1.UserData; handles.list_data2.UserData];
+    data_array = [handles.list_data1.UserData; handles.list_data2.UserData]; %KRITISCH
     if isempty(data_array)
         error('Keine Daten ausgewaehlt - keine Berechnung moeglich.');
     end
@@ -868,7 +882,7 @@ function calculateFeature(varargin)
         strct.features.radiomics.featureNames = strct.features.feature_list.feature_list_radiomics(l2.Value);        
     else
         % komplexer, Masken muessen erst berechnet werden aus *.mha Files und dann muessen auch die Features berechnet werden
-        [default1, default2,~] = assign_MaskToData([],[],[handles.list_data1; handles.list_data2],handles.list_ROI2,1);
+        [default1, default2,~] = assign_MaskToData([],[],[handles.list_data1; handles.list_data2],handles.list_ROI2,1); %
         if isequal(default1,0) && isequal(default2,0), showWaitbar_loadData(hLoad,0); return; end             
             % strct.ROI.sameROIs                already assigned in the function assign_MaskToData
             % strct.data
@@ -1635,4 +1649,21 @@ elseif startEnd == 0
         close(hLoad);
     end
 end
+end
+
+% -----------------------------
+% MOD from Phi and Math ©
+% -----------------------------
+function saveclosereq(varargin)
+    % Close request function 
+% to display a question dialog box 
+   selection = questdlg('Soll TFCV geschlossen werden',...
+      'MainGUI',...
+      'Ja (Daten werden aus Workspace gelöscht)','Nein','Ja (Daten werden aus Workspace gelöscht)'); 
+   switch selection
+      case 'Ja (Daten werden aus Workspace gelöscht)'
+         delete(gcf), clear all; clc; %Toggle Point
+      case 'Nein'
+      return 
+   end
 end

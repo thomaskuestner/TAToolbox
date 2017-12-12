@@ -4,7 +4,7 @@ function main_runGUI()
 tmp = matlab.desktop.editor.getActive;
 cd(fileparts(tmp.Filename));
 
-
+%Do we need the following two lines?
 addpath(genpath(cd));
 addpath(genpath('/net/linse8-sn/home/s1216/doc/matlab_scripts'));
 
