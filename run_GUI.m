@@ -252,7 +252,7 @@ function my_closereq(src,callbackdata)
    end
 end
 
-function set_StudyData(hObject,~)
+function set_StudyData(hObject,~) %KRITISCH
     global bekannteStudien
     global handles
     global strct
@@ -283,13 +283,18 @@ function set_StudyData(hObject,~)
 end
 
 function loadStudy(~,~)
+    global handles
     global bekannteStudien
+    duplicate = 0;
+    a = 1;
     [file,path] = uigetfile('*.mat','Lade alle bekannten Studien','MultiSelect', 'on');
     dir = fullfile(path,file);
     if ~iscell(dir) % then only 1 input
-        dir = cellstr(dir);
+        dir = cellstr(dir); 
     end
+    
     hLoad = showWaitbar_loadData([],1,'Lade "bekannteStudien.mat" ...');
+    
     for i=1:length(dir)
         temp = load(dir{i});
         bekannteStudien = [bekannteStudien temp.bekannteStudien];
@@ -298,7 +303,6 @@ function loadStudy(~,~)
     emptyIndex = find(arrayfun(@(x) isempty(x.ROI),bekannteStudien));
     bekannteStudien(emptyIndex) = [];
     showWaitbar_loadData(hLoad,0);
-    
     handles.popup_studies.String = {bekannteStudien.name};
 end
 
@@ -1659,7 +1663,7 @@ function saveclosereq(varargin)
       'Ja (Daten werden aus Workspace gelöscht)','Nein','Ja (Daten werden aus Workspace gelöscht)'); 
    switch selection
       case 'Ja (Daten werden aus Workspace gelöscht)'
-         delete(gcf), clear all; clc; %Toggle Point
+         delete(gcf), clear all; clc; %Toggle Point %KRITISCH nur Daten von dem Framework
       case 'Nein'
       return 
    end

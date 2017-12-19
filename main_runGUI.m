@@ -4,7 +4,7 @@ function main_runGUI()
 tmp = matlab.desktop.editor.getActive;
 cd(fileparts(tmp.Filename));
 
-%Do we need the following two lines?
+%Do we need the following two lines they are hard coded?
 addpath(genpath(cd));
 addpath(genpath('/net/linse8-sn/home/s1216/doc/matlab_scripts'));
 
@@ -16,7 +16,7 @@ global handles
 global bekannteStudien
 
 %Creating First Dialoge Window
-textButton_from_scratch='DICOM Daten und zugehörige Masken';textButton_continue_work='Schon mit TFCV berechnete Datensätze';
+textButton_from_scratch='DICOM Rohdaten und zugehörige Masken';textButton_continue_work='Schon mit TFCV berechnete Datensätze';
 options.Interpreter = 'tex'; options.Default = textButton_continue_work;
 choice = questdlg('Welche Daten möchten Sie verabeiten?','Start TFCV - TexturFeature Calculator and Viewer',textButton_from_scratch,textButton_continue_work,options);
 switch choice
