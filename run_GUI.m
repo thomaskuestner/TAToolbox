@@ -33,7 +33,7 @@ handles.tgroup_data = uitabgroup('Parent', handles.tab1,'units','pixel','Positio
 handles.tab_SpezData = uitab('Parent',handles.tgroup_data, 'Title', 'bekannte Studien');
 handles.tab_Alldata = uitab('Parent',handles.tgroup_data, 'Title', '+');
 handles.txt_info = uicontrol('Parent',handles.tab1,'Style','text','Position',[150 525 300 15],'HorizontalAlignment','left','ForegroundColor','red','String','Items abwaehlen mit Strg','FontSize',10);
-handles.p_loadStudies = uicontrol('Parent',handles.tab_SpezData,'Style','pushbutton','units','normalized','String','<html>Lade weitere<br>Studien ein','Position',[0.01 0.05 0.3 0.1],'Callback',@loadStudy);
+handles.p_loadStudies = uicontrol('Parent',handles.tab_SpezData,'Style','pushbutton','units','normalized','String','<html>Lade weitere<br>schon berechnete<br>Studien ein','Position',[0.01 0.05 0.3 0.1],'Callback',@loadStudy);
 try
     handles.popup_studies = uicontrol('Parent',handles.tab_SpezData,'Style','popupmenu','units','normalized','Position',[0.01 0.9 0.3 0.07],'String',{bekannteStudien.name},'Callback', @set_StudyData);
 catch
