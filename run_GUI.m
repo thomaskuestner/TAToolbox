@@ -1281,7 +1281,7 @@ function out = cut_nameDisplayed(names)
     catch
         out = cellfun(@(x) x,names,'UniformOutput',false); % x{end}
     end
-    out = cellfun(@(x) vertcat(x),out);
+    out = cellfun(@(x) vertcat(x),out,'UniformOutput',false);
 end
 
 function show_CompSelection(object,~)
