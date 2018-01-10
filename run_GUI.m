@@ -37,7 +37,8 @@ handles.p_loadStudies = uicontrol('Parent',handles.tab_SpezData,'Style','pushbut
 try
     handles.popup_studies = uicontrol('Parent',handles.tab_SpezData,'Style','popupmenu','units','normalized','Position',[0.01 0.9 0.3 0.07],'String',{bekannteStudien.name},'Callback', @set_StudyData);
 catch
-    handles.popup_studies = []; %try to catch the error
+    handles.popup_studies = uicontrol('Parent',handles.tab_SpezData,'Style','popupmenu','units','normalized','Position',[0.01 0.9 0.3 0.07],'String',{},'Callback', @set_StudyData);
+    %handles.popup_studies = []; %new error with that there is no gui-popup
 end
 handles.bg_dataMS = uibuttongroup('Parent',handles.tab_SpezData,'Position',[0 0.4 0.3 0.4]);    
 handles.r_dataAll = uicontrol('Parent',handles.bg_dataMS,'Style','radiobutton','units','normalized','String','alle','Position',[0 0.8 1 0.2],'Callback' , @select_allData);
