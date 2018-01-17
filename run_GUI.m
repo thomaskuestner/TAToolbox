@@ -1663,7 +1663,7 @@ function saveclosereq(varargin)
       'Ja (Daten werden aus Workspace gelöscht)','Nein','Ja (Daten werden aus Workspace gelöscht)'); 
    switch selection
       case 'Ja (Daten werden aus Workspace gelöscht)'
-         delete(gcf), clear all; clc; %Toggle Point %KRITISCH nur Daten von dem Framework
+         delete(gcf), clear all; clc; clearvars; %Toggle Point %KRITISCH nur Daten von dem Framework
       case 'Nein'
       return 
    end
