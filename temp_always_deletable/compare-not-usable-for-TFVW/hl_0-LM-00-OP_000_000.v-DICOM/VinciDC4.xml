@@ -1,0 +1,1175 @@
+<?xml version="1.0" standalone="yes" ?>
+<!-- This file has been created by VINCI to allow 
+     for more efficient processing of DICOM data 
+     in the directory where it is located.
+-->
+<VinciXMLXchange>
+	<Version>Vinci 4.25.0.14179, March 26 2014</Version>
+	<NumVersion>4.25.0.14179</NumVersion>
+	<TimeStamp>2015-02-28 17:35:02</TimeStamp>
+	<LoadDICOMImageVersion>1.47</LoadDICOMImageVersion>
+	<DICOMDataSets>1</DICOMDataSets>
+	<DICOMFilesFound>127</DICOMFilesFound>
+	<VinciDICOMDir34>
+		<DataSet>
+			<Modality>PT</Modality>
+			<PatientName>Phantom_4_to_1</PatientName>
+			<PatientId>PET Dose</PatientId>
+			<StudyDateTimeIso>2014-12-10 16:36:58.296000</StudyDateTimeIso>
+			<PatientDOBIso>2013-12-10</PatientDOBIso>
+			<Protocol></Protocol>
+			<Description>None</Description>
+			<SeriesInstanceUID>1.3.12.2.1107.5.1.4.99999.142324192010602</SeriesInstanceUID>
+			<Dimensions_xyz>344 344 127</Dimensions_xyz>
+			<Dimension_t>1</Dimension_t>
+			<PixelSizes_xyz>2.08626 2.08626 2.03125</PixelSizes_xyz>
+			<ImageOrientationPatient>1\0\0\0\1\0</ImageOrientationPatient>
+			<OrientationRowsColumns>L P</OrientationRowsColumns>
+		<Frame>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0127.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>3A114806ED8F973330421B34C2C5E964</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -381.249</ImagePosPat>
+				<InstanceNumber>127</InstanceNumber>
+				<SliceLocation>-381.249</SliceLocation>
+				<ScalarPos>-381.249</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0126.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>0E33E1D10BF318E24B60B8E7D536F3DD</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -379.218</ImagePosPat>
+				<InstanceNumber>126</InstanceNumber>
+				<SliceLocation>-379.218</SliceLocation>
+				<ScalarPos>-379.218</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0125.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>86BF55E852083F82B76140D91C155D27</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -377.187</ImagePosPat>
+				<InstanceNumber>125</InstanceNumber>
+				<SliceLocation>-377.187</SliceLocation>
+				<ScalarPos>-377.187</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0124.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>86FB96ED731C496756B37401BFAC2A6D</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -375.156</ImagePosPat>
+				<InstanceNumber>124</InstanceNumber>
+				<SliceLocation>-375.156</SliceLocation>
+				<ScalarPos>-375.156</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0123.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>1F8A639A74338B5BD9C7DB3CDD22F35F</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -373.124</ImagePosPat>
+				<InstanceNumber>123</InstanceNumber>
+				<SliceLocation>-373.124</SliceLocation>
+				<ScalarPos>-373.124</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0122.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>1211C49103B166560992C214A6963D8C</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -371.093</ImagePosPat>
+				<InstanceNumber>122</InstanceNumber>
+				<SliceLocation>-371.093</SliceLocation>
+				<ScalarPos>-371.093</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0121.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>FAFEFD13E7D1F8F0834B34C88827A272</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -369.062</ImagePosPat>
+				<InstanceNumber>121</InstanceNumber>
+				<SliceLocation>-369.062</SliceLocation>
+				<ScalarPos>-369.062</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0120.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>D5F4DCE41CF2C8ADD102EEAD62BD5B01</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -367.031</ImagePosPat>
+				<InstanceNumber>120</InstanceNumber>
+				<SliceLocation>-367.031</SliceLocation>
+				<ScalarPos>-367.031</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0119.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>2A64D357358250DA9CEB73294955ED1C</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -364.999</ImagePosPat>
+				<InstanceNumber>119</InstanceNumber>
+				<SliceLocation>-364.999</SliceLocation>
+				<ScalarPos>-364.999</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0118.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>4B80F9458C52D7BFA9A60A43CDAB9F85</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -362.968</ImagePosPat>
+				<InstanceNumber>118</InstanceNumber>
+				<SliceLocation>-362.968</SliceLocation>
+				<ScalarPos>-362.968</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0117.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>7464100A919B69ECEBC5429B379E000C</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -360.937</ImagePosPat>
+				<InstanceNumber>117</InstanceNumber>
+				<SliceLocation>-360.937</SliceLocation>
+				<ScalarPos>-360.937</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0116.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>B24BBE2E64AD7A9B872AD414D5519DB4</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -358.906</ImagePosPat>
+				<InstanceNumber>116</InstanceNumber>
+				<SliceLocation>-358.906</SliceLocation>
+				<ScalarPos>-358.906</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0115.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>1C581EF514995FEA15C29DF412397213</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -356.874</ImagePosPat>
+				<InstanceNumber>115</InstanceNumber>
+				<SliceLocation>-356.874</SliceLocation>
+				<ScalarPos>-356.874</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0114.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>4F31217119C51F64E9DED9B2FF31A068</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -354.843</ImagePosPat>
+				<InstanceNumber>114</InstanceNumber>
+				<SliceLocation>-354.843</SliceLocation>
+				<ScalarPos>-354.843</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0113.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>3043E42DE33F586ACDF141315AF75DFB</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -352.812</ImagePosPat>
+				<InstanceNumber>113</InstanceNumber>
+				<SliceLocation>-352.812</SliceLocation>
+				<ScalarPos>-352.812</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0112.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>1166F62EC19EC7F70D24E6210F6C5D85</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -350.781</ImagePosPat>
+				<InstanceNumber>112</InstanceNumber>
+				<SliceLocation>-350.781</SliceLocation>
+				<ScalarPos>-350.781</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0111.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>83D517FC5A2E2968E7DC6C3D00819C3D</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -348.749</ImagePosPat>
+				<InstanceNumber>111</InstanceNumber>
+				<SliceLocation>-348.749</SliceLocation>
+				<ScalarPos>-348.749</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0110.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>5350A43C3A54B53AD6B8BF15ADB2FC41</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -346.718</ImagePosPat>
+				<InstanceNumber>110</InstanceNumber>
+				<SliceLocation>-346.718</SliceLocation>
+				<ScalarPos>-346.718</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0109.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>07093CC5597F35BBF96C1F0FB252244C</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -344.687</ImagePosPat>
+				<InstanceNumber>109</InstanceNumber>
+				<SliceLocation>-344.687</SliceLocation>
+				<ScalarPos>-344.687</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0108.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>F99CB6BA08379358231781FDC13683AE</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -342.656</ImagePosPat>
+				<InstanceNumber>108</InstanceNumber>
+				<SliceLocation>-342.656</SliceLocation>
+				<ScalarPos>-342.656</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0107.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>1FA7A60284294A79DDFEF48C20C7D90D</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -340.624</ImagePosPat>
+				<InstanceNumber>107</InstanceNumber>
+				<SliceLocation>-340.624</SliceLocation>
+				<ScalarPos>-340.624</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0106.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>1729402B8A32EDB47DCEEC166079C9DB</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -338.593</ImagePosPat>
+				<InstanceNumber>106</InstanceNumber>
+				<SliceLocation>-338.593</SliceLocation>
+				<ScalarPos>-338.593</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0105.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>A883D32CB3D55070D341EC00AEFCA95B</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -336.562</ImagePosPat>
+				<InstanceNumber>105</InstanceNumber>
+				<SliceLocation>-336.562</SliceLocation>
+				<ScalarPos>-336.562</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0104.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>FD4031C85717E00556B5A0169534821B</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -334.531</ImagePosPat>
+				<InstanceNumber>104</InstanceNumber>
+				<SliceLocation>-334.531</SliceLocation>
+				<ScalarPos>-334.531</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0103.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>6E7F18D9CAC48350E1CDEAC6EBDE8762</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -332.499</ImagePosPat>
+				<InstanceNumber>103</InstanceNumber>
+				<SliceLocation>-332.499</SliceLocation>
+				<ScalarPos>-332.499</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0102.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>5D78C546976F9D8E97AD6D2C436554B3</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -330.468</ImagePosPat>
+				<InstanceNumber>102</InstanceNumber>
+				<SliceLocation>-330.468</SliceLocation>
+				<ScalarPos>-330.468</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0101.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>BFF93BF267564D95846A4DAA529559E3</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -328.437</ImagePosPat>
+				<InstanceNumber>101</InstanceNumber>
+				<SliceLocation>-328.437</SliceLocation>
+				<ScalarPos>-328.437</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0100.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>2ABEB2D14893B1689BFFF6082C66D05B</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -326.406</ImagePosPat>
+				<InstanceNumber>100</InstanceNumber>
+				<SliceLocation>-326.406</SliceLocation>
+				<ScalarPos>-326.406</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0099.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>1ACF491F3508B4A8577A4F04DF7BE6B2</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -324.374</ImagePosPat>
+				<InstanceNumber>99</InstanceNumber>
+				<SliceLocation>-324.374</SliceLocation>
+				<ScalarPos>-324.374</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0098.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>5B0FEE878809C4EAE85E213311CF26E1</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -322.343</ImagePosPat>
+				<InstanceNumber>98</InstanceNumber>
+				<SliceLocation>-322.343</SliceLocation>
+				<ScalarPos>-322.343</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0097.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>78797DD8C8FE1D87DEDDA1E7796958DF</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -320.312</ImagePosPat>
+				<InstanceNumber>97</InstanceNumber>
+				<SliceLocation>-320.312</SliceLocation>
+				<ScalarPos>-320.312</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0096.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>DB8290C690D92C2921D5F7C42CA61A2F</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -318.281</ImagePosPat>
+				<InstanceNumber>96</InstanceNumber>
+				<SliceLocation>-318.281</SliceLocation>
+				<ScalarPos>-318.281</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0095.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>24F80EB804018BE955751E232A18C4D0</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -316.249</ImagePosPat>
+				<InstanceNumber>95</InstanceNumber>
+				<SliceLocation>-316.249</SliceLocation>
+				<ScalarPos>-316.249</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0094.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>6233DFA8ACB5A22DF9766B54FDB7F3BB</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -314.218</ImagePosPat>
+				<InstanceNumber>94</InstanceNumber>
+				<SliceLocation>-314.218</SliceLocation>
+				<ScalarPos>-314.218</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0093.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>2CFBDAC79F4E0193E43AAB4C4B3154AE</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -312.187</ImagePosPat>
+				<InstanceNumber>93</InstanceNumber>
+				<SliceLocation>-312.187</SliceLocation>
+				<ScalarPos>-312.187</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0092.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>E87C9A37CE4B22268890BD0944136C27</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -310.156</ImagePosPat>
+				<InstanceNumber>92</InstanceNumber>
+				<SliceLocation>-310.156</SliceLocation>
+				<ScalarPos>-310.156</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0091.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>327AEA4B8F863C3E3D8BFBD92C434B77</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -308.124</ImagePosPat>
+				<InstanceNumber>91</InstanceNumber>
+				<SliceLocation>-308.124</SliceLocation>
+				<ScalarPos>-308.124</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0090.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>C10B8FF8DFF511766F2FD13A093EA995</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -306.093</ImagePosPat>
+				<InstanceNumber>90</InstanceNumber>
+				<SliceLocation>-306.093</SliceLocation>
+				<ScalarPos>-306.093</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0089.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>6AE7C158FEA2086E5BD1614C614ABC3F</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -304.062</ImagePosPat>
+				<InstanceNumber>89</InstanceNumber>
+				<SliceLocation>-304.062</SliceLocation>
+				<ScalarPos>-304.062</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0088.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>865162117D9CB7B84FDA44BE269C6388</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -302.031</ImagePosPat>
+				<InstanceNumber>88</InstanceNumber>
+				<SliceLocation>-302.031</SliceLocation>
+				<ScalarPos>-302.031</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0087.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>B6635F5FA292586584B092E756526B52</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -299.999</ImagePosPat>
+				<InstanceNumber>87</InstanceNumber>
+				<SliceLocation>-299.999</SliceLocation>
+				<ScalarPos>-299.999</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0086.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>61A43F57FAAED00D9F94D0175B0F9580</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -297.968</ImagePosPat>
+				<InstanceNumber>86</InstanceNumber>
+				<SliceLocation>-297.968</SliceLocation>
+				<ScalarPos>-297.968</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0085.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>C5B77D1FEAA1F82A434511E7DA4216E0</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -295.937</ImagePosPat>
+				<InstanceNumber>85</InstanceNumber>
+				<SliceLocation>-295.937</SliceLocation>
+				<ScalarPos>-295.937</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0084.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>5A16CD58288E4CE4FDBB2D8AF339D51F</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -293.906</ImagePosPat>
+				<InstanceNumber>84</InstanceNumber>
+				<SliceLocation>-293.906</SliceLocation>
+				<ScalarPos>-293.906</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0083.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>2A2C94543D80019BF5C5E8593A0E137B</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -291.874</ImagePosPat>
+				<InstanceNumber>83</InstanceNumber>
+				<SliceLocation>-291.874</SliceLocation>
+				<ScalarPos>-291.874</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0082.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>1A999B9E4274A50EBADD176C107A88DB</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -289.843</ImagePosPat>
+				<InstanceNumber>82</InstanceNumber>
+				<SliceLocation>-289.843</SliceLocation>
+				<ScalarPos>-289.843</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0081.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>9D70215CFABFEE6F9C3DDC9C8E3D7AF4</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -287.812</ImagePosPat>
+				<InstanceNumber>81</InstanceNumber>
+				<SliceLocation>-287.812</SliceLocation>
+				<ScalarPos>-287.812</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0080.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>748280D448D191AB1F3704DEE233ACF1</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -285.781</ImagePosPat>
+				<InstanceNumber>80</InstanceNumber>
+				<SliceLocation>-285.781</SliceLocation>
+				<ScalarPos>-285.781</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0079.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>B121163C5BCAA83459DB9D756E04D501</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -283.749</ImagePosPat>
+				<InstanceNumber>79</InstanceNumber>
+				<SliceLocation>-283.749</SliceLocation>
+				<ScalarPos>-283.749</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0078.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>B7F240416A9F95429CCC946EB0897416</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -281.718</ImagePosPat>
+				<InstanceNumber>78</InstanceNumber>
+				<SliceLocation>-281.718</SliceLocation>
+				<ScalarPos>-281.718</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0077.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>1D5CA6CE88555BDCA6C4689C00B77C4D</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -279.687</ImagePosPat>
+				<InstanceNumber>77</InstanceNumber>
+				<SliceLocation>-279.687</SliceLocation>
+				<ScalarPos>-279.687</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0076.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>1D590019D51A8A2ED3681ACEF838FCBC</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -277.656</ImagePosPat>
+				<InstanceNumber>76</InstanceNumber>
+				<SliceLocation>-277.656</SliceLocation>
+				<ScalarPos>-277.656</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0075.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>E89CDA326B7CD70BDD68F502F403705B</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -275.624</ImagePosPat>
+				<InstanceNumber>75</InstanceNumber>
+				<SliceLocation>-275.624</SliceLocation>
+				<ScalarPos>-275.624</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0074.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>643F9F06316BEBDDF709BFBA40530772</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -273.593</ImagePosPat>
+				<InstanceNumber>74</InstanceNumber>
+				<SliceLocation>-273.593</SliceLocation>
+				<ScalarPos>-273.593</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0073.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>029DD2AB0B854ACA381C1F2BCCDC1283</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -271.562</ImagePosPat>
+				<InstanceNumber>73</InstanceNumber>
+				<SliceLocation>-271.562</SliceLocation>
+				<ScalarPos>-271.562</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0072.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>D8A0EB52D3E0909329DD106A0BA0E80A</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -269.531</ImagePosPat>
+				<InstanceNumber>72</InstanceNumber>
+				<SliceLocation>-269.531</SliceLocation>
+				<ScalarPos>-269.531</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0071.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>764E78FEB37A2FBDC718620D9A027DCA</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -267.499</ImagePosPat>
+				<InstanceNumber>71</InstanceNumber>
+				<SliceLocation>-267.499</SliceLocation>
+				<ScalarPos>-267.499</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0070.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>844BC30DA4B1E00E41955A90D13CDEBA</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -265.468</ImagePosPat>
+				<InstanceNumber>70</InstanceNumber>
+				<SliceLocation>-265.468</SliceLocation>
+				<ScalarPos>-265.468</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0069.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>1FF471F6588B5920353DBB17845E93DE</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -263.437</ImagePosPat>
+				<InstanceNumber>69</InstanceNumber>
+				<SliceLocation>-263.437</SliceLocation>
+				<ScalarPos>-263.437</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0068.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>E789567219ED82F70937C5AFF90B347C</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -261.406</ImagePosPat>
+				<InstanceNumber>68</InstanceNumber>
+				<SliceLocation>-261.406</SliceLocation>
+				<ScalarPos>-261.406</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0067.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>70DC5306B6FCD58AA0B7C4CCEA657DEE</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -259.374</ImagePosPat>
+				<InstanceNumber>67</InstanceNumber>
+				<SliceLocation>-259.374</SliceLocation>
+				<ScalarPos>-259.374</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0066.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>769BE477898D9CEE289CD458D5B4B179</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -257.343</ImagePosPat>
+				<InstanceNumber>66</InstanceNumber>
+				<SliceLocation>-257.343</SliceLocation>
+				<ScalarPos>-257.343</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0065.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>ABE43BAB9E665D5D943E279368DEDDE4</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -255.312</ImagePosPat>
+				<InstanceNumber>65</InstanceNumber>
+				<SliceLocation>-255.312</SliceLocation>
+				<ScalarPos>-255.312</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0064.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>CCAC3F259689FA0CB0CB212422CCD139</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -253.281</ImagePosPat>
+				<InstanceNumber>64</InstanceNumber>
+				<SliceLocation>-253.281</SliceLocation>
+				<ScalarPos>-253.281</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0063.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>1099C44AFA0BEFB24E08FDE685D59B20</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -251.249</ImagePosPat>
+				<InstanceNumber>63</InstanceNumber>
+				<SliceLocation>-251.249</SliceLocation>
+				<ScalarPos>-251.249</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0062.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>D948F7ED3D27A073CC3F73F3394722A7</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -249.218</ImagePosPat>
+				<InstanceNumber>62</InstanceNumber>
+				<SliceLocation>-249.218</SliceLocation>
+				<ScalarPos>-249.218</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0061.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>F0B8024504E36FBB47918446B9DAA7CD</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -247.187</ImagePosPat>
+				<InstanceNumber>61</InstanceNumber>
+				<SliceLocation>-247.187</SliceLocation>
+				<ScalarPos>-247.187</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0060.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>1ECF8074EF6E530226E94DC6A2396F42</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -245.156</ImagePosPat>
+				<InstanceNumber>60</InstanceNumber>
+				<SliceLocation>-245.156</SliceLocation>
+				<ScalarPos>-245.156</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0059.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>90370B355F1E147AD610598FA9CA2EAE</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -243.124</ImagePosPat>
+				<InstanceNumber>59</InstanceNumber>
+				<SliceLocation>-243.124</SliceLocation>
+				<ScalarPos>-243.124</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0058.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>0D473CC3D05FC3CD4CF7A4CDCED3C469</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -241.093</ImagePosPat>
+				<InstanceNumber>58</InstanceNumber>
+				<SliceLocation>-241.093</SliceLocation>
+				<ScalarPos>-241.093</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0057.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>C2EF83CDB868FCCCFDC87ECB5759BD33</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -239.062</ImagePosPat>
+				<InstanceNumber>57</InstanceNumber>
+				<SliceLocation>-239.062</SliceLocation>
+				<ScalarPos>-239.062</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0056.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>8E7C8B40FEFA2366396FCD9B1B0BDB8B</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -237.031</ImagePosPat>
+				<InstanceNumber>56</InstanceNumber>
+				<SliceLocation>-237.031</SliceLocation>
+				<ScalarPos>-237.031</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0055.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>55A61F4A77156D2A995ED072A1C76A13</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -234.999</ImagePosPat>
+				<InstanceNumber>55</InstanceNumber>
+				<SliceLocation>-234.999</SliceLocation>
+				<ScalarPos>-234.999</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0054.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>0B19999293FB66A836B696A0A0729B08</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -232.968</ImagePosPat>
+				<InstanceNumber>54</InstanceNumber>
+				<SliceLocation>-232.968</SliceLocation>
+				<ScalarPos>-232.968</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0053.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>3E348026AF65DA91061E8D1E51970814</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -230.937</ImagePosPat>
+				<InstanceNumber>53</InstanceNumber>
+				<SliceLocation>-230.937</SliceLocation>
+				<ScalarPos>-230.937</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0052.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>419D8FA279B4155F337B82CFB343E175</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -228.906</ImagePosPat>
+				<InstanceNumber>52</InstanceNumber>
+				<SliceLocation>-228.906</SliceLocation>
+				<ScalarPos>-228.906</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0051.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>B2BFA449D93D77155FADCF52C6EBDFCA</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -226.874</ImagePosPat>
+				<InstanceNumber>51</InstanceNumber>
+				<SliceLocation>-226.874</SliceLocation>
+				<ScalarPos>-226.874</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0050.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>DFB352FFE5DA4EFC2EEF8440EE91DE9C</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -224.843</ImagePosPat>
+				<InstanceNumber>50</InstanceNumber>
+				<SliceLocation>-224.843</SliceLocation>
+				<ScalarPos>-224.843</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0049.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>8B2AEA2762CFCA31B31827B07A46A687</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -222.812</ImagePosPat>
+				<InstanceNumber>49</InstanceNumber>
+				<SliceLocation>-222.812</SliceLocation>
+				<ScalarPos>-222.812</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0048.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>E261DF91C86D01A8B4A1AA455C1B0184</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -220.781</ImagePosPat>
+				<InstanceNumber>48</InstanceNumber>
+				<SliceLocation>-220.781</SliceLocation>
+				<ScalarPos>-220.781</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0047.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>B3990AB9A6CC18C2B3B4C282A75FDD7D</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -218.749</ImagePosPat>
+				<InstanceNumber>47</InstanceNumber>
+				<SliceLocation>-218.749</SliceLocation>
+				<ScalarPos>-218.749</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0046.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>4FEAE8C2CE4DEB5B015BAF45230C25EA</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -216.718</ImagePosPat>
+				<InstanceNumber>46</InstanceNumber>
+				<SliceLocation>-216.718</SliceLocation>
+				<ScalarPos>-216.718</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0045.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>D8A1BD11D810015B6EAC5873D1179B4A</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -214.687</ImagePosPat>
+				<InstanceNumber>45</InstanceNumber>
+				<SliceLocation>-214.687</SliceLocation>
+				<ScalarPos>-214.687</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0044.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>C681CEAEF1EEBAABC440A9DBA34E0693</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -212.656</ImagePosPat>
+				<InstanceNumber>44</InstanceNumber>
+				<SliceLocation>-212.656</SliceLocation>
+				<ScalarPos>-212.656</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0043.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>571A2E3378D1EE858933EC44861D3104</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -210.624</ImagePosPat>
+				<InstanceNumber>43</InstanceNumber>
+				<SliceLocation>-210.624</SliceLocation>
+				<ScalarPos>-210.624</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0042.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>5FE49257F2366105C62341F05FFA83B3</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -208.593</ImagePosPat>
+				<InstanceNumber>42</InstanceNumber>
+				<SliceLocation>-208.593</SliceLocation>
+				<ScalarPos>-208.593</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0041.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>41FE65B4E239C451FD7345563F100E7E</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -206.562</ImagePosPat>
+				<InstanceNumber>41</InstanceNumber>
+				<SliceLocation>-206.562</SliceLocation>
+				<ScalarPos>-206.562</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0040.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>D939C2CCA9754408AF903C8E64196A64</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -204.531</ImagePosPat>
+				<InstanceNumber>40</InstanceNumber>
+				<SliceLocation>-204.531</SliceLocation>
+				<ScalarPos>-204.531</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0039.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>468E00A5CE120A8E71EEFEC127075DC5</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -202.499</ImagePosPat>
+				<InstanceNumber>39</InstanceNumber>
+				<SliceLocation>-202.499</SliceLocation>
+				<ScalarPos>-202.499</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0038.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>3E7E40C282EDF7100285E742A97DE5AE</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -200.468</ImagePosPat>
+				<InstanceNumber>38</InstanceNumber>
+				<SliceLocation>-200.468</SliceLocation>
+				<ScalarPos>-200.468</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0037.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>EEEF09BCEF8B820C7CD907A6942CA22B</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -198.437</ImagePosPat>
+				<InstanceNumber>37</InstanceNumber>
+				<SliceLocation>-198.437</SliceLocation>
+				<ScalarPos>-198.437</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0036.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>FDD5C50E71DF272D4E1A71CBCB77B0DD</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -196.406</ImagePosPat>
+				<InstanceNumber>36</InstanceNumber>
+				<SliceLocation>-196.406</SliceLocation>
+				<ScalarPos>-196.406</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0035.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>5BE772A726D6293993C6F29FA2A52372</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -194.374</ImagePosPat>
+				<InstanceNumber>35</InstanceNumber>
+				<SliceLocation>-194.374</SliceLocation>
+				<ScalarPos>-194.374</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0034.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>0A128F6EDE73DCE52A93E137F59D3B15</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -192.343</ImagePosPat>
+				<InstanceNumber>34</InstanceNumber>
+				<SliceLocation>-192.343</SliceLocation>
+				<ScalarPos>-192.343</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0033.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>2ADA5E1F76554831750A45D5376C424A</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -190.312</ImagePosPat>
+				<InstanceNumber>33</InstanceNumber>
+				<SliceLocation>-190.312</SliceLocation>
+				<ScalarPos>-190.312</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0032.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>24945F379EBA7F50CA314A4633FE223A</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -188.281</ImagePosPat>
+				<InstanceNumber>32</InstanceNumber>
+				<SliceLocation>-188.281</SliceLocation>
+				<ScalarPos>-188.281</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0031.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>725820B3902FB87BDA3F804F9AC09950</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -186.249</ImagePosPat>
+				<InstanceNumber>31</InstanceNumber>
+				<SliceLocation>-186.249</SliceLocation>
+				<ScalarPos>-186.249</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0030.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>C37AC77834C52849A9B87FECD132B85B</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -184.218</ImagePosPat>
+				<InstanceNumber>30</InstanceNumber>
+				<SliceLocation>-184.218</SliceLocation>
+				<ScalarPos>-184.218</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0029.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>B45B3252CBA133335FF05E720257B0E0</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -182.187</ImagePosPat>
+				<InstanceNumber>29</InstanceNumber>
+				<SliceLocation>-182.187</SliceLocation>
+				<ScalarPos>-182.187</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0028.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>DF0E85410F41F2D1D7C737D1BCCCE9DF</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -180.156</ImagePosPat>
+				<InstanceNumber>28</InstanceNumber>
+				<SliceLocation>-180.156</SliceLocation>
+				<ScalarPos>-180.156</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0027.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>D0CCE15CF997C80FFE26B565E36590C1</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -178.124</ImagePosPat>
+				<InstanceNumber>27</InstanceNumber>
+				<SliceLocation>-178.124</SliceLocation>
+				<ScalarPos>-178.124</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0026.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>84FFEAAB60138CD69DDB5C8D45EE8FB3</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -176.093</ImagePosPat>
+				<InstanceNumber>26</InstanceNumber>
+				<SliceLocation>-176.093</SliceLocation>
+				<ScalarPos>-176.093</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0025.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>E5CFB90542C5997E84E6060EBB73BA93</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -174.062</ImagePosPat>
+				<InstanceNumber>25</InstanceNumber>
+				<SliceLocation>-174.062</SliceLocation>
+				<ScalarPos>-174.062</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0024.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>EB19E186E4CAFFC167B479036E2C6161</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -172.031</ImagePosPat>
+				<InstanceNumber>24</InstanceNumber>
+				<SliceLocation>-172.031</SliceLocation>
+				<ScalarPos>-172.031</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0023.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>5927C580B22A065C0C578149E46BF874</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -169.999</ImagePosPat>
+				<InstanceNumber>23</InstanceNumber>
+				<SliceLocation>-169.999</SliceLocation>
+				<ScalarPos>-169.999</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0022.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>EC6A32BE8F8286D2B3649945E575BAF4</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -167.968</ImagePosPat>
+				<InstanceNumber>22</InstanceNumber>
+				<SliceLocation>-167.968</SliceLocation>
+				<ScalarPos>-167.968</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0021.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>C238EBE9BB5369F0B674F2D1CDA786B9</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -165.937</ImagePosPat>
+				<InstanceNumber>21</InstanceNumber>
+				<SliceLocation>-165.937</SliceLocation>
+				<ScalarPos>-165.937</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0020.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>B40D5A90B02B45B333966B8CF479ECB9</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -163.906</ImagePosPat>
+				<InstanceNumber>20</InstanceNumber>
+				<SliceLocation>-163.906</SliceLocation>
+				<ScalarPos>-163.906</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0019.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>67F6FE282A52033ED56834574DBE56E4</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -161.874</ImagePosPat>
+				<InstanceNumber>19</InstanceNumber>
+				<SliceLocation>-161.874</SliceLocation>
+				<ScalarPos>-161.874</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0018.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>76028DD5D0541CEDAB3D2D76A7DF5119</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -159.843</ImagePosPat>
+				<InstanceNumber>18</InstanceNumber>
+				<SliceLocation>-159.843</SliceLocation>
+				<ScalarPos>-159.843</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0017.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>126887530A7FF23494B6DEAF61AE1604</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -157.812</ImagePosPat>
+				<InstanceNumber>17</InstanceNumber>
+				<SliceLocation>-157.812</SliceLocation>
+				<ScalarPos>-157.812</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0016.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>5177E2B77DD8DBCABB9021F99B36E9DF</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -155.781</ImagePosPat>
+				<InstanceNumber>16</InstanceNumber>
+				<SliceLocation>-155.781</SliceLocation>
+				<ScalarPos>-155.781</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0015.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>E18905D69AD9DE103E2010CAB1C4D4C5</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -153.749</ImagePosPat>
+				<InstanceNumber>15</InstanceNumber>
+				<SliceLocation>-153.749</SliceLocation>
+				<ScalarPos>-153.749</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0014.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>3BDAF801A3985023952E37904D28AB69</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -151.718</ImagePosPat>
+				<InstanceNumber>14</InstanceNumber>
+				<SliceLocation>-151.718</SliceLocation>
+				<ScalarPos>-151.718</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0013.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>41503A4D9100EB7B27876BBA01DEBA7A</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -149.687</ImagePosPat>
+				<InstanceNumber>13</InstanceNumber>
+				<SliceLocation>-149.687</SliceLocation>
+				<ScalarPos>-149.687</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0012.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>01E7F4E72F240AEB69F653C6D2D7E1C6</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -147.656</ImagePosPat>
+				<InstanceNumber>12</InstanceNumber>
+				<SliceLocation>-147.656</SliceLocation>
+				<ScalarPos>-147.656</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0011.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>95FC2B367AFC8D3B884BCE8A75E75707</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -145.624</ImagePosPat>
+				<InstanceNumber>11</InstanceNumber>
+				<SliceLocation>-145.624</SliceLocation>
+				<ScalarPos>-145.624</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0010.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>619C886CC26D2C26AD69486F3B6B5E9D</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -143.593</ImagePosPat>
+				<InstanceNumber>10</InstanceNumber>
+				<SliceLocation>-143.593</SliceLocation>
+				<ScalarPos>-143.593</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0009.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>5ACC5CC2AECEB059E4E4751358E66220</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -141.562</ImagePosPat>
+				<InstanceNumber>9</InstanceNumber>
+				<SliceLocation>-141.562</SliceLocation>
+				<ScalarPos>-141.562</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0008.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>4C6DC461D7794ECEE1C7990D4A46A8DE</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -139.531</ImagePosPat>
+				<InstanceNumber>8</InstanceNumber>
+				<SliceLocation>-139.531</SliceLocation>
+				<ScalarPos>-139.531</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0007.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>D3ED92150849615A09169F7CD14286C8</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -137.499</ImagePosPat>
+				<InstanceNumber>7</InstanceNumber>
+				<SliceLocation>-137.499</SliceLocation>
+				<ScalarPos>-137.499</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0006.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>88EEA1EBE59C09CDCC748EA0FCDDF90E</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -135.468</ImagePosPat>
+				<InstanceNumber>6</InstanceNumber>
+				<SliceLocation>-135.468</SliceLocation>
+				<ScalarPos>-135.468</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0005.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>3C2D868BCA5939C04AECABA8EF95D5F3</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -133.437</ImagePosPat>
+				<InstanceNumber>5</InstanceNumber>
+				<SliceLocation>-133.437</SliceLocation>
+				<ScalarPos>-133.437</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0004.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>74F8CCB4B07D3A0631F9E18AA4821026</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -131.406</ImagePosPat>
+				<InstanceNumber>4</InstanceNumber>
+				<SliceLocation>-131.406</SliceLocation>
+				<ScalarPos>-131.406</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0003.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>5FA39F5BC6DF5A24CB5D3D39FC898479</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -129.374</ImagePosPat>
+				<InstanceNumber>3</InstanceNumber>
+				<SliceLocation>-129.374</SliceLocation>
+				<ScalarPos>-129.374</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0002.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>E3B75BB3A5901ADCF02D3CC5659DA439</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -127.343</ImagePosPat>
+				<InstanceNumber>2</InstanceNumber>
+				<SliceLocation>-127.343</SliceLocation>
+				<ScalarPos>-127.343</ScalarPos>
+			</File>
+			<File>
+				<Filename>hl_0-LM-00-OP_000_000.v-0001.ima</Filename>
+				<RescaleIcSl>0 0.476823</RescaleIcSl>
+				<MD5Vinci4>44E2C49E895A98CB369F74C7AEB1FE0C</MD5Vinci4>
+				<ImagePosPat>-358.991 -357.961 -125.312</ImagePosPat>
+				<InstanceNumber>1</InstanceNumber>
+				<SliceLocation>-125.312</SliceLocation>
+				<ScalarPos>-125.312</ScalarPos>
+			</File>
+		</Frame>
+		</DataSet>
+	</VinciDICOMDir34>
+</VinciXMLXchange>
