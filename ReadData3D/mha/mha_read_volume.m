@@ -12,7 +12,7 @@ function V = mha_read_volume(info)
 
 if(~isstruct(info)), info=mha_read_header(info); end
 
-% change on my own - KRITISCH
+% change on my own - KRITISCH ????
 info.Filename = info.Filename';
 
 switch(lower(info.DataFile))
