@@ -1,0 +1,56 @@
+Notes to Excel (1)
+
+http://pyradiomics.readthedocs.io/en/latest/features.html#module-radiomics.glrlm
+
+
+Gray Level Run Length Matrix (GLRLM) Features
+
+Pij ~= Matrix mit i = Anzahl/ Nummer der Reihen; j = Anzahl/ Nummer der Zeilen
+Pij gibt Häufigkeit an, mit der i in j aufeinander folgenden Grauwerte zwischen Nachbarpixeln auftauchen
+
+- 1. Short Run Emphasis (SRE)
+
+"SRE is a measure of the distribution of short run lengths, with a greater value indicative of shorter 
+run lengths and more fine textural textures."
+-> Verteilung der kurzen run Längen -> Höherer SRE- Wert deutet auf feiner nouaceierte / TFs Strukturen hin
+
+In den Dummies sind alle Werte gleich (0,625)???
+
+- 2. Long Run Emphasis (LRE)
+
+"LRE is a measure of the distribution of long run lengths, with a greater value indicative of longer run 
+lengths and more coarse structural textures."
+-> Gegenteil von SRE -> Hinweis auf gröbere Strukturen
+
+Ebenfalls in den Dummies alles gleich (25.000 = 25,0)???
+
+- 3. Gray Level Non-Uniformity (GLN)
+
+"GLN measures the similarity of gray-level intensity values in the image, where a lower GLN value correlates 
+with a greater similarity in intensity values."
+-> geringe Werte sind Hinweis auf mehr Gemeinsamkeiten der Intensitätswerte -> Größere auf mehr Diskrepanz
+
+Längs und quer haben gleiche Werte (macht Sinn). Diagonal ist 10^3 größer
+
+
+- 4. Run Length Non-Uniformity (RLN)
+
+"RLN measures the similarity of run lengths throughout the image, with a lower value indicating more homogeneity 
+among run lengths in the image."
+-> vergleicht Gleichheit der run lengths -> niedrigere Werte weisen auf mehr Homogenität hin
+
+Längs und quer haben gleiche Werte (macht Sinn). Diagonal ist 10^2 größer
+
+- 4.1. Run Length Non-Uniformity Normalized (RLNN) 
+
+"RLNN measures the similarity of run lengths throughout the image, with a lower value indicating more homogeneity 
+among run lengths in the image. This is the normalized version of the RLN formula."
+->  ->
+
+- 7. 
+
+- Gray Level Non-Uniformity Normalized (GLNN)
+
+"GLNN measures the similarity of gray-level intensity values in the image, where a lower GLNN value correlates 
+with a greater similarity in intensity values. This is the normalized version of the GLN formula."
+-> Normalisierte Form der GLN- Formel -> Niedrige Werte weisen auf gem. Intensitätswerte hin
