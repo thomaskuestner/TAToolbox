@@ -1,0 +1,113 @@
+Notes to Excel (1)
+
+http://pyradiomics.readthedocs.io/en/latest/features.html#module-radiomics.glrlm
+
+
+Gray Level Run Length Matrix (GLRLM) Features
+
+Pij ~= Matrix mit i = Anzahl/ Nummer der Reihen; j = Anzahl/ Nummer der Zeilen
+Pij gibt Häufigkeit an, mit der i in j aufeinander folgenden Grauwerte zwischen Nachbarpixeln auftauchen
+
+- 1. Short Run Emphasis (SRE)
+
+"SRE is a measure of the distribution of short run lengths, with a greater value indicative of shorter 
+run lengths and more fine textural textures."
+-> Verteilung der kurzen run Längen -> Höherer SRE- Wert deutet auf feiner nouaceierte / TFs Strukturen hin
+
+In den Dummies sind alle Werte gleich (0,625)???
+
+- 2. Long Run Emphasis (LRE)
+
+"LRE is a measure of the distribution of long run lengths, with a greater value indicative of longer run 
+lengths and more coarse structural textures."
+-> Gegenteil von SRE -> Hinweis auf gröbere Strukturen
+
+Ebenfalls in den Dummies alles gleich (25.000 = 25,0)???
+
+- 3. Gray Level Non-Uniformity (GLN)
+
+"GLN measures the similarity of gray-level intensity values in the image, where a lower GLN value correlates 
+with a greater similarity in intensity values."
+-> geringe Werte sind Hinweis auf mehr Gemeinsamkeiten der Intensitätswerte -> Größere auf mehr Diskrepanz
+
+Längs und quer haben gleiche Werte (macht Sinn). Diagonal ist 10^3 größer
+
+
+- 4. Run Length Non-Uniformity (RLN)
+
+"RLN measures the similarity of run lengths throughout the image, with a lower value indicating more homogeneity 
+among run lengths in the image."
+-> vergleicht Gleichheit der run lengths -> niedrigere Werte weisen auf mehr Homogenität hin
+
+Längs und quer haben gleiche Werte (macht Sinn). Diagonal ist 10^2 größer
+
+- 4.1. Run Length Non-Uniformity Normalized (RLNN) 
+
+"RLNN measures the similarity of run lengths throughout the image, with a lower value indicating more homogeneity 
+among run lengths in the image. This is the normalized version of the RLN formula."
+-> Genau wie 4 aber normalisiert  
+
+- 5. Run Percentage
+
+"RP measures the coarseness of the texture by taking the ratio of number of runs and number of voxels in the ROI.
+Values are in range 1Np≤RP≤1
+with higher values indicating a larger portion of the ROI consists of short runs (indicates a more fine texture)"
+-> Ermittelt die Rauheit, indem es die Runs durch die Voxel teilt -> Höherer Wert impliziert feinere Textur
+ 
+- 6. Low Gray Level Run Emphasis (LGLRE)
+
+"LGLRE measures the distribution of low gray-level values, with a higher value indicating a greater concentration 
+of low gray-level values in the image.
+-> Misst geringe GW -> Höhere Werte deuten auf hohe "niedrige GW- Konzentration" hin
+
+Passt bei Matzes Beispielen aber nicht bei den Dummies...
+
+- 7. High Gray Level Run Emphasis (HGLRE)
+
+"HGLRE measures the distribution of the higher gray-level values, with a higher value indicating a greater 
+concentration of high gray-level values in the image."
+-> Misst hohe GW -> Hohe Werte deuten auf hohe "hohe GW- Konzentration" hin
+
+Macht Sinn bei Matzes Dummies aber bedingt nur bei den Dummies
+
+- 8. Short Run High Gray-Level Emphasis (SRHGLE)
+
+"SRHGLE measures the joint distribution of shorter run lengths with higher gray-level values."
+-> Misst eine gemeinsame Verteilung von kurzen run- lenghts mit hohen GWs
+
+Macht Sinn in allen Dummies (aber ich habe es nicht sehr gut durchgedacht)
+
+- 9. Long Run Low Gray Level Emphasis (LRLGLE)
+
+"LRLGLRE measures the joint distribution of long run lengths with lower gray-level values."
+-> Misst eine gemeinsame Verteilung von langen run- lenghts mit niedrigeren GWs
+
+Macht bei Matzes Dummies keinen Sinn aber bei den Dummies ein wenig mehr
+
+- 10. Long Run High Gray Level Emphasis (LRHGLE)
+
+"LRHGLRE measures the joint distribution of long run lengths with higher gray-level values."
+-> Misst eine gemeinsame Verteilung von langen run- lenghts mit höheren GWs
+
+10^9 Unterschied zu LRLGLE... In sich bei Dummies einigermaßen stimmig
+
+- 11. Gray Level Variance (GLV)
+
+"GLV measures the variance in gray level intensity for the runs."
+-> Misst die Varianz der GW- Intensity für die runs
+
+Dummies machen mathematisch Sinn aber Matzes Dummies nicht
+
+- 12. Run Length Variance (RLV)(= Run Variance (RV) = Same thing?)
+
+"RV is a measure of the variance in runs for the run lengths."
+-> Messung der Varianz in runs für die run- länge
+
+
+
+
+- Gray Level Non-Uniformity Normalized (GLNN)
+
+"GLNN measures the similarity of gray-level intensity values in the image, where a lower GLNN value correlates 
+with a greater similarity in intensity values. This is the normalized version of the GLN formula."
+-> Normalisierte Form der GLN- Formel -> Niedrige Werte weisen auf gem. Intensitätswerte hin
