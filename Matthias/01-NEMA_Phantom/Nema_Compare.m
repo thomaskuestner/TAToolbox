@@ -9,7 +9,9 @@ for i=1:((size(CA1,2)-1)/2)
     end
 end
 
-for i=1:CountTF
-    figure(i);
-    hist(differ(i,:));
-end
+
+% 
+% for i=1:CountTF
+%     figure(i);
+%     hist(differ(i,:));
+% end
