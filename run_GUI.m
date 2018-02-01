@@ -897,18 +897,31 @@ function calculateFeature(varargin)
             maskFile = ROI.UserData;
             for i = 1:numel(data_array)
                 for j=1:numel(maskFile{i})
-                    isMatFile = strfind(maskFile{i}{j},'.mat');
-                    if isempty(isMatFile)
+                    [file_path_of_mask,name_of_mask,datatype_of_mask]=fileparts(maskFile{i}{j});
+                    which_file_type = strfind(maskFile{i}{j},'.mat'); %isMatFile hat Jana als Variable benutzt
+                    switch datatype_of_mask
+                        case '.mat'
                         lMask{i}{j} = main_read_mask(maskFile{i}{j});  
-
                         lMask{i}{j} = permute(lMask{i}{j},[3 1 2]); % permute matrix to flip matrix along 3rd dimension
                         lMask{i}{j}= flipud(lMask{i}{j});
                         lMask{i}{j} = permute(lMask{i}{j},[3 2 1]); % permute 3rd dimension back and change swap 1st and 2nd dimensions
-                    else
-                        temp = load(maskFile{i}{j});
-                        fn = fieldnames(temp);
-                        lMask{i}{j} = temp.(fn{1});
+                        case '.mha'
+                            temp = load(maskFile{i}{j});
+                            fn = fieldnames(temp);
+                            lMask{i}{j} = temp.(fn{1});
+                        case '.mhd'
+                            temp = load(maskFile{i}{j});
+                            fn = fieldnames(temp);
+                            lMask{i}{j} = temp.(fn{1});
+                        case '.nii'
+                            lMask{i}{j} = get_biggest_ROI_from_nii(maskFile{i}{j});
                     end
+                    
+%                     if isempty(isMatFile)
+% 
+%                     else
+% 
+%                     end
                 end
                 if strct.ROI.sameROIs
                     for i = 2:numel(data_array)
