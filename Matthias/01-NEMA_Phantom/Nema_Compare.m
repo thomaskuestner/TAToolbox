@@ -1,17 +1,38 @@
+%% Prework
+clear all;
+clc;
+
 load('Measured_vs_Simulated_allDosis_Mask_TK.mat');
 CA1=table2cell(MeasuredvsSimulatedallDosisMaskTK);
 CountTF=size(CA1,1);
-differ=0;
+countvalue_pairs= ((size(CA1,2)-1)/2);
 
-for i=1:((size(CA1,2)-1)/2)
+%% Calculation of relative procentage difference between mes and sim + plot
+%(TF_x_sim-TF_x_mes)/TF_x_mes
+for i=1:countvalue_pairs
     for k=1:CountTF
-        differ(k,i)=1-(CA1{k,i+6}/CA1{k,i+1});
+        differ_mes_vs_sim(k,i)=(CA1{k,i+6}-CA1{k,i+1})/CA1{k,i+1};
+    end 
+end
+figure(1)
+hold on;
+ylim([-1 1])
+for i=1:CountTF
+    plot(linspace(1,countvalue_pairs,countvalue_pairs),differ_mes_vs_sim(i,:));
+end
+grid on;
+hold off;
+
+
+%% Statistcal-Tests
+%Paired T-Test
+for k=1:CountTF
+    for i=1:((size(CA1,2)-1)/2)
+            x(i,1)=CA1{k,i+1};
+            y(i,1)=CA1{k,i+6};
     end
+    [h(k,1),p(k,1)] = ttest(x,y);
 end
 
+%Wilcoxon
 
-% 
-% for i=1:CountTF
-%     figure(i);
-%     hist(differ(i,:));
-% end
