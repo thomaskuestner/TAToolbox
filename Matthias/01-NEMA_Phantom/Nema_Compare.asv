@@ -35,7 +35,7 @@ for k=1:CountTF
     R_temp=corrcoef(x,y);
     R(k,1) = R_temp(1,2);
     
-    p_wilcoxon(k,1) = ranksum(x,y);
+    p_wilcoxon = ranksum(x,y);
 
 end
 
