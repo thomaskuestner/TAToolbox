@@ -31,28 +31,26 @@ for k=1:CountTF
     for i=1:((size(CA1,2)-1)/2)-1
             x(i,1)=CA1{k,i+2};
             y(i,1)=CA1{k,i+7};
-            x_friedman(i,1)=x(i,1);
-            x_friedman(i,2)=y(i,1);
     end
     %T-Test
         [h_t_test(k,1),p_t_test(k,1)] = ttest(x,y);
     %Wilcoxon https://stats.stackexchange.com/questions/91034/difference-between-the-wilcoxon-rank-sum-test-and-the-wilcoxon-signed-rank-test
         [p_wilcoxon(k,1), h_wilcoxon(k,1)] = signrank(x,y);
-    %Friedman
-        [p_friedman(k,1),tbl{k,1}] = friedman(x_friedman,2,'off');
     %Pearson Correlation (just linear Correlation)
         % r = .10 entspricht einem schwachen Effekt
         % r = .30 entspricht einem mittleren Effekt
         % r = .50 entspricht einem starken Effekt 
         [R_Pearson(k,1),p_Pearson(k,1)] = corr(x,y,'Type','Pearson');
-        R_Pearson_strong_relevant(CountTF,1)=0;R_Pearson_relevant(CountTF,1)=0;R_Pearson_unrelevant(CountTF,1)=0;
+        R_Pearson_relevant(CountTF,1)=0; R_Pearson_unrelevant(CountTF,1) =0;
         if(abs(R_Pearson(k,1))>0.5)
             R_Pearson_relevant(k,1) = R_Pearson(k,1);
-            if (p_Pearson(k,1)<=0.05)
-                R_Pearson_strong_relevant(k,1)=R_Pearson(k,1);
+            if
             end
         else
-            R_Pearson_unrelevant(k,1) = p_Pearson(k,1);
+            R_Pearson_unrelevant(k,1) = P_Pearson(k,1);
+        end
+        if(p_Pearson(k,1)<=0.05)
+           [R_Pearson(k,1),p_Pearson(k,1)]
         end
     %Spearman Correlation (linear or Ranks - Correlation)
         [R_Spearman(k,1),P_Spearman(k,1)] = corr(x,y,'Type','Spearman');
