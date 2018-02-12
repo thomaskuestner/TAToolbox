@@ -27,20 +27,22 @@ hold off;
 %% Statistcal-Tests
 %Paired T-Test
 for k=1:CountTF
+    %Create Compare Matrix
     for i=1:((size(CA1,2)-1)/2)-1
             x(i,1)=CA1{k,i+2};
             y(i,1)=CA1{k,i+7};
     end
+    %T-Test
     [h(k,1),p_t_test(k,1)] = ttest(x,y);
+    %Correlation
     R_temp=corrcoef(x,y);
     R(k,1) = R_temp(1,2);
-    
+    %Wilcoxon
     p_wilcoxon(k,1) = ranksum(x,y);
-
 end
 
 
-%Wilcoxon
+
 
 
 
