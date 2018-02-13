@@ -43,7 +43,7 @@ for k=1:CountTF
     %Pearson Correlation (just linear Correlation)
         % r = .10 entspricht einem schwachen Effekt
         % r = .30 entspricht einem mittleren Effekt
-        % r = .50 entspricht einem starken Effekt 
+        % r = .50 entspricht einem starken Effekt
         [R_Pearson(k,1),p_Pearson(k,1)] = corr(x,y,'Type','Pearson');
         R_Pearson_strong_relevant(CountTF,1)=0;R_Pearson_relevant(CountTF,1)=0;R_Pearson_unrelevant(CountTF,1)=0;
         if(abs(R_Pearson(k,1))>0.5)
