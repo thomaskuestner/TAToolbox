@@ -1,6 +1,10 @@
 %Try to load .nii - Data
 %%Prework
-function [biggest_ROI] = get_biggest_ROI_from_nii(filePath)
+% function [biggest_ROI] = get_biggest_ROI_from_nii(filePath)
+%please delete
+clc;clear all;
+filePath='Maske 100.nii';
+%please delete
 mask_100_nii = load_nii(filePath);
 allROI_mask=mask_100_nii.img;
 [row,col,v]=find(allROI_mask);
@@ -28,4 +32,4 @@ for i=1:v_max
     single_ROIsmask{1,1}=logical(single_ROIsmask{1,1});
 end
 biggest_ROI=single_ROIsmask{1,number_of_biggest_ROI};
-end
+% end
