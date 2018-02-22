@@ -4,7 +4,7 @@
 % function infoGrabber()
 % function applyStatistics() % Maybe create a 2nd GUI? 
 
-struct = load('C:\Users\Philipp\Documents\02_University\Master (Medizintechnik)\Studienarbeit\05_Code\MoCo_Corrected_Cell');
+struct = load('C:\Users\Philipp\Documents\02_University\Master (Medizintechnik)\Studienarbeit\05_Code\Philipp_Statistik_Skripte\MoCo_Corrected_Cell');
 current_Data= struct.features(:,:,:);
 var_feature = 1;
 datatype = 2;
@@ -13,30 +13,40 @@ counter = 1;
 switch datatype
     case 1 % Loop for same TFs of all measurements
         for i = 1:42
-            feature_value(counter) = current_Data{var_feature,i,i};
+            feature_value_0(counter) = current_Data{var_feature,i,i};
             counter = counter + 1;
         end
 % Loops for same TFs of all measurements of the same kind
     case 2 % Loop for same TFs of all 'Corrected Files'
         for i = 1:3:42
-            feature_value(counter) = current_Data{var_feature,i,i};
+            feature_value_1(counter) = current_Data{var_feature,i,i};
             counter = counter + 1;
         end
     case 3 % Loop for same TFs of all 'DICOM files'
         for i = 2:3:42
-            feature_value(counter) = current_Data{var_feature,i,i};
+            feature_value_2(counter) = current_Data{var_feature,i,i};
             counter = counter + 1;
         end
     case 4 % Loop for same TFs of all 'Gated files'
         for i = 3:3:42
-            feature_value(counter) = current_Data{var_feature,i,i};
+            feature_value_3(counter) = current_Data{var_feature,i,i};
             counter = counter + 1;
         end
     otherwise
         error('Wrong Input!');
 end
 
-var_feature = feature_value;
+var_feature_0 = feature_value_0;
+var_feature_1 = feature_value_1;
+var_feature_2 = feature_value_2;
+var_feature_3 = feature_value_3;
+
+
+%% Statistical Methods
+% T-Test -> Variablen umbenennen, wegen Export
+[~,~] = ttest(var_feature_1,var_feature_2); % Reihenfolge der Variablen evtl. abändern
+% Wilcoxon - Test -> Variablen umbenennen, wegen Export
+[p,h] = ranksum(var_feature_1,var_feature_2); % Reihenfolge der Variablen evtl. abändern
 
 % hist(var_feature);
 plot(var_feature,'bo','markersize',5);
