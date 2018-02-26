@@ -1,74 +1,87 @@
-% Statistics for the Radiomics Toolbox features with PET MoCo- Data
+% Skript for statistical analysis with the Radiomics Toolbox features from PET MoCo- Data
 
-% function structSorter()
-% function infoGrabber()
-% function applyStatistics() % Maybe create a 2nd GUI? 
+%% Preprocessing 
+
+flag_plot = 1;
 
 struct = load('C:\Users\Philipp\Documents\02_University\Master (Medizintechnik)\Studienarbeit\05_Code\Philipp_Statistik_Skripte\MoCo_Corrected_Cell');
 current_Data= struct.features(:,:,:);
-var_feature = 1;
-datatype = 2;
 counter = 1;
+counter_1 = 1;
+counter_2 = 1;
+datatype = inputdlg(sprintf('1 = all Tfs from the all 3 different types of data\n 2 = DICOM and CORRECTED\n 3 = Only GATED'),'Please enter one of the below discribed numbers'); 
 
-switch datatype
-    case 1 % Loop for same TFs of all measurements
+switch str2num(datatype{1})
+    case 1 % Loop for all TFs of all measurements, sorted in final_output
+       for k = 1:42
         for i = 1:42
-            feature_value_0(counter) = current_Data{var_feature,i,i};
+            feature_value_0(counter) = current_Data{k,i,i};
             counter = counter + 1;
+            var_feature_0 = feature_value_0;
         end
-% Loops for same TFs of all measurements of the same kind
-    case 2 % Loop for same TFs of all 'Corrected Files'
-        for i = 1:3:42
-            feature_value_1(counter) = current_Data{var_feature,i,i};
-            counter = counter + 1;
+        k = k + 1;
+       end
+    final_output = reshape(feature_value_0,14,42);
+    
+% Loops for TF pre- analysis
+    case 2 % Loop for same TFs of all 'Corrected Files' and for same TFs of all 'DICOM files'
+            for l = 1:42
+                for i = 1:3:42
+                feature_value_1(counter_1) = current_Data{l,i,i};
+                counter_1 = counter_1 + 1;
+                end
+            l = l + 1;
+            end
+            
+        var_temp_corr = feature_value_1;
+        final_output_corr = reshape(feature_value_1,14,42);
+        for o = 1:42
+        for j = 2:3:42
+            feature_value_2(counter_2) = current_Data{var_number_feature,j,j};
+            counter_2 = counter_2 + 1;
+            var_feature_2 = feature_value_2;
         end
-    case 3 % Loop for same TFs of all 'DICOM files'
-        for i = 2:3:42
-            feature_value_2(counter) = current_Data{var_feature,i,i};
-            counter = counter + 1;
+            o = o + 1;
         end
-    case 4 % Loop for same TFs of all 'Gated files'
+        
+        var_temp_corr = feature_value_1;
+        final_output_corr = reshape(feature_value_1,14,42);
+        
+    case 3 % Loop for same TFs of all 'Gated files'
         for i = 3:3:42
-            feature_value_3(counter) = current_Data{var_feature,i,i};
+            feature_value_3(counter) = current_Data{var_number_feature,i,i};
             counter = counter + 1;
+            var_feature_3 = feature_value_3;
         end
     otherwise
         error('Wrong Input!');
 end
 
-var_feature_0 = feature_value_0;
-var_feature_1 = feature_value_1;
-var_feature_2 = feature_value_2;
-var_feature_3 = feature_value_3;
-
-
+clearvars i k j l o
 %% Statistical Methods
-% T-Test -> Variablen umbenennen, wegen Export
-[~,~] = ttest(var_feature_1,var_feature_2); % Reihenfolge der Variablen evtl. abändern
-% Wilcoxon - Test -> Variablen umbenennen, wegen Export
-[p,h] = ranksum(var_feature_1,var_feature_2); % Reihenfolge der Variablen evtl. abändern
+% 1. Dependant Variables Loop for running through all 42 TFs and safe them,
+% for plotting reasons
 
-% hist(var_feature);
-plot(var_feature,'bo','markersize',5);
-
-% title = 'Enter Statistics of selected data here:';
-% discr = 'Functions';
-% defaultAns = 'ttest';
-% var_select = inputdlg(title, discr, 1, {defaultAns},'on');
-
-% switch char(var_select)
-%     case 'ttest'
-%         output = ttest(var_feature); % -> How does it work? % for each TF of all 14/42 patients
-%     case 'hist'
-%         output = histogram(var_feature,10); % for each TF of all 14/42 patients
-%     case 'corr'
-%         output = corrcoef(var_feature); % for each TF of all 14/42 patients
-%         
-%   % More cases here:
-%         
-%     otherwise
-%         error(sprintf('Die ausgewaehlte Funktion ist nicht implementiert/ vorhaden!\n\nIst die Schreibweise der Funktion richitg?\n'));
-% end
-
-% plot(output); % Output hat den Y- Achsencharakter (bedenken beim Belegen von Plot!)
+if  (exist('var_feature_1')&& exist('var_feature_2'))
+    
+        if flag_plot == 1
+        Plot = [var_feature_1',var_feature_2'];
+        figure
+    	plot(Plot, 'o');
         
+    % T-Test -> Wenn tTest versagt -> Wilcoxon
+    [h_ttest,p_ttest] = ttest(var_feature_1,var_feature_2); 
+    
+        if h_ttest == 0
+        % Wilcoxon- Test bei nicht-normalverteilten Stichproben
+        [p_wilcox,h_wilcox] = ranksum(var_feature_1,var_feature_2); % Reihenfolge der Variablen evtl. abändern
+        end
+        
+    end
+end
+%% All Features of one datatype -> implement up
+for i = 1:3:42
+            feature_value_0(count) = current_Data{var_number_feature,i,i};
+            count = count + 1;
+            var_feature_0 = feature_value_0;
+end
