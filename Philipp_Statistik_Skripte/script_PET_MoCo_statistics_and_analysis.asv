@@ -6,7 +6,9 @@ flag_plot = 0;
 struct = load('C:\Users\Philipp\Documents\02_University\Master (Medizintechnik)\Studienarbeit\05_Code\Philipp_Statistik_Skripte\MoCo_Corrected_Cell');
 current_Data= struct.features(:,:,:);
 counter = 1;
-datatype = inputdlg(sprintf('1 = all TFs from all the 3 different types of data\n2 = DICOM and CORRECTED Data\n3 = Only GATED Data'),'Please enter one of the below discribed numbers',1,{'2'}); 
+counter_1 = 1;
+counter_2 = 1;
+datatype = inputdlg(sprintf('1 = all Tfs from the all 3 different types of data\n 2 = DICOM and CORRECTED\n 3 = Only GATED'),'Please enter one of the below discribed numbers'); 
 
 switch str2num(datatype{1})
     case 1 % Loop for all TFs of all measurements, sorted in final_output
@@ -24,20 +26,19 @@ switch str2num(datatype{1})
     case 2 % Loop for same TFs of all 'Corrected Files' and for same TFs of all 'DICOM files'
             for l = 1:42
                 for i = 1:3:42
-                feature_value_1(counter) = current_Data{l,i,i};
-                counter = counter + 1;
+                feature_value_1(counter_1) = current_Data{l,i,i};
+                counter_1 = counter_1 + 1;
                 end
             l = l + 1;
             end
             
-        counter = 1;    
-        var_temp_corr = feature_value_1; 
+        var_temp_corr = feature_value_1; %
         final_output_corr = reshape(feature_value_1,14,42);
         
         for o = 1:42
         for j = 2:3:42
-            feature_value_2(counter) = current_Data{o,j,j};
-            counter = counter + 1;
+            feature_value_2(counter_2) = current_Data{o,j,j};
+            counter_2 = counter_2 + 1;
         end
             o = o + 1;
         end
@@ -57,7 +58,7 @@ end
 
 clearvars i k j l o
 %% Statistical Methods
-% 1. Test von DICOM- und CORRECTED- Daten
+% 1. Test von zusammenhängenden Daten
 % T-Test -> Wenn tTest versagt -> Wilcoxon
 
 counter = 1;
