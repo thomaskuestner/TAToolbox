@@ -2,6 +2,7 @@
 % Skript for statistical analysis with the Radiomics Toolbox features from PET MoCo- Data
 
 flag_plot = 0;
+flag_all_plots = 1;
 
 struct = load('C:\Users\Philipp\Documents\02_University\Master (Medizintechnik)\Studienarbeit\05_Code\Philipp_Statistik_Skripte\MoCo_Corrected_Cell');
 current_Data= struct.features(:,:,:);
@@ -67,17 +68,48 @@ for i = 1:42
 end
 clearvars i counter
 
-if flag_plot == 1 % Plotting of Ttest- findings
+if flag_plot == 1 % Plotting of T-Test- findings
 vis_ttest = [h_ttest',p_ttest'];
-figure (1)
+figure(1)
 plot(vis_ttest, 'o');
+figure(2)
 bar(p_ttest);
 end
 
+if flag_all_plots == 1
+    load('feature_Names');
+    counter = 1;
+    for i = 1:42 
+    var_feature_name(counter) = feature_Names(i,:);
+    filename_plot = feature_Names{i,1};
+    var_plottable = figure;
+    plot(final_output_corr(:,i),final_output_dicom(:,i),'bo');
+    
+        title(filename_plot);
+        refline(1);
+        grid on;
+        set(var_plottable,'Units','Inches');
+        pos = get(var_plottable,'Position');
+        set(var_plottable,'PaperPositionMode','Auto','PaperUnits','Inches','PaperSize',[pos(3), pos(4)])
+        pos = get(var_plottable,'Position');
+        text_labeling_plot = sprintf(strcat('\n','Absolute Values for Texture Features','\n','PET- MoCo - Corrected'));
+        xlabel(text_labeling_plot);
+        ylabel('PET- MoCo - DICOM');
+        print(var_plottable,filename_plot,'-dpdf','-r0');
+    pause(2.5); % Time to look at the plot for the user -> Can be changed for personal preferences
+    close(var_plottable);
+    
+    counter = counter + 1;
+    end
+end
+
+% Wilcoxon- Test bei nicht-normalverteilten(?) Stichproben    
 counter = 1;
+h_wilcox = zeros(1,42);
+p_wilcox = zeros(1,42);
+
 for i = 1:42
 if h_ttest(:,i) == 0
-   % Wilcoxon- Test bei nicht-normalverteilten Stichproben
    [p_wilcox(counter),h_wilcox(counter)] = ranksum(final_output_corr(:,i),final_output_dicom(:,i)); 
    counter = counter + 1;
 end
