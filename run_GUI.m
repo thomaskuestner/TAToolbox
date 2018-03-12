@@ -906,10 +906,11 @@ function calculateFeature(varargin)
                             lMask{i}{j} = temp.(fn{1});
                        
                         case '.mha'
-                            lMask{i}{j} = main_read_mask(maskFile{i}{j});  
-                            lMask{i}{j} = permute(lMask{i}{j},[3 1 2]); % permute matrix to flip matrix along 3rd dimension
-                            lMask{i}{j}= flipud(lMask{i}{j});
-                            lMask{i}{j} = permute(lMask{i}{j},[3 2 1]); % permute 3rd dimension back and change swap 1st and 2nd dimensions
+                            lMask{i}{j} = main_read_mask(maskFile{i}{j});
+%                             Orientierungscheck fehlt bisher!?
+%                             lMask{i}{j} = permute(lMask{i}{j},[3 1 2]); % permute matrix to flip matrix along 3rd dimension
+%                             lMask{i}{j}= flipud(lMask{i}{j});
+%                             lMask{i}{j} = permute(lMask{i}{j},[3 2 1]); % permute 3rd dimension back and change swap 1st and 2nd dimensions
                             
                         case '.mhd'
                             lMask{i}{j} = main_read_mask(maskFile{i}{j});  

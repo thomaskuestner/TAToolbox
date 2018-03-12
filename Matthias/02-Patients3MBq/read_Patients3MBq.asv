@@ -1,18 +1,18 @@
 %Try to load .nii - Data
-%%Prework
+%%Prework+
 filePath='Maske 100.nii';
 mask_100_nii = load_nii(filePath);
 allROI_mask=mask_100_nii.img;
 [row,col,v]=find(allROI_mask);
-v_max=max(v); %v_max = number of different ROIs
+v_max=max(v);
 
-%% better coding, has a fixed size
+%% %better coding, has a fixed size
 ROI_indices(v_max)=0;
 mask_Size=size(allROI_mask);
 single_ROIsmask={};
 temp=0;
 
-%% Create single ROIs from a mask
+%%Create single ROIs from a mask
 for i=1:v_max
     ROI_indices=find(allROI_mask==i);
     length_ROI_indices=length(ROI_indices);
@@ -27,15 +27,7 @@ for i=1:v_max
     end
     single_ROIsmask{1,i}=logical(single_ROIsmask{1,i});
     
+    
+    
 end
 all_single_ROIs=single_ROIsmask;
-
-%% create mha-template 
-load('template_mha_mask.mat');
-
-%% save ROIs as single Masks
-%Control Masks - Dr. Seith
-
-%Real Masks
-
-%% what is a mha Mask
