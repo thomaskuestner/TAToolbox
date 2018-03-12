@@ -1,4 +1,5 @@
 %Try to load .nii - Data
+clc; clear all;
 %%Prework
 filePath='Maske 100.nii';
 mask_100_nii = load_nii(filePath);
@@ -32,6 +33,20 @@ all_single_ROIs=single_ROIsmask;
 
 %% create mha-template 
 load('template_mha_mask.mat');
+output_mha_mask= template_mha_mask;
+%clear template_mha_mask;
+output_mha_mask.mask = all_single_ROIs{1,1};
+%prepare meshing
+    qoffset_sc(1,2)= mask_100_nii.hdr.hist.qoffset_x;
+    qoffset_sc(1,3)= mask_100_nii.hdr.hist.qoffset_y;
+    qoffset_sc(1,4)= mask_100_nii.hdr.hist.qoffset_z;
+% meshing
+for i=1:3
+    output_mha_mask.info.Dimensions(1,i) = mask_100_nii.hdr.dime.dim(1,1+i); %mesh global dimensions
+    output_mha_mask.info.Offset(1,i) = qoffset_sc(1,i+1); %mesh Offset
+    output_mha_mask.info.PixelDimensions(1,i) = mask_100_nii.hdr.dime.pixdim(1,1+i); %mesh pixel dimensions
+end
+
 
 %% save ROIs as single Masks
 %Control Masks - Dr. Seith
