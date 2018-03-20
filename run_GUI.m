@@ -541,7 +541,7 @@ function load_Extern3Dmask(varargin)
     global handles
     warning('Achte auf die Masken-Orientierung. Musss sie gedreht/gespiegelt werden?')
     path_img = '/net/linse8-sn/no_backup_00/med_data/Texture/TA_Muscle/MSStudie/'; %hard coded? why?
-    [file_mask, pathname] = uigetfile({'*.mha;*.mhd','Meta-Images'; '*.*','All Files'},'Select mask file',path_img,'MultiSelect','on'); %no differnece of different os's
+    [file_mask, pathname] = uigetfile({'*.mha;*.mhd;*.nii','Meta-Images'; '*.*','All Files'},'Select mask file',path_img,'MultiSelect','on'); %no differnece of different os's
     if isequal(pathname,0)
         return;
     end
@@ -907,23 +907,16 @@ function calculateFeature(varargin)
                        
                         case '.mha'
                             lMask{i}{j} = main_read_mask(maskFile{i}{j});
-%                             Orientierungscheck fehlt bisher!?
+%                             Orientierungscheck fehlt bisher!?!
 %                             lMask{i}{j} = permute(lMask{i}{j},[3 1 2]); % permute matrix to flip matrix along 3rd dimension
 %                             lMask{i}{j}= flipud(lMask{i}{j});
 %                             lMask{i}{j} = permute(lMask{i}{j},[3 2 1]); % permute 3rd dimension back and change swap 1st and 2nd dimensions
                             
                         case '.mhd'
                             lMask{i}{j} = main_read_mask(maskFile{i}{j});  
-%                             lMask{i}{j} = permute(lMask{i}{j},[3 1 2]); % permute matrix to flip matrix along 3rd dimension
-%                             lMask{i}{j}= flipud(lMask{i}{j});
-%                             lMask{i}{j} = permute(lMask{i}{j},[3 2 1]); % permute 3rd dimension back and change swap 1st and 2nd dimensions
-                           
+             
                         case '.nii'
-                            lMask{i}{j} = get_biggest_ROI_from_nii(maskFile{i}{j}); %Caution you get really just the bigges ROI in the nii-File!
-                            %do i need the following three rows?
-%                             lMask{i}{j} = permute(lMask{i}{j},[3 1 2]); % permute matrix to flip matrix along 3rd dimension
-%                             lMask{i}{j}= flipud(lMask{i}{j});
-%                             lMask{i}{j} = permute(lMask{i}{j},[3 2 1]); % permute 3rd dimension back and change swap 1st and 2nd dimensions
+                            lMask{i}{j} = read_single_nii(maskFile{i}{j});
                     end
                     
                 end

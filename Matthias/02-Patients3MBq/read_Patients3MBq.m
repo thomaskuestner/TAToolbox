@@ -16,25 +16,32 @@ temp=0;
 
 %% Create single ROIs from a mask
 for i=1:v_max
+    %prework
     ROI_indices=find(allROI_mask==i);
     length_ROI_indices=length(ROI_indices);
+    
+    %find biggest_ROI
     if length_ROI_indices>temp
         biggest_ROI=i;
         temp=length_ROI_indices;
     end
+    
+    %define geometry
     [i_geometry,j_geometry,k_geometry]=ind2sub(size(allROI_mask), find(allROI_mask==i));
     if all(k_geometry == k_geometry(1))
         geometry{i,1}='flat_plate';
     else
         geometry{i,1}='3D';
     end
-    single_ROIsmask{i}=zeros(mask_Size);
+    
+    %filling 1 in right matrix locations for ROI-Voxels
+    single_ROIsmask{i}=zeros(mask_Size); 
     for j=1:length_ROI_indices
         single_ROIsmask{1,i}(ROI_indices(j))=1;
     end
-  
 end
 
+%save single ROI-Masks with meaningful names
 for i=1:v_max
     switch geometry{i}
         case '3D'

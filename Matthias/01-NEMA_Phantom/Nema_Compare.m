@@ -16,6 +16,7 @@ for i=1:countvalue_pairs
         differ_mes_vs_sim(k,i)=(CA1{k,i+6}-CA1{k,i+1})/CA1{k,i+1};
     end
 end
+
 % First Try to sort the differences
 for k=1:CountTF
     [diff_max_v,diff_max_i] = max(abs(differ_mes_vs_sim(k,:)));
@@ -30,8 +31,32 @@ for k=1:CountTF
     end
 end
 
-%% Statistcal-Tests on the differences
+%% ingroup-Test
+for i=1:4
+    for k=1:CountTF
+        diff_ingroup_mes(k,i)=(CA1{k,i+2}-CA1{k,2})/CA1{k,2};
+        diff_ingroup_sim(k,i)=(CA1{k,i+7}-CA1{k,7})/CA1{k,7};
+    end
+end
 
+for k=1:CountTF
+    if isempty(find(abs(diff_ingroup_mes(k,:))>0.25, 1))
+        status=0; %'not significant';
+    else
+        status=1; %'significant';
+    end
+    diff_ingroup_mes(k,5)=status;
+    
+    if isempty(find(abs(diff_ingroup_sim(k,:))>0.25, 1))
+        status=0; %'not significant';
+    else
+        status=1; %'significant';
+    end
+    diff_ingroup_sim(k,5)=status;
+end
+
+
+%% Statistcal-Tests on the differences
 
 %% Plot of the differences
 figure(1)
