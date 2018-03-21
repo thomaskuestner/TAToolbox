@@ -487,42 +487,47 @@ end
 
 function getfolder(varargin)
     global handles                  %opens OS interface tool of matlab
-    folder_name = uigetdir(mfilename('fullpath'));
-    %folder_name = uigetdir(handles.list_data1.String{1});   % opens OS
-    %window folder open - JANA
-    %Select right OS-PathCode
-        if ismac
-        msgbox('Operating System is not supported');return;     % toDo!
-        elseif isunix
-        dirs = regexp(genpath(folder_name),'[^:]*','match');
-        elseif ispc
-        dirs = regexp(genpath(folder_name),'[^;]*','match');
-        else
-        msgbox('Operating System is not supported');return;
-        end   
-    hLoad = showWaitbar_loadData([],1); %shows loadwindow 
-    % check if folders contain dicom images - if not: don't display them in listbox
-    SFiles = [];    %
-    cNames = [];    %contentNames
-    for i=1:numel(dirs)
-        SFiles{i} = dir(dirs{i});
-        cNames{i} = {SFiles{i}(:).name};
-        lInd = cellfun(@(x) any(strcmpi(x(end-3:end),{'.ima','.dcm'})), cNames{i}(3:end)); % skip unwanted files
-        list_dcm = cNames{i}(lInd);
-        if strfind(dirs{i},'localizer')
-            dirs{i} = [];
+    folder_names=uigetfile_n_dir;
+    dir_number=length(folder_names);
+      
+    for count_dir=1:dir_number
+        folder_name=folder_names{count_dir};
+        %folder_name = uigetdir(handles.list_data1.String{1});   % opens OS
+        %window folder open - JANA
+        %Select right OS-PathCode
+            if ismac
+            msgbox('Operating System is not supported');return;     % toDo!
+            elseif isunix
+            dirs = regexp(genpath(folder_name),'[^:]*','match');
+            elseif ispc
+            dirs = regexp(genpath(folder_name),'[^;]*','match');
+            else
+            msgbox('Operating System is not supported');return;
+            end   
+        hLoad = showWaitbar_loadData([],1); %shows loadwindow 
+        % check if folders contain dicom images - if not: don't display them in listbox
+        SFiles = [];    %
+        cNames = [];    %contentNames
+        for i=1:numel(dirs)
+            SFiles{i} = dir(dirs{i});
+            cNames{i} = {SFiles{i}(:).name};
+            lInd = cellfun(@(x) any(strcmpi(x(end-3:end),{'.ima','.dcm'})), cNames{i}(3:end)); % skip unwanted files
+            list_dcm = cNames{i}(lInd);
+            if strfind(dirs{i},'localizer')
+                dirs{i} = [];
+            end
+            if isempty(list_dcm)
+                dirs{i} = [];
+            end
         end
-        if isempty(list_dcm)
-            dirs{i} = [];
-        end
-    end
-    list = dirs(~cellfun('isempty',dirs))';
+        list = dirs(~cellfun('isempty',dirs))';
 
-    out = list;
-    h = findobj(handles.f,'Tag','list_data2');
-    h.String = [h.String; out];
-    get_listboxSelection(h,[]);
-    showWaitbar_loadData(hLoad,0);
+        out = list;
+        h = findobj(handles.f,'Tag','list_data2');
+        h.String = [h.String; out];
+        get_listboxSelection(h,[]);
+        showWaitbar_loadData(hLoad,0);
+    end
 end
 
 function clearlist(~,~,listbox)
@@ -917,6 +922,9 @@ function calculateFeature(varargin)
              
                         case '.nii'
                             lMask{i}{j} = read_single_nii(maskFile{i}{j});
+                            %Orientierungscheck fehlt bisher!?!HardCodiert!
+                            lMask{i}{j} = rot90(lMask{i}{j});
+                            lMask{i}{j} = rot90(lMask{i}{j});
                     end
                     
                 end
