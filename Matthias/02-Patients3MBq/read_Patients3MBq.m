@@ -19,6 +19,8 @@ for i=1:v_max
     %prework
     ROI_indices=find(allROI_mask==i);
     length_ROI_indices=length(ROI_indices);
+    length_of_ROI{i}=length_ROI_indices;
+   
     
     %find biggest_ROI
     if length_ROI_indices>temp
@@ -42,21 +44,22 @@ for i=1:v_max
 end
 
 %save single ROI-Masks with meaningful names
-for i=1:v_max
-    switch geometry{i}
-        case '3D'
-            if i==biggest_ROI
-                finame=strcat('big_testROI',num2str(i));
-            else
-                finame=num2str(i);
-            end
-        case 'flat_plate'
-            finame=strcat('flat_plate',num2str(i));
-    end
-    finame=strcat(finame,'.nii');
-    mask_100_nii.img=single_ROIsmask{1,i};
-    save_nii(mask_100_nii,finame);
-end
+% for i=1:v_max
+%     switch geometry{i}
+%         case '3D'
+%             if i==biggest_ROI
+%                 finame=strcat('big_testROI',num2str(i));
+%             else
+%                 finame=num2str(i);
+%             end
+%         case 'flat_plate'
+%             finame=strcat('flat_plate',num2str(i));
+%     end
+%     finame=strcat(finame,'.nii');
+%     mask_100_nii.img=single_ROIsmask{1,i};
+%     save_nii(mask_100_nii,finame);
+% end
+ save('length_of_ROIs',length_of_ROI);
 
 
 
