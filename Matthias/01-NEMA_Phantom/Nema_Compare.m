@@ -69,7 +69,7 @@ grid on;
 hold off;
 
 
-%% Statistcal-Tests on the origin data
+%% Statistcal-Tests on the origin data - always paired because same simulation was applied on data
 %Paired T-Test
 for k=1:CountTF
     %Create Compare Matrix
