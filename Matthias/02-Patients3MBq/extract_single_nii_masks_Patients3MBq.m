@@ -6,7 +6,8 @@ files_to_extract = uigetfile_n_dir();
 number_of_files_to_extract = length(files_to_extract);
 name={};
 for p=1:number_of_files_to_extract
-    filepath=strcat(namexx,'/Maske 100.nii');
+    name=files_to_extract{1,p};
+    filePath=strcat(name,'/Maske 100.nii');
     mask_100_nii = load_nii(filePath);
     allROI_mask=mask_100_nii.img;
     [row,col,v]=find(allROI_mask);
@@ -53,7 +54,7 @@ for p=1:number_of_files_to_extract
         switch geometry{i}
             case '3D'
                 if i==biggest_ROI
-                    finame=strcat(num2str(i),'_big_testROI');
+                    finame=strcat(num2str(i),'_biggest_ROI');
                 else
                     finame=num2str(i);
                 end
@@ -61,8 +62,9 @@ for p=1:number_of_files_to_extract
                 finame=strcat(num2str(i),'_flat_plate');
         end
         finame=strcat(finame,'.nii');
+        finame=strcat(name,'/',finame);
         mask_100_nii.img=single_ROIsmask{1,i};
         save_nii(mask_100_nii,finame);
     end
-    save('length_of_ROIs',length_of_ROI);
+    save(strcat(name,'/','length_of_ROIs.mat'),'length_of_ROI');
 end

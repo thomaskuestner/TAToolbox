@@ -4,10 +4,17 @@ load('summarized_data_of_all_patients_V2.mat');
 
 %create the names of the fields in the struct
 number_of_patient=[01,03,06,09,10,13,14,17,18,19,20,21,22,24,25,26,27,28,29];
+% number_of_patient=[01,03,06,13,17,18,19,20,22,24,25,26,28,29];%excluding to small rois
 name={};
-length_data=19;
-% you choose which dose in [MBq]
+length_data=length(number_of_patient);
+
+% you choose which dose in [MBq] and which ROI
 dose=3;
+roi=1;
+selected_TF=18;
+
+
+%excluding to small ROIs
 
 %for histogramms
 for i=1:length_data
@@ -18,21 +25,30 @@ for i=1:length_data
     name = {strcat(temp_name,int2str(number_of_patient(i)))};
     % here comes your statistic code (example:
     % temp_data=data.(name{1}).Size_of_ROIs;)
-    tf_Values_of_one_Dose(:,i)=cell2mat(data.(name{1}).feature_data(:,1,get_zValue_data_table(dose)));
-    
-
+    %tf_Values_of_one_Dose(:,i)=cell2mat(data.(name{1}).feature_data(:,roi,get_zValue_data_table(dose)));
+    klara=cell2mat(data.(name{1}).feature_data(:,roi,:));
+    temp=name{1};
+    temp=strcat('data2R/',temp,'.csv');
+    csvwrite(temp,klara);
 end
 %using temp for shorter name
 temp=tf_Values_of_one_Dose;
-
+% 
+for selected_TF=1:42
 %plot basic statistic features
 figure
 ax1 = subplot(2,1,1);
 ax2 = subplot(2,1,2);
 grid on;
 nbins=10;
-h = histogram(ax1,temp(1,:),nbins); 
-b = boxplot(ax2,temp(1,:),'Orientation','horizontal');
+his_t = histogram(ax1,temp(selected_TF,:),nbins); 
+bo_x = boxplot(ax2,temp(selected_TF,:),'Orientation','horizontal');
+text_legend='Lilliefors test';
+[h_lillli,p_lillli,k_lillli,c_lillli]=lillietest(temp(selected_TF,:)) % https://en.wikipedia.org/wiki/Lilliefors_test
+text_legend=strcat(text_legend,'   ','P Wert = ',num2str(p_lillli));
+xlabel(text_legend);
+end
+
 
 
 
