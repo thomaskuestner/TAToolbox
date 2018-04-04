@@ -67,7 +67,7 @@ write.csv(outlierdf, file="data2R/ROI1_outlier_per_TF.csv", quote=F)
 rm(i, iqr, vv, temp)
 
 ####~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#### Rank plot without outliers_ROI_Sizes: 
+#### Rank plot without outliers_ROI_Sizes:
 data_long_noOutlier<-data_long[which(!(data_long$PID %in% outliers_ROI_Sizes)),]
 data_long_noOutlier$PID<-factor(data_long_noOutlier$PID)
 pdf("data2R/ROI1plots/rank_per_TF.pdf")
