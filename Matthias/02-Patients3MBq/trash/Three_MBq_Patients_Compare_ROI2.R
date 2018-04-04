@@ -1,0 +1,90 @@
+#library(R.matlab)
+
+fileNames<-list.files("data2R/ROI2/")
+fileNames_TF_values<-fileNames[!grepl("ROI", fileNames)]
+fileNames_ROI_Sizes<-fileNames[grepl("ROI", fileNames)]
+dataMatthieu<-data.frame()
+
+dataSize<-vector()
+for(i in 1:length(fileNames_TF_values)){
+  df<-read.csv(paste0("data2R/ROI2/", fileNames_TF_values[i]), header=F)[,1:11]
+  colnames(df)<-paste0("dose", 1:11)
+  rownames(df)<-paste0("TF", 1:42)
+  
+  dataMatthieu<-rbind(dataMatthieu, df)
+  
+  df2<-read.csv(paste0("data2R/ROI2/", fileNames_ROI_Sizes[i]), header=F)
+  dataSize[i]<-df2[1,1]
+}
+
+iqr<-(quantile(dataSize, 0.75) -  quantile(dataSize, 0.25))
+outliers<-boxplot(dataSize)$out
+outliers<-c(6,13)
+
+dataMatthieu<-cbind(PID=factor(rep(1:19, each=42)), dataMatthieu)
+dataMatthieu<-cbind(TF=factor(rep(1:42, 19)), dataMatthieu)
+dataMatthieu$colour<-1*(dataMatthieu$PID %in% outliers)
+
+library("tidyr")
+library(tidyr)
+library(ggplot2)
+
+data_long <- gather(dataMatthieu, dose, value, dose1:dose11, factor_key=TRUE)
+
+df_mean<-aggregate(data_long$value, by=list(data_long$TF,data_long$dose), mean)
+df_sd<-aggregate(data_long$value, by=list(data_long$TF,data_long$dose), sd)
+
+cols<-c("#9999CC","#CC6666")
+
+for(i in 1:42){
+  cc<-cols[data_long$colour+1]
+  p <- ggplot(data = data_long[data_long$TF==i,], 
+              aes(x = dose, y = value, group = PID))
+  p+geom_line()+geom_point(colour=cc[data_long$TF==i])
+  
+  ggsave(paste0("data2R/plot_",i,"_ROI2.tiff"))
+}
+
+
+
+p <- ggplot(data = df_mean[which(df_mean$Group.1==2),], aes(x = Group.2, y = x, group = Group.1))
+p+geom_line()
+
+outlierdf<-data.frame(TF=vector(), PID=vector())
+
+for(i in 1:42){
+  temp<-data_long[data_long$TF==i,]
+  vv<-temp$value
+  iqr<-(quantile(vv, 0.75) -  quantile(vv, 0.25))
+  
+  outliers<-unique(temp[which(vv> median(vv)+1.5*iqr  | vv < median(vv) - 1.5*iqr),"PID"])
+  outlierdf<-rbind(outlierdf, data.frame(TF=rep(i, length(outliers)), PID=outliers))
+}
+
+
+summary(outlierdf)
+unique(outlierdf$PID)
+
+write.csv(outlierdf, file="data2R/outlier_per_TF_ROI2.csv", quote=F)
+
+data_long$dose2<-as.numeric(gsub("dose", "", data_long$dose))/4 +0.25
+
+
+library(lme4)
+
+fit<- lmer(value ~ dose2 * TF +(1|PID), data=data_long)
+
+data_TF1<-data_long[data_long$TF==1,]
+fit1<- lmer(value ~ dose2 +(1|PID), data=data_TF1)
+plot(fit1)
+
+
+data_TF11<-data_long[data_long$TF==11,]
+fit11<- lmer(value ~ dose2 +(1|PID), data=data_TF11)
+plot(fit11)
+summary(fit11)
+Anova(fit11)
+
+
+friedm
+

@@ -1,55 +1,53 @@
-#library(R.matlab)
+rm(list=ls())
+library("tidyr")
+library(tidyr)
+library(ggplot2)
 
+
+#### Daten einlesen
+names_of_TFs<-read.csv("data2R/Zuordnung-TFs-to-Number.csv")
 fileNames<-list.files("data2R/ROI2/")
 fileNames_TF_values<-fileNames[!grepl("ROI", fileNames)]
 fileNames_ROI_Sizes<-fileNames[grepl("ROI", fileNames)]
-dataMatthieu<-data.frame()
-
+dM<-data.frame()
 dataSize<-vector()
+
 for(i in 1:length(fileNames_TF_values)){
   df<-read.csv(paste0("data2R/ROI2/", fileNames_TF_values[i]), header=F)[,1:11]
   colnames(df)<-paste0("dose", 1:11)
   rownames(df)<-paste0("TF", 1:42)
-  
-  dataMatthieu<-rbind(dataMatthieu, df)
+  dM<-rbind(dM, df)
   
   df2<-read.csv(paste0("data2R/ROI2/", fileNames_ROI_Sizes[i]), header=F)
   dataSize[i]<-df2[1,1]
 }
 
-iqr<-(quantile(dataSize, 0.75) -  quantile(dataSize, 0.25))
-outliers<-boxplot(dataSize)$out
-outliers<-c(6,13)
+rm(df, df2, i, fileNames, fileNames_ROI_Sizes, fileNames_TF_values)
 
-dataMatthieu<-cbind(PID=factor(rep(1:19, each=42)), dataMatthieu)
-dataMatthieu<-cbind(TF=factor(rep(1:42, 19)), dataMatthieu)
-dataMatthieu$colour<-1*(dataMatthieu$PID %in% outliers)
+###################################################################################
+#### Ausreisser definieren & long-format
+outliers_ROI_Sizes<-which(dataSize %in% boxplot(dataSize, range=1, ylab="Number of Voxel")$out)
+grid()
 
-library("tidyr")
-library(tidyr)
-library(ggplot2)
+dM<-cbind(PID=factor(rep(1:19, each=42)), dM)
+dM<-cbind(TF=factor(rep(1:42, 19)), dM)
+dM$colour<-1*(dM$PID %in% outliers_ROI_Sizes)
 
-data_long <- gather(dataMatthieu, dose, value, dose1:dose11, factor_key=TRUE)
+data_long <- gather(dM, dose, value, dose1:dose11, factor_key=TRUE)
 
-df_mean<-aggregate(data_long$value, by=list(data_long$TF,data_long$dose), mean)
-df_sd<-aggregate(data_long$value, by=list(data_long$TF,data_long$dose), sd)
 
-cols<-c("#9999CC","#CC6666")
-
+#### profile-plots per TF (marked outliers)
 for(i in 1:42){
-  cc<-cols[data_long$colour+1]
+  cc<-c("#9999CC","#CC6666")[data_long$colour+1]
   p <- ggplot(data = data_long[data_long$TF==i,], 
               aes(x = dose, y = value, group = PID))
   p+geom_line()+geom_point(colour=cc[data_long$TF==i])
   
-  ggsave(paste0("data2R/plot_",i,"_ROI2.tiff"))
+  ggsave(paste0("data2R/ROI2plots/",i,"_plot_",names_of_TFs[i,1],".tiff"))
 }
-
-
-
-p <- ggplot(data = df_mean[which(df_mean$Group.1==2),], aes(x = Group.2, y = x, group = Group.1))
-p+geom_line()
-
+rm(i, cc, p)
+####~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#### outlier per TF in values:
 outlierdf<-data.frame(TF=vector(), PID=vector())
 
 for(i in 1:42){
@@ -57,7 +55,7 @@ for(i in 1:42){
   vv<-temp$value
   iqr<-(quantile(vv, 0.75) -  quantile(vv, 0.25))
   
-  outliers<-unique(temp[which(vv> median(vv)+1.5*iqr  | vv < median(vv) - 1.5*iqr),"PID"])
+  temp<-unique(temp[which(vv> quantile(vv, 0.75)+1.5*iqr  | vv < quantile(vv, 0.25) - 1.5*iqr),"PID"])
   outlierdf<-rbind(outlierdf, data.frame(TF=rep(i, length(outliers)), PID=outliers))
 }
 
@@ -65,26 +63,24 @@ for(i in 1:42){
 summary(outlierdf)
 unique(outlierdf$PID)
 
-write.csv(outlierdf, file="data2R/outlier_per_TF_ROI2.csv", quote=F)
+write.csv(outlierdf, file="data2R/ROI2_outlier_per_TF.csv", quote=F)
+rm(i, iqr, vv, temp)
 
-data_long$dose2<-as.numeric(gsub("dose", "", data_long$dose))/4 +0.25
+####~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#### Rank plot without outliers: 
 
-
-library(lme4)
-
-fit<- lmer(value ~ dose2 * TF +(1|PID), data=data_long)
-
-data_TF1<-data_long[data_long$TF==1,]
-fit1<- lmer(value ~ dose2 +(1|PID), data=data_TF1)
-plot(fit1)
-
-
-data_TF11<-data_long[data_long$TF==11,]
-fit11<- lmer(value ~ dose2 +(1|PID), data=data_TF11)
-plot(fit11)
-summary(fit11)
-Anova(fit11)
-
-
-friedm
+data_long_noOutlier<-data_long[which(!(data_long$PID %in% outliers_ROI_Sizes)),]
+data_long_noOutlier$PID<-factor(data_long_noOutlier$PID)
+pdf("data2R/ROI2plots/rank_per_TF.pdf")
+for(i in 1:42){
+  data_temp<-data_long_noOutlier[data_long_noOutlier$TF==i,]
+  rankMat<-aggregate(data_temp$value, by=list(data_temp$PID), rank)
+  
+  plot(rankMat[,2][1,], type="l", main=paste0("ROI2: ", names_of_TFs[i,1]), xlab="dose", ylab="rank")
+  for(i in 2:length(unique(data_temp$PID))){
+    lines(rankMat[,2][i,])
+    lines(as.numeric(apply(rankMat[,2], 2, median)), col="red", lwd=4)
+  }
+}
+dev.off()
 
