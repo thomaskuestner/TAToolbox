@@ -22,7 +22,7 @@ TFX(1,:)={'Identification_ID','Strength of Dose','TF-Value'};
         name = {strcat(temp_name,int2str(number_of_patient(i)))};
 
         for w=1:length_of_DV
-            TFX(w+count,:)={(name{1}),num2str(Doses_Values(w)),num2str(cell2mat(file.(name{1}).feature_data(1,1,w)))};
+            TFX(w+count,:)={(name{1}),Doses_Values(w),(cell2mat(file.(name{1}).feature_data(1,1,w)))};
         end
         count=count+length_of_DV;
     end
