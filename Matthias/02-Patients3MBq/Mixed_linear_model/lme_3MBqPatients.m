@@ -11,9 +11,10 @@ TF_Values=1:1:42; %all possible TF-Values in radiomics
 length_of_TFV=length(TF_Values);
 Doses_Values=(0.5:0.25:3); %based on 3MBq Patients
 length_of_DV=length(Doses_Values);
-count=1;
-TFX(1,:)={'Identification_ID','Strength of Dose','TF-Value'};
-%for q=1:length_of_TFV
+for q=1:length_of_TFV
+    clear TFX lme_TFX;
+    TFX(1,:)={'Identification_ID','Strength of Dose','TF-Value'};
+    count=1;
     for i=1:length_of_patientnumbers
         temp_name='pure_data_';
             if i<5
@@ -22,11 +23,15 @@ TFX(1,:)={'Identification_ID','Strength of Dose','TF-Value'};
         name = {strcat(temp_name,int2str(number_of_patient(i)))};
 
         for w=1:length_of_DV
-            TFX(w+count,:)={(name{1}),Doses_Values(w),(cell2mat(file.(name{1}).feature_data(1,1,w)))};
+            TFX(w+count,:)={(name{1}),Doses_Values(w),(cell2mat(file.(name{1}).feature_data(q,1,w)))};
         end
         count=count+length_of_DV;
     end
+    %calculate lme and save the result
     TFX=cell2dataset(TFX);
-%end
+    lme_TFX = fitlme(TFX,'TF_Value ~ 1 + StrengthOfDose + (1|Identification_ID)');
+    outputname=strcat('ROI1_lme_TF_',num2str(q));
+    save(outputname,'lme_TFX');
+end
 
 %mat2dataset()
