@@ -1,7 +1,7 @@
 %%Prework
 %filename_to_extract=uigetfile;
 clear all;clc;
-filename_to_extract='summarized_data_of_all_Patients_ROI1.mat';
+filename_to_extract='summarized_data_of_all_Patients_ROI2.mat';
 file_to_extract=load(filename_to_extract);
 file=file_to_extract.data;
 
@@ -15,6 +15,7 @@ for q=1:length_of_TFV
     clear TFX lme_TFX;
     TFX(1,:)={'Identification_ID','Strength of Dose','TF-Value'};
     count=1;
+        
     for i=1:length_of_patientnumbers
         temp_name='pure_data_';
             if i<5
@@ -30,7 +31,7 @@ for q=1:length_of_TFV
     %calculate lme and save the result
     TFX=cell2dataset(TFX);
     lme_TFX = fitlme(TFX,'TF_Value ~ 1 + StrengthOfDose + (1|Identification_ID)');
-    outputname=strcat('ROI1_lme_TF_',num2str(q));
+    outputname=strcat('ROI2_lme_TF_',num2str(q));
     save(outputname,'lme_TFX');
 end
 
