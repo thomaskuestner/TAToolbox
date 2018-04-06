@@ -5,20 +5,20 @@ library(ggplot2)
 
 
 #### Daten einlesen
-names_of_TFs<-read.csv("data2R/Zuordnung-TFs-to-Number.csv")
-fileNames<-list.files("data2R/ROI1/")
+names_of_TFs<-read.csv("rank_test_and_outlier_specification/Zuordnung-TFs-to-Number.csv")
+fileNames<-list.files("rank_test_and_outlier_specification/ROI1/")
 fileNames_TF_values<-fileNames[!grepl("ROI", fileNames)]
 fileNames_ROI_Sizes<-fileNames[grepl("ROI", fileNames)]
 dM<-data.frame()
 dataSize<-vector()
 
 for(i in 1:length(fileNames_TF_values)){
-  df<-read.csv(paste0("data2R/ROI1/", fileNames_TF_values[i]), header=F)[,1:11]
+  df<-read.csv(paste0("rank_test_and_outlier_specification/ROI1/", fileNames_TF_values[i]), header=F)[,1:11]
   colnames(df)<-paste0("dose", 1:11)
   rownames(df)<-paste0("TF", 1:42)
   dM<-rbind(dM, df)
   
-  df2<-read.csv(paste0("data2R/ROI1/", fileNames_ROI_Sizes[i]), header=F)
+  df2<-read.csv(paste0("rank_test_and_outlier_specification/ROI1/", fileNames_ROI_Sizes[i]), header=F)
   dataSize[i]<-df2[1,1]
 }
 
@@ -43,7 +43,7 @@ for(i in 1:42){
               aes(x = dose, y = value, group = PID))
   p+geom_line()+geom_point(colour=cc[data_long$TF==i])
   
-  ggsave(paste0("data2R/ROI1plots/",i,"_plot_",names_of_TFs[i,1],".tiff"))
+  ggsave(paste0("rank_test_and_outlier_specification/ROI1plots/",i,"_plot_",names_of_TFs[i,1],".tiff"))
 }
 rm(i, cc, p)
 ####~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -63,14 +63,14 @@ for(i in 1:42){
 summary(outlierdf)
 unique(outlierdf$PID)
 
-write.csv(outlierdf, file="data2R/ROI1_outlier_per_TF.csv", quote=F)
+write.csv(outlierdf, file="rank_test_and_outlier_specification/ROI1_outlier_per_TF.csv", quote=F)
 rm(i, iqr, vv, temp)
 
 ####~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #### Rank plot without outliers_ROI_Sizes:
 data_long_noOutlier<-data_long[which(!(data_long$PID %in% outliers_ROI_Sizes)),]
 data_long_noOutlier$PID<-factor(data_long_noOutlier$PID)
-pdf("data2R/ROI1plots/rank_per_TF.pdf")
+pdf("rank_test_and_outlier_specification/ROI1plots/rank_per_TF.pdf")
 for(i in 1:42){
   data_temp<-data_long_noOutlier[data_long_noOutlier$TF==i,]
   rankMat<-aggregate(data_temp$value, by=list(data_temp$PID), rank)
