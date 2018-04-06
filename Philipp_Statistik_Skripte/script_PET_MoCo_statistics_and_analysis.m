@@ -6,6 +6,7 @@ clear vars
 flag_print_preprocessed_plots = 0; % Plotting of preprocessed data (1st section)
 flag_statistics = 1; % Running statistical methods (2nd Section)
 flag_plot_stats = 0; % Plotting of results of statistical analysis (3rd Section)
+flag_stats_que = 0;
 
 struct = load('C:\Users\Philipp\Documents\02_University\Master (Medizintechnik)\Studienarbeit\05_Code\Philipp_Statistik_Skripte\MoCo_Corrected_Cell');
 current_Data= struct.features(:,:,:);
@@ -106,6 +107,7 @@ end
 % T-Test -> Wenn tTest versagt -> Wilcoxon
 
 if flag_statistics == 1
+    if flag_stats_que == 1
 var_stat_compare = inputdlg(sprintf('1 = Dicom and Corrected\n2 = Dicom and Gated\n3 = Corrected and Gated\n '),'Please enter option for plots',1,{'Type either 1, 2 or 3'}); 
 switch str2double(var_stat_compare{1})
     case 1
@@ -137,8 +139,29 @@ if h_ttest(:,i) == 0
    counter = counter + 1;
 end
 end
+    end
+% Bartlett Test    
 clearvars i counter
+counter = 1;
 
+mean_dicom = mean(final_output_dicom); % Calc. and safe of means
+% save('Mittelwert_DICOM','mean_dicom');
+mean_corr = mean(final_output_corr);
+% save('Mittelwert_CORRECTED','mean_corr');
+mean_gated = mean(final_output_gated);
+% save('Mittelwert_GATED','mean_gated');
+
+variance_dicom = var(final_output_dicom); % Calc. and saving of variances
+% save('Varianz_DICOM','variance_dicom');
+variance_corr = (final_output_corr);
+% save('Varianz_CORRECTED','variance_corr');
+variance_gated = (final_output_dicom);
+% save('Varianz_GATED','variance_gated');
+
+%%%% Hier weiter: Was kann ich machen (Diff. oder Verh. etc. für Skedasdiz.)
+bartlett_dicom = vartestn(final_output_dicom(:,:));
+bartlett_corr = vartestn(final_output_corr(:,:));
+bartlett_gated = vartestn(final_output_gated(:,:));
 end
 %% Plotting of statistical results
 if flag_plot_stats == 1 % Plotting of statistic- finding
