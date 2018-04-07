@@ -6,7 +6,7 @@ clear all;clc;
         outlier_included=false;
    %do you want plots?  
         plots=true;
-        aspdf=true;
+        aspdf=false;
         %config you plots
         subplot_per_row=8;
 %please fill out!!!! - !!!!
@@ -39,10 +39,10 @@ file_to_extract=load(filename_to_extract);
 file=file_to_extract.data;
 name2number=load('Zuordnung_TFs_to_Number.mat');
 length_of_patientnumbers=length(number_of_patient);
-TF_Values=1:1:42; %all possible TF-Values in radiomics
-length_of_TFV=length(TF_Values);
-Doses_Values=(0.5:0.25:3); %based on 3MBq Patients
-length_of_DV=length(Doses_Values);
+tF_Values=1:1:42; %all possible TF-Values in radiomics
+length_of_TFV=length(tF_Values);
+doses_Values=(0.5:0.25:3); %based on 3MBq Patients
+length_of_DV=length(doses_Values);
 length_of_diff_DV=length_of_DV-1; %pairs of doses for deltas
 
 %% Calculation
@@ -84,26 +84,47 @@ if ROIX==1
 else
     rOIname=' ROI2: ';
 end
-titleOfigure=strcat('distribution coefficients of variation - deltas of TFs in ',rOIname,add2figure_title_name);
- 
+%title off igures (tof) - name of figures
+tof_boxplots=strcat('distribution coefficients of variation - deltas of TFs in ',rOIname,add2figure_title_name);
+tof_coef_var_dose=strcat('distribution coefficients of variation - deltas of TFs in ',rOIname,add2figure_title_name);
+
 if plots==true
     if aspdf == false
-        %for every TF - Plots
+        %how many rows are needed?
         maxrow_4_subplot=ceil(length_of_TFV/subplot_per_row);
-        figure('Name',titleOfigure);
-
-        for q=1:length_of_TFV
-            subplot(maxrow_4_subplot,subplot_per_row,q)
-            boxplot(TF.overview(q,:));
-            title(name2number.name2number{q+1});
-            grid on;
-        end
+        %for every TF -> coef Boxplots
+            figure('Name',tof_boxplots);set(gcf,'NumberTitle','off');
+            for q=1:length_of_TFV
+                subplot(maxrow_4_subplot,subplot_per_row,q)
+                boxplot(TF.overview(q,:));
+                title(name2number.name2number{q+1});
+                grid on;
+            end
+        %for every TF -> Dose-coef diagramm
+            figure('Name',strcat(tof_coef_var_dose,'_fig_',num2str(1)));set(gcf,'NumberTitle','off');
+            names_delt_dos = {'d(0,50-0,75)';'d(0,75-1,00)';'d(1,00-1,25)';'d(1,25-1,50)';'d(1,50-1,75)';'d(1,75-2,00)';'d(2,00-2,25)';'d(2,00-2,25)';'d(2,25-2,50)';'d(2,50-2,75)';'d(2,75-3,00)'};
+            next_figure_count=1; next_figure_add=1;
+            for q=1:length_of_TFV
+                if next_figure_count==5
+                    next_figure_count=1;
+                    next_figure_add=next_figure_add+1;
+                    figure('Name',strcat(tof_coef_var_dose,'_fig_',num2str(next_figure_add)));set(gcf,'NumberTitle','off');
+                end
+                subplot(4,1,next_figure_count)
+                plot(1:1:10,TF.overview(q,:));
+                set(gca,'xtick',1:10,'xticklabel',names_delt_dos)
+                %boxplot(TF.overview(q,:));
+                title(name2number.name2number{q+1});
+                grid on;
+                next_figure_count=next_figure_count+1;
+            end
+        
     else %aspdf PDF is generated
         for q=1:length_of_TFV
             waaaitbar=waitbar(q/length_of_TFV);
             boxplot(TF.overview(q,:));
             title(name2number.name2number{q+1});
-            xlabel(titleOfigure);
+            xlabel(tof_boxplots);
             grid on;
 %             set(h,'Units','Inches');
 %             pos = get(h,'Position');
@@ -112,6 +133,7 @@ if plots==true
         end
         close(waaaitbar);
     end
+    
 end
 
 
