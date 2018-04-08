@@ -99,12 +99,12 @@ if plots==true
         maxrow_4_subplot=ceil(length_of_TFV/subplot_per_row);
         %for every TF -> coef Boxplots
             figure('Name',tof_boxplots);set(gcf,'NumberTitle','off');
-            for q=1:length_of_TFV
-                subplot(maxrow_4_subplot,subplot_per_row,q)
-                boxplot(TF.all_coef_var(:,q));
-                title(name2number.name2number{q+1});
-                grid on;
-            end
+%             for q=1:length_of_TFV
+%                 subplot(maxrow_4_subplot,subplot_per_row,q)
+%                 boxplot(TF.overview(q,:));
+%                 title(name2number.name2number{q+1});
+%                 grid on;
+%             end
         %for every TF -> Dose-coef diagramm
             figure('Name',strcat(tof_coef_var_dose,'_fig_',num2str(1)));set(gcf,'NumberTitle','off');
             names_delt_dos = {'d(0,50-0,75)';'d(0,75-1,00)';'d(1,00-1,25)';'d(1,25-1,50)';'d(1,50-1,75)';'d(1,75-2,00)';'d(2,00-2,25)';'d(2,00-2,25)';'d(2,25-2,50)';'d(2,50-2,75)';'d(2,75-3,00)'};
@@ -118,8 +118,8 @@ if plots==true
                 subplot(4,1,next_figure_count)
                 plot(1:1:10,TF.all_coef_var(:,q),':o');
                 set(gca,'xtick',1:10,'xticklabel',names_delt_dos)
-                title(name2number.name2number{q+1});
-                xlabel(strcat('Sum of absolute values of coefficient of varaiation =',' ',num2str(TF.all_sum_coef_var(q))));
+                title(strcat(name2number.name2number{q+1}, ' coefficient of varaiation'));
+                xlabel('lele');
                 grid on;
                 next_figure_count=next_figure_count+1;
             end
@@ -131,6 +131,9 @@ if plots==true
             title(name2number.name2number{q+1});
             xlabel(tof_boxplots);
             grid on;
+%             set(h,'Units','Inches');
+%             pos = get(h,'Position');
+%             set(h,'PaperPositionMode','Auto','PaperUnits','Inches','PaperSize',[pos(3), pos(4)])
             print((name2number.name2number{q+1}),'-dpdf','-fillpage');
         end
         close(waaaitbar);
