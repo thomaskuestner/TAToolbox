@@ -1,10 +1,10 @@
 %% Preprocessing 
 % Skript for statistical analysis with the Radiomics Toolbox features from PET MoCo- Data
 clear vars
-%%% -> Abfrage für die Abfrage der flags programmieren
+%%% -> Abfrage fuer die Abfrage der flags programmieren
 % Preprocessing will be executed regardless the intention running this script (0th section)
 flag_print_preprocessed_plots = 0; % Plotting of preprocessed data (1st section)
-flag_statistics = 1; % Running statistical methods (2nd Section)
+flag_statistics = 0; % Running statistical methods (2nd Section)
 flag_plot_stats = 0; % Plotting of results of statistical analysis (3rd Section)
 flag_stats_que = 0;
 
@@ -53,13 +53,13 @@ switch str2double(datatype{1})
         error('Wrong Input!');
 end
 
-clearvars i k j l o d s counter 
+clearvars i k j l o d s counters struct
 
 %% Printing the TFs Values
 % Section for plotting of a comparison of 2 sets of Data. Usually the same
 % Features with each other from 2 different sets of data
 if flag_print_preprocessed_plots == 1
-    
+% Implement new cases for paired outputs!!!!
 var_plot_pairing = inputdlg(sprintf('1 = Dicom and Corrected\n2 = Dicom and Gated\n3 = Corrected and Gated\n '),'Please enter option for plots',1,{'Type either 1, 2 or 3'}); 
 switch str2double(var_plot_pairing{1})
     case 1
@@ -67,18 +67,20 @@ switch str2double(var_plot_pairing{1})
     final_output_2 = final_output_corr;
     label_X_axis = 'PET- MoCo DICOM';
     label_Y_axis = 'PET- MoCo CORRECTED';
+    path_00 = 'C:\Users\Philipp\Documents\02_University\Master (Medizintechnik)\Studienarbeit\06_Plots\First_Comp_DIC_vs_COR';
     case 2
     final_output_1 = final_output_dicom;
     final_output_2 = final_output_gated;
     label_X_axis = 'PET- MoCo DICOM';
     label_Y_axis = 'PET- MoCo GATED';
+    path_00 = 'C:\Users\Philipp\Documents\02_University\Master (Medizintechnik)\Studienarbeit\06_Plots\First_Comp_DIC_vs_GAT';
     case 3
     final_output_1 = final_output_corr;
     final_output_2 = final_output_gated;
     label_X_axis = 'PET- MoCo CORRECTED';
     label_Y_axis = 'PET- MoCo GATED';
+    path_00 = 'C:\Users\Philipp\Documents\02_University\Master (Medizintechnik)\Studienarbeit\06_Plots\First_Comp_COR_vs_GAT';
 end
-    
     load('feature_Names');
     counter = 1;
     for i = 1:42 
@@ -86,22 +88,39 @@ end
     filename_plot = feature_Names{i,1};
     var_plottable = figure;
     plot(final_output_1(:,i),final_output_2(:,i),'bo');
-        title(filename_plot);
-        refline(1);
-        grid on;
-        set(var_plottable,'Units','Inches');
-        pos = get(var_plottable,'Position');
-        set(var_plottable,'PaperPositionMode','Auto','PaperUnits','Inches','PaperSize',[pos(3), pos(4)])
-        pos = get(var_plottable,'Position');
-        text_labeling_plot = sprintf(strcat('\n','Absolute Values for Texture Features','\n',label_X_axis));
-        xlabel(text_labeling_plot); % x-axis label
-        ylabel(label_Y_axis); % y-axis label
-        print(var_plottable,filename_plot,'-dpdf','-r0'); % Safe .PDFs of TF-values
-    pause(1.0); % Time to look at the plot for the user 
+    title(filename_plot); refline(1); grid on;
+    set(var_plottable,'Units','Inches');
+    pos = get(var_plottable,'Position');
+    set(var_plottable,'PaperPositionMode','Auto','PaperUnits','Inches','PaperSize',[pos(3), pos(4)])
+    pos = get(var_plottable,'Position');
+    text_labeling_plot = sprintf(strcat('\n','Absolute Values for Texture Features','\n',label_X_axis));
+    xlabel(text_labeling_plot); % x-axis label
+    ylabel(label_Y_axis); % y-axis label
+    saveas(gcf, fullfile(path_00, filename_plot), 'pdf');
     close(var_plottable);
     counter = counter + 1;
     end
+    clearvars var_feature_name i
+    
+    sorted_dicom = sort(final_output_dicom,'ascend');
+    sorted_corr = sort(final_output_corr,'ascend');
+    sorted_gated = sort(final_output_gated,'ascend');
+    for j = 1:42
+    counter = 1;
+    load('feature_Names');
+    var_feature_name(counter) = feature_Names(j,:);
+    filename_plot = feature_Names{j,1};
+    var_plottable = figure; title(filename_plot); grid on;
+    plot(1:14,final_output_dicom(:,j),'o',1:14,final_output_corr(:,j),'o',1:14,final_output_gated(:,j),'o');
+ % ,1:14,sorted_dicom(:,j),'r-o',1:14,sorted_corr(:,j),'b-*',1:14,sorted_gated(:,j),'c-x'
+    legend('DICOM','CORRECTED','GATED','Location','northwest');
+    path_01 = 'C:\Users\Philipp\Documents\02_University\Master (Medizintechnik)\Studienarbeit\06_Plots\Second_Comp_All';
+    saveas(gcf, fullfile(path_01, filename_plot), 'pdf'); 
+    close(var_plottable);
+    counter = counter + 1;
+    end  
 end
+    clearvars j path_00 path_01
 %% Statistical Methods
 % 1. Test von DICOM- und CORRECTED- Daten
 % T-Test -> Wenn tTest versagt -> Wilcoxon
@@ -158,11 +177,13 @@ variance_corr = (final_output_corr);
 variance_gated = (final_output_dicom);
 % save('Varianz_GATED','variance_gated');
 
-%%%% Hier weiter: Was kann ich machen (Diff. oder Verh. etc. für Skedasdiz.)
+%%%% Hier weiter: Was kann ich machen (Diff. oder Verh. etc. f?r Skedasdiz.)
 bartlett_dicom = vartestn(final_output_dicom(:,:));
 bartlett_corr = vartestn(final_output_corr(:,:));
 bartlett_gated = vartestn(final_output_gated(:,:));
 end
+%https://de.mathworks.com/help/stats/friedman.html
+%https://de.wikipedia.org/wiki/Friedman-Test_(Statistik)
 %% Plotting of statistical results
 if flag_plot_stats == 1 % Plotting of statistic- finding
 %   
