@@ -11,7 +11,7 @@ for l = 1:42
 end
 counter = 1;
 %var_temp_dicom = feature_value_1;
-dicom_final_output = reshape(feature_value_1,14,42);
+final_output_dicom = reshape(feature_value_1,14,42);
 for o = 1:42
     for j = 2:3:42
         feature_value_2(counter) = current_Data{o,j,j};
@@ -21,7 +21,7 @@ for o = 1:42
 end
 counter = 1;
 %var_temp_corr = feature_value_2;
-corrected_final_output = reshape(feature_value_2,14,42);
+final_output_corrected = reshape(feature_value_2,14,42);
 for s = 1:42
     for d = 3:3:42
         feature_value_3(counter) = current_Data{s,d,d};
@@ -29,9 +29,8 @@ for s = 1:42
     end
     s = s + 1;
 end
-counter = 1;
 %var_temp_gated = feature_value_3;
-gated_final_output = reshape(feature_value_3,14,42);
+final_output_gated = reshape(feature_value_3,14,42);
 clearvars i j l o s d counter struct
 
 %% Printing the TFs Values
@@ -101,25 +100,43 @@ clearvars i j l o s d counter struct
 m1 = mean(final_output_dicom);
 m2 = mean(final_output_corrected);
 m3 = mean(final_output_gated);
-vh1 = m1./m2; %Ratio of the TFs
+vh1 = m1./m2; % Ratio of the TFs
 vh2 = m1./m3;
 vh3 = m2./m3;
-diff1 = m1-m2;%originals minus corrected
+diff1 = m1-m2; % originals minus corrected
 diff2 = m1-m3;
 diff3 = m2-m3;
 plot(vh1,'bx');
 saveas(gcf,'Mean_Ratio_Dicom_Corrected','jpg');    
 
 v1 = var(final_output_dicom);
-v2= var(final_output_corrected);
+v2 = var(final_output_corrected);
 v3 = var(final_output_gated);
 ratio1 = v1./v2;
 ratio2 = v1./v3;
 ratio3 = v2./v3;
-plot(ratio2,'bx');
-saveas(gcf,'Variance_Ratio_Dicom_Gated','pdf'); 
+plot(ratio1,'bx');
+name = 'Variance_Ratio_Dicom_Corrected';
+xlabel('Nummer der TFs (siehe Liste)');
+ylabel('Wert des Verhältnisses')
+saveas(gcf,name,'pdf'); 
+saveas(gcf,name,'jpg');
 close all
-%% einzelne Plots der Varianzboxen des Bartlett Tests
+plot(ratio2,'bx');
+name = 'Variance_Ratio_Dicom_Gated';
+xlabel('Nummer der TFs (siehe Liste)');
+ylabel('Wert des Verhältnisses')
+saveas(gcf,name,'pdf'); 
+saveas(gcf,name,'jpg');
+close all
+plot(ratio3,'bx');
+name = 'Variance_Ratio_Corrected_Gated';
+xlabel('Nummer der TFs (siehe Liste)');
+ylabel('Wert des Verhältnisses')
+saveas(gcf,name,'pdf'); 
+saveas(gcf,name,'jpg');
+close all
+%% All the separate plots from Bartletts Tests for all 42 features
 for n = 1:42
 bruh = [final_output_dicom(:,n),final_output_corrected(:,n),final_output_gated(:,n)];
 out = vartestn(bruh);
@@ -128,7 +145,9 @@ saveas(gcf,strcat(filename,'.jpg'));
 pause(4.0)
 close all
 end
-%% Plot P- Value of Bartlett_Test(from each of the 3 sequences) of all 42 features
+%% Plot !!P- Value!! of Bartlett_Test(from each of the 3 sequences) of all 42 features
+load('feature_Names');
+counter = 1;
 for n = 1:42
 var_PET_data = [final_output_dicom(:,n),final_output_corrected(:,n),final_output_gated(:,n)];
 [p,stats] = vartestn(var_PET_data,'TestType','Bartlett','Display','off');
@@ -137,7 +156,21 @@ chisq_vals_bart(counter) = stats.chisqstat;
 axislabel_plot = feature_Names{n,1};
 counter = counter + 1;
 end
-plot(p_vals_bart,'bx'); % Actual Plotting
-title('P-Values of Bartlett-Test of all compared TFs');
+
+axislabel_plot_chi = strcat('Chi-squared of all TFs compared');
+axislabel_plot_p = strcat('P_values of all TFs compared');
+
+plot(chisq_vals_bart,'bx') % Actual Plotting of Chi-squared
+title('Chi- Squared values of Bartlett-Test of all TFs compared with the same ones')
+ylabel('Chi-squared Value');
+xlabel('Number of Textur Feature');
+saveas(gcf, axislabel_plot_chi,'pdf');
+saveas(gcf, axislabel_plot_chi,'jpg');
+close all
+plot(p_vals_bart,'bx'); % Actual Plotting of the p-values
+title('P-Values of Bartlett-Test of all TFs compared with the same ones');
 ylabel('P-Value');
 xlabel('Number of Textur Feature');
+saveas(gcf, axislabel_plot_p,'pdf');
+saveas(gcf, axislabel_plot_p,'jpg');
+close all

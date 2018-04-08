@@ -11,7 +11,7 @@ for l = 1:42
 end
 counter = 1;
 %var_temp_dicom = feature_value_1;
-dicom_final_output = reshape(feature_value_1,14,42);
+final_output_dicom = reshape(feature_value_1,14,42);
 for o = 1:42
     for j = 2:3:42
         feature_value_2(counter) = current_Data{o,j,j};
@@ -21,7 +21,7 @@ for o = 1:42
 end
 counter = 1;
 %var_temp_corr = feature_value_2;
-corrected_final_output = reshape(feature_value_2,14,42);
+final_output_corrected = reshape(feature_value_2,14,42);
 for s = 1:42
     for d = 3:3:42
         feature_value_3(counter) = current_Data{s,d,d};
@@ -29,9 +29,8 @@ for s = 1:42
     end
     s = s + 1;
 end
-counter = 1;
 %var_temp_gated = feature_value_3;
-gated_final_output = reshape(feature_value_3,14,42);
+final_output_gated = reshape(feature_value_3,14,42);
 clearvars i j l o s d counter struct
 
 %% Various comparisons and simple tests
@@ -69,7 +68,6 @@ end
 %% Statistical Methods
 % 1. Test von DICOM- und CORRECTED- Daten
 % T-Test -> Wenn tTest versagt -> Wilcoxon
-flag_test_comp_cases = 1;
 
 % Calculate and safe of means
 mean_dicom = mean(final_output_dicom); 
@@ -92,10 +90,8 @@ variance_gated = (final_output_dicom);
 % bartlett_corr = vartestn(final_output_corr(:,:));
 % bartlett_gated = vartestn(final_output_gated(:,:));
 for n = 1:42
-here = [final_output_dicom(:,n),final_output_corrected(:,n),final_output_gated(:,n)]
+here = [final_output_dicom(:,n),final_output_corrected(:,n),final_output_gated(:,n)];
 [a,b] = vartestn(here);
-pause(30.0);
-close all;
 end
 
 %% Hier weiter: Was kann ich machen (Diff. oder Verh. etc. f?r Skedasdiz.)
