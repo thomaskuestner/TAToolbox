@@ -63,7 +63,7 @@ for q=1:length_of_TFV
 
         %for every diff-Dose-value of the TF - d_TFX
         for w=1:length_of_diff_DV
-            d_TFX(w,i)=(cell2mat(file.(name{1}).feature_data(q,1,1))-cell2mat(file.(name{1}).feature_data(q,1,w+1)));
+            d_TFX(w,i)=(cell2mat(file.(name{1}).feature_data(q,1,11))-cell2mat(file.(name{1}).feature_data(q,1,w)));
         end
     end
     for j=1:length_of_diff_DV
@@ -148,7 +148,7 @@ if plots==true
             next_figure_count=1;
             next_figure_add=1;
             figure('Name',strcat(tof_coef_var_dose,'_fig_',num2str(next_figure_add)));set(gcf,'NumberTitle','off');
-            names_delt_dos = {'d(0,50-0,75)';'d(0,75-1,00)';'d(1,00-1,25)';'d(1,25-1,50)';'d(1,50-1,75)';'d(1,75-2,00)';'d(2,00-2,25)';'d(2,00-2,25)';'d(2,25-2,50)';'d(2,50-2,75)';'d(2,75-3,00)'};
+            names_delt_dos = {'d(3,00-0,5)';'d(3,00-0,75)';'d(3,00-1,00)';'d(3,00-1,25)';'d(3,00-1,50)';'d(3,00-1,75)';'d(3,00-2,00)';'d(3,00-2,25)';'d(3,00-2,50)';'d(3,00-2,75)'};
             for q=1:length_of_TFV
                 waaaitbar=waitbar(q/length_of_TFV);
                 if next_figure_count==5

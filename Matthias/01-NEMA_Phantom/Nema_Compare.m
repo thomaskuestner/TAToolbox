@@ -80,16 +80,16 @@ for k=1:CountTF
             x_friedman(i,2)=y(i,1);
     end
     %T-Test
-        [h_t_test(k,1),p_t_test(k,1)] = ttest(x,y);
+        [h_t_test(k,1),p_t_test(k,1)] = ttest(x,y); % Nullhypthose Gruppe A und Gruppe B sind nicht unterschiedlich -> Beispiel p=0,41 -> sind nicht unterschiedlich |  p=0,01 -> sind unterschiedlich
     %Wilcoxon https://stats.stackexchange.com/questions/91034/difference-between-the-wilcoxon-rank-sum-test-and-the-wilcoxon-signed-rank-test
-        [p_wilcoxon(k,1), h_wilcoxon(k,1)] = signrank(x,y);
+        [p_wilcoxon(k,1), h_wilcoxon(k,1)] = signrank(x,y); % also Nullhypthose ist Gruppe A - Gruppe B einen Median von Null -> Gruppe A und Gruppe B sind nicht "unterschiedlich" -> Beispiel p=0.33 -> sind nicht unterschiedlich | p=0.04 -> sind unterschiedlich
     %Friedman
-        [p_friedman(k,1),tbl{k,1}] = friedman(x_friedman,2,'off');
+        [p_friedman(k,1),tbl{k,1}] = friedman(x_friedman,2,'off'); %Ranktest - Nullhypthose Gruppe A und Gruppe B sind nicht unterschiedlich -> Beispiel p=0,41 -> sind nicht unterschiedlich |  p=0,01 -> sind unterschiedlich
     %Pearson Correlation (just linear Correlation)
         % r = .10 entspricht einem schwachen Effekt
         % r = .30 entspricht einem mittleren Effekt
         % r = .50 entspricht einem starken Effekt
-        [R_Pearson(k,1),p_Pearson(k,1)] = corr(x,y,'Type','Pearson');
+        [R_Pearson(k,1),p_Pearson(k,1)] = corr(x,y,'Type','Pearson'); % (mächtiger als Spearman) linear bei p<0,05 
         R_Pearson_strong_relevant(CountTF,1)=0;R_Pearson_relevant(CountTF,1)=0;R_Pearson_unrelevant(CountTF,1)=0;
         if(abs(R_Pearson(k,1))>0.5)
             R_Pearson_relevant(k,1) = R_Pearson(k,1);
@@ -99,7 +99,7 @@ for k=1:CountTF
         else
             R_Pearson_unrelevant(k,1) = p_Pearson(k,1);
         end
-    %Spearman Correlation (linear or Ranks - Correlation)
+    %Spearman Correlation (linear or Ranks - Correlation) %Rang - linear bei p<0,05
         [R_Spearman(k,1),p_Spearman(k,1)] = corr(x,y,'Type','Spearman');
 end
 

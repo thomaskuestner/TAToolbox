@@ -6,7 +6,7 @@ cd(fileparts(tmp.Filename));
 
 %Do we need the following two lines they are hard coded?
 addpath(genpath(cd));
-addpath(genpath('/net/linse8-sn/home/s1216/doc/matlab_scripts-haha-was-zur-hölle-soll-das-hier'));
+addpath(genpath('/net/linse8-sn/home/s1216/doc/matlab_scripts_noetig'));
 
 global comp_strct
 comp_strct = struct('No',[],'features',[],'featureNames',[],'idxEndPORTS',[],'ROI',[],'ROINames',[],'data',[],'plots',[]);
