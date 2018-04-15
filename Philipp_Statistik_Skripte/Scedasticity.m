@@ -8,7 +8,7 @@ if type == 'bartlett'
         var_safe_temporary = [dicom(:,n),corrected(:,n),gated(:,n)];
         p_value(counter) = vartestn(var_safe_temporary);
         var_names = feature_Names{n,1};
-        path = 'C:\Users\Philipp\Documents\02_University\Master (Medizintechnik)\Studienarbeit\06_Plots\Bartlett_einzelne_Features';
+        path = 'C:\Users\Philipp\Documents\02_University\Master (Medizintechnik)\Studienarbeit\06_Plots\Bartlett_einzelne_Features_final';
         saveas(gcf,fullfile(path,var_names),'png');
         close all;
         counter = counter + 1;

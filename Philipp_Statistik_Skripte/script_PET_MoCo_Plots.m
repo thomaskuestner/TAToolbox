@@ -136,15 +136,7 @@ ylabel('Wert des Verhältnisses')
 saveas(gcf,name,'pdf'); 
 saveas(gcf,name,'jpg');
 close all
-%% All the separate plots from Bartletts Tests for all 42 features
-for n = 1:42
-bruh = [final_output_dicom(:,n),final_output_corrected(:,n),final_output_gated(:,n)];
-out = vartestn(bruh);
-filename = strcat(feature_Names{n,:},' mit dem P-Wert = ',num2str(p_vals_bart(n)));
-saveas(gcf,strcat(filename,'.jpg')); 
-pause(4.0)
-close all
-end
+
 %% Plot !!P- Value!! of Bartlett_Test(from each of the 3 sequences) of all 42 features
 load('feature_Names');
 counter = 1;

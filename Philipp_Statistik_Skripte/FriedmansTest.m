@@ -1,6 +1,6 @@
 function [p_friedman] = FriedmansTest(dicom,corrected,gated)
 load('feature_Names');
-path = 'C:\Users\Philipp\Documents\02_University\Master (Medizintechnik)\Studienarbeit\06_Plots\Friedman_final';
+path = 'C:\Users\Philipp\Documents\02_University\Master (Medizintechnik)\Studienarbeit\06_Plots\02_Friedman_final';
 counter = 1;
 for n = 1:42
 temp_save = [dicom(:,n),corrected(:,n),gated(:,n)];
