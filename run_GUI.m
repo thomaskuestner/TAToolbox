@@ -14,7 +14,7 @@ clear features;
 % ----- create GUI ------------
 % -----------------------------
 handles.f = figure('Visible','Off','units','pixel','Position',[0 50 1300 570]);
-handles.f.Name = 'MainGUI';
+handles.f.Name = 'TFCV';
 handles.f.CloseRequestFcn = @saveclosereq;
 % create the three main tabs %%% Here we can insert our augmentations
 handles.tgroup = uitabgroup('Parent', handles.f);
