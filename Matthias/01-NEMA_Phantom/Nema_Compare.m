@@ -13,7 +13,8 @@ differ_mes_vs_sim(CountTF,countvalue_pairs)=0;
 diff_is_getting_greater(CountTF,1)=0;
 for i=1:countvalue_pairs
     for k=1:CountTF
-        differ_mes_vs_sim(k,i)=(CA1{k,i+6}-CA1{k,i+1})/CA1{k,i+1};
+        absolut_differ_mes_vs_sim(k,i)=(CA1{k,i+6}-CA1{k,i+1});
+        differ_mes_vs_sim(k,i)=absolut_differ_mes_vs_sim(k,i)/CA1{k,i+1};
     end
 end
 
@@ -74,11 +75,13 @@ hold off;
 for k=1:CountTF
     %Create Compare Matrix
     for i=1:((size(CA1,2)-1)/2)-1
-            x(i,1)=CA1{k,i+2};
-            y(i,1)=CA1{k,i+7};
+            x(i,1)=CA1{k,i+2}; x_log(i,1)= abs(log(x(i,1)));
+            y(i,1)=CA1{k,i+7}; y_log(i,1)= abs(log(y(i,1)));
             x_friedman(i,1)=x(i,1);
             x_friedman(i,2)=y(i,1);
     end
+    %Normaldistribution Kolmogorow-Smirnow-Test
+    [h_nd_test(k,1),p_nd_test(k,1)]=kstest(absolut_differ_mes_vs_sim(k,:));
     %T-Test
         [h_t_test(k,1),p_t_test(k,1)] = ttest(x,y); % Nullhypthose Gruppe A und Gruppe B sind nicht unterschiedlich -> Beispiel p=0,41 -> sind nicht unterschiedlich |  p=0,01 -> sind unterschiedlich
     %Wilcoxon https://stats.stackexchange.com/questions/91034/difference-between-the-wilcoxon-rank-sum-test-and-the-wilcoxon-signed-rank-test
@@ -101,36 +104,58 @@ for k=1:CountTF
         end
     %Spearman Correlation (linear or Ranks - Correlation) %Rang - linear bei p<0,05
         [R_Spearman(k,1),p_Spearman(k,1)] = corr(x,y,'Type','Spearman');
+    %log-Data%%%%%%%%%%%%%log-Data %%%%%%%%%%%%% log-Data
+    %Pearson Correlation (just linear Correlation)
+        [R_Pearson_log(k,1),p_Pearson_log(k,1)] = corr(x_log,y_log,'Type','Pearson'); % (mächtiger als Spearman) linear bei p<0,05 
+        R_Pearson_strong_relevant(CountTF,1)=0;R_Pearson_relevant(CountTF,1)=0;R_Pearson_unrelevant(CountTF,1)=0;
+        if(abs(R_Pearson_log(k,1))>0.5)
+            R_Pearson_relevant_log(k,1) = R_Pearson_log(k,1);
+            if (p_Pearson(k,1)<=0.05)
+                R_Pearson_strong_relevant_log(k,1)=R_Pearson_log(k,1);
+            end
+        else
+            R_Pearson_unrelevant_log(k,1) = p_Pearson(k,1);
+        end
+    %Spearman Correlation (linear or Ranks - Correlation) %Rang - linear bei p<0,05
+        [R_Spearman_log(k,1),p_Spearman_log(k,1)] = corr(x_log,y_log,'Type','Spearman');
+    %log-Data%%%%%%%%%%%%%log-Data %%%%%%%%%%%%% log-Data
 end
 
 
 
 
 %% Graphical Output
-% 
-% for k=1:CountTF
-%      for i=1:((size(CA1,2)-1)/2)-1
-%             x_plot(i,1)=CA1{k,i+2};
-%             y_plot(i,1)=CA1{k,i+7};
-%      end
-%     h = figure;
-%     plot(x_plot(:,1),y_plot(:,1),'bo');
-%     filename_plot=char(CA1{k,1}(1,1));
-%     title(filename_plot);
-%     refline(1);
-%     grid on;
-%     set(h,'Units','Inches');
-%     pos = get(h,'Position');
-%     set(h,'PaperPositionMode','Auto','PaperUnits','Inches','PaperSize',[pos(3), pos(4)])
-%     text_legend='measured';
-%     text_legend=strcat(text_legend,'\n','t-Test P Wert = ',num2str(p_t_test(k,1)));
-%     text_legend=strcat(text_legend,'\n','Wilcoxon signrank P Wert = ',num2str(p_wilcoxon(k,1)));
-%     text_legend=strcat(text_legend,'\n','Friedman P Wert = ',num2str(p_friedman(k,1)));
-%     text_legend=strcat(text_legend,'\n','Pearson R Wert = ',num2str(R_Pearson(k,1)));   
-%     text_legend=strcat(text_legend,'\n','Pearson P Wert = ',num2str(p_Pearson(k,1))); 
-%     text_legend=strcat(text_legend,'\n','Spearman R Wert = ',num2str(R_Spearman(k,1)));
-%     text_legend=sprintf(strcat(text_legend,'\n','Spearman P Wert = ',num2str(p_Spearman(k,1))));
-%     xlabel(text_legend);ylabel('simulated');
-%     print(h,filename_plot,'-dpdf','-r0')
-% end
+
+for k=1:CountTF
+     for i=1:((size(CA1,2)-1)/2)-1
+            x_plot(i,1)=CA1{k,i+2};
+            y_plot(i,1)=CA1{k,i+7};
+     end
+    h = figure;
+    plot(x_plot(:,1),y_plot(:,1),'bo');
+    filename_plot=char(CA1{k,1}(1,1));
+    title(filename_plot);
+    refline(1);
+    grid on;
+    set(h,'Units','Inches');
+    pos = get(h,'Position');
+    set(h,'PaperPositionMode','Auto','PaperUnits','Inches','PaperSize',[pos(3), pos(4)])
+    text_legend='measured';
+    text_legend=strcat(text_legend,'\n','K-Smirnov-Test p-Wert = ',num2str(p_nd_test(k,1)));
+    text_legend=strcat(text_legend,'   K-Smirnov-Test H-Wert = ',num2str(h_nd_test(k,1)));
+    text_legend=strcat(text_legend,'\n','t-Test p-Wert = ',num2str(p_t_test(k,1)));
+    text_legend=strcat(text_legend,'\n','Wilcoxon signrank p-Wert = ',num2str(p_wilcoxon(k,1)));
+    text_legend=strcat(text_legend,'\n','Friedman p-Wert = ',num2str(p_friedman(k,1)));
+    text_legend=strcat(text_legend,'\n','Pearson R Wert = ',num2str(R_Pearson(k,1)));   
+    text_legend=strcat(text_legend,'\n','Pearson p-Wert = ',num2str(p_Pearson(k,1))); 
+    text_legend=strcat(text_legend,'\n','Spearman R Wert = ',num2str(R_Spearman(k,1)));
+    text_legend=sprintf(strcat(text_legend,'\n','Spearman p-Wert = ',num2str(p_Spearman(k,1))));
+    %Log_data
+    text_legend=strcat(text_legend,'\n','Log Pearson R Wert = ',num2str(R_Pearson_log(k,1)));   
+    text_legend=strcat(text_legend,'\n','Log Pearson p-Wert = ',num2str(p_Pearson_log(k,1))); 
+    text_legend=strcat(text_legend,'\n','Log Spearman R Wert = ',num2str(R_Spearman_log(k,1)));
+    text_legend=sprintf(strcat(text_legend,'\n','Log Spearman p-Wert = ',num2str(p_Spearman_log(k,1))));
+    xlabel(text_legend);ylabel('simulated');
+    print(h,filename_plot,'-dpdf','-r0')
+end
 

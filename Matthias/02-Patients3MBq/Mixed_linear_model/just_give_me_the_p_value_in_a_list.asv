@@ -1,5 +1,0 @@
-for q=1:42
-    filename=strcat('ROI1_lme_TF_',num2str(q),'.mat');
-    load('ROI1_lme_TF_31.mat')
-    A(q)=lme_TF
-end
