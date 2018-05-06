@@ -18,8 +18,7 @@ roi_sizes=rawdata.data.all_Patients_ROI_sizes;
 roi_bp=boxplot(roi_sizes,'Whisker',1,'Labels','-');
 median_ROIX = median(roi_sizes);
 std_ROIX = round(std(roi_sizes),0);
-outlier_ROIX = findobj(roi_bp,'Tag','Outliers');outlier_ROIX = get(outlier_ROIX,'YData'); 
-num_outlier_ROIX=length(outlier_ROIX);
+outlier_ROIX = findobj(roi_bp,'Tag','Outliers');outlier_ROIX = get(outlier_ROIX,'YData'); n
 grid on;
 grid minor;
 
@@ -27,17 +26,19 @@ if ROI==1
     ylim([1800 7500]);
     set(gca,'YTick',0:200:10000);
     title('ROI 1 - rechter Leberlappen')
+    x_text_label=strcat('Median = ',num2str(median_ROIX), ' Voxel');
+    x_text_label=sprintf(strcat(x_text_label,'\r\n','Standardabweichung = ', num2str(std_ROIX), ' Voxel'));
+    xlabel(x_text_label);
 else
     ylim([50 300]);
     set(gca,'YTick',0:10:500);
     title('ROI 2 - linker Leberlappen')
+    x_text_label=strcat('Median = ',num2str(median_ROIX), ' Voxel');
+    x_text_label=sprintf(strcat(x_text_label,'\r\n','Standardabweichung = ', num2str(std_ROIX), ' Voxel'));
+    xlabel(x_text_label);
 end
-x_text_label=strcat('Median = ',num2str(median_ROIX), ' Voxel');
-x_text_label=strcat(x_text_label,'\r\n','Standardabweichung = ', num2str(std_ROIX), ' Voxel');
-x_text_label=strcat(x_text_label,'\r\n','Ausreiﬂeranzahl = ', num2str(num_outlier_ROIX));
-x_text_label=sprintf(x_text_label);
-xlabel(x_text_label);
 end
+
 set(h,'Units','Inches');
 pos = get(h,'Position');
 %set(h,'position',[pos(1:2)/4 pos(3:4)*5])

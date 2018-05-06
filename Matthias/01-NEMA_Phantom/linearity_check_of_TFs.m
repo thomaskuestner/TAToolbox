@@ -69,3 +69,37 @@ p_Spearman_mes_rel_sqrt=find(p_Spearman_mes_sqrt<0.05); p_Spearman_sim_rel_sqrt=
 %         else
 %             R_Pearson_unrelevant(k,1) = p_Pearson(k,1);
 %         end
+
+% %% Graphical Output - single plot
+% fontsizelegend = 12;
+% mark_size = 8;
+% colorstring = 'kbmr';
+% glcm_entropy_id=9;
+%     h = figure;
+%     % unchanged data
+%     ax1=subplot(2,1,1);
+%     hold on;
+%     plot(mes(1,1),y_plot(1,1),'bo','MarkerSize',mark_size,'Color', colorstring(1));
+%     plot(mes(2,1),y_plot(2,1),'bo','MarkerSize',mark_size,'Color', colorstring(2));
+%     plot(mes(3,1),y_plot(3,1),'bo','MarkerSize',mark_size,'Color', colorstring(3));
+%     plot(mes(4,1),y_plot(4,1),'bo','MarkerSize',mark_size,'Color', colorstring(4));
+%     hold off;
+%     filename_plot=char(CA1{9,1}(1,1));
+%     title(filename_plot);
+%     refline(1);
+%     grid on;   
+%     text_legend='measured';
+%     text_legend=strcat(text_legend,'\n \n','K-Smirnov-Test p-Wert = ',num2str(p_nd_test(k,1)));
+%     text_legend=strcat(text_legend,'   K-Smirnov-Test H-Wert = ',num2str(h_nd_test(k,1)));
+%     text_legend=strcat(text_legend,'\n \n','t-Test p-Wert = ',num2str(p_t_test(k,1)));
+%     text_legend=strcat(text_legend,'     Wilcoxon signrank p-Wert = ',num2str(p_wilcoxon(k,1)));
+%     text_legend=strcat(text_legend,'     Friedman p-Wert = ',num2str(p_friedman(k,1)));
+%     text_legend=strcat(text_legend,'\n \n','Pearson R Wert = ',num2str(R_Pearson(k,1)));   
+%     text_legend=strcat(text_legend,'   Pearson p-Wert = ',num2str(p_Pearson(k,1))); 
+%     text_legend=strcat(text_legend,'\n','Spearman R Wert = ',num2str(R_Spearman(k,1)));
+%     %real legend of dots
+%     real_fig_legend=legend('25.0% A','12.5% A','6.25% A','3.13% A','y=x','Location','best');
+%     %end of text_legend
+%     text_legend=sprintf(strcat(text_legend,'   Spearman p-Wert = ',num2str(p_Spearman(k,1))));
+%     own_xlabel=xlabel(text_legend);ylabel('simulated');
+%     set(own_xlabel, 'FontSize', fontsizelegend) 
