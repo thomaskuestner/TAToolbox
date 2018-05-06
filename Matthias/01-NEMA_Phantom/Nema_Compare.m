@@ -69,14 +69,13 @@ end
 grid on;
 hold off;
 
-
 %% Statistcal-Tests on the origin data - always paired because same simulation was applied on data
 %Paired T-Test
 for k=1:CountTF
     %Create Compare Matrix
     for i=1:((size(CA1,2)-1)/2)-1
-            x(i,1)=CA1{k,i+2}; x_log(i,1)= abs(log(x(i,1)));
-            y(i,1)=CA1{k,i+7}; y_log(i,1)= abs(log(y(i,1)));
+            x(i,1)=CA1{k,i+2}; x_log(i,1)= abs(log(x(i,1))); x_sqrt(i,1)=sqrt(abs(x(i,1)));
+            y(i,1)=CA1{k,i+7}; y_log(i,1)= abs(log(y(i,1))); y_sqrt(i,1)=sqrt(abs(y(i,1)));
             x_friedman(i,1)=x(i,1);
             x_friedman(i,2)=y(i,1);
     end
@@ -104,10 +103,11 @@ for k=1:CountTF
         end
     %Spearman Correlation (linear or Ranks - Correlation) %Rang - linear bei p<0,05
         [R_Spearman(k,1),p_Spearman(k,1)] = corr(x,y,'Type','Spearman');
-    %log-Data%%%%%%%%%%%%%log-Data %%%%%%%%%%%%% log-Data
+    
+ %log-Data%%%%%%%%%%%%%log-Data %%%%%%%%%%%%% log-Data
     %Pearson Correlation (just linear Correlation)
         [R_Pearson_log(k,1),p_Pearson_log(k,1)] = corr(x_log,y_log,'Type','Pearson'); % (mächtiger als Spearman) linear bei p<0,05 
-        R_Pearson_strong_relevant(CountTF,1)=0;R_Pearson_relevant(CountTF,1)=0;R_Pearson_unrelevant(CountTF,1)=0;
+        R_Pearson_strong_relevant_log(CountTF,1)=0;R_Pearson_relevant_log(CountTF,1)=0;R_Pearson_unrelevant_log(CountTF,1)=0;
         if(abs(R_Pearson_log(k,1))>0.5)
             R_Pearson_relevant_log(k,1) = R_Pearson_log(k,1);
             if (p_Pearson(k,1)<=0.05)
@@ -119,43 +119,94 @@ for k=1:CountTF
     %Spearman Correlation (linear or Ranks - Correlation) %Rang - linear bei p<0,05
         [R_Spearman_log(k,1),p_Spearman_log(k,1)] = corr(x_log,y_log,'Type','Spearman');
     %log-Data%%%%%%%%%%%%%log-Data %%%%%%%%%%%%% log-Data
+    
+ %sqrt-Data%%%%%%%%%%%%%sqrt-Data%%%%%%%%%%%%%sqrt-Data
+    %Pearson Correlation (just linear Correlation)
+        [R_Pearson_sqrt(k,1),p_Pearson_sqrt(k,1)] = corr(x,y_sqrt,'Type','Pearson'); % (mächtiger als Spearman) linear bei p<0,05 
+        R_Pearson_strong_relevant_sqrt(CountTF,1)=0;R_Pearson_relevant_sqrt(CountTF,1)=0;R_Pearson_unrelevant_sqrt(CountTF,1)=0;
+        if(abs(R_Pearson_sqrt(k,1))>0.5)
+            R_Pearson_relevant_sqrt(k,1) = R_Pearson_sqrt(k,1);
+            if (p_Pearson(k,1)<=0.05)
+                R_Pearson_strong_relevant_sqrt(k,1)=R_Pearson_sqrt(k,1);
+            end
+        else
+            R_Pearson_unrelevant_sqrt(k,1) = p_Pearson(k,1);
+        end
+    %Spearman Correlation (linear or Ranks - Correlation) %Rang - linear bei p<0,05
+        [R_Spearman_sqrt(k,1),p_Spearman_sqrt(k,1)] = corr(x,y_sqrt,'Type','Spearman');
+    %sqrt-Data%%%%%%%%%%%%%sqrt-Data%%%%%%%%%%%%%sqrt-Data
 end
 
-
-
-
 %% Graphical Output
-
+fontsizelegend = 12;
+mark_size = 8;
+colorstring = 'kbmr';
 for k=1:CountTF
      for i=1:((size(CA1,2)-1)/2)-1
-            x_plot(i,1)=CA1{k,i+2};
-            y_plot(i,1)=CA1{k,i+7};
+            x_plot(i,1)=CA1{k,i+2}; x_plot_log(i,1)=abs(log(x_plot(i,1))); x_plot_sqrt(i,1)=sqrt(x_plot(i,1));
+            y_plot(i,1)=CA1{k,i+7}; y_plot_log(i,1)=abs(log(y_plot(i,1))); y_plot_sqrt(i,1)=sqrt(y_plot(i,1));
      end
     h = figure;
-    plot(x_plot(:,1),y_plot(:,1),'bo');
+    % unchanged data
+    %ax1=subplot(3,1,1);
+    hold on;
+    plot(x_plot(1,1),y_plot(1,1),'bo','MarkerSize',mark_size,'Color', colorstring(1));
+    plot(x_plot(2,1),y_plot(2,1),'bo','MarkerSize',mark_size,'Color', colorstring(2));
+    plot(x_plot(3,1),y_plot(3,1),'bo','MarkerSize',mark_size,'Color', colorstring(3));
+    plot(x_plot(4,1),y_plot(4,1),'bo','MarkerSize',mark_size,'Color', colorstring(4));
+    hold off;
     filename_plot=char(CA1{k,1}(1,1));
     title(filename_plot);
     refline(1);
-    grid on;
+    grid on;   
+    text_legend='measured';
+    text_legend=strcat(text_legend,'\n \n','K-Smirnov-Test p-Wert = ',num2str(p_nd_test(k,1)));
+    text_legend=strcat(text_legend,'   K-Smirnov-Test H-Wert = ',num2str(h_nd_test(k,1)));
+    text_legend=strcat(text_legend,'\n \n','t-Test p-Wert = ',num2str(p_t_test(k,1)));
+    text_legend=strcat(text_legend,'     Wilcoxon signrank p-Wert = ',num2str(p_wilcoxon(k,1)));
+    text_legend=strcat(text_legend,'     Friedman p-Wert = ',num2str(p_friedman(k,1)));
+    text_legend=strcat(text_legend,'\n \n','Pearson R Wert = ',num2str(R_Pearson(k,1)));   
+    text_legend=strcat(text_legend,'   Pearson p-Wert = ',num2str(p_Pearson(k,1))); 
+    text_legend=strcat(text_legend,'\n','Spearman R Wert = ',num2str(R_Spearman(k,1)));
+    %real legend of dots
+    real_fig_legend=legend('25.0% A','12.5% A','6.25% A','3.13% A','y=x','Location','best');
+    %end of text_legend
+    text_legend=sprintf(strcat(text_legend,'   Spearman p-Wert = ',num2str(p_Spearman(k,1))));
+    own_xlabel=xlabel(text_legend);ylabel('simulated');
+    set(own_xlabel, 'FontSize', fontsizelegend) 
+%     %Log data -------------- %%%%%%%%%%%%%%%%%
+%     ax2=subplot(3,1,2);
+%     plot(x_plot_log(:,1),y_plot_log(:,1),'bo');
+%     filename_plot=char(CA1{k,1}(1,1));
+%     title(strcat(filename_plot,' Log'));
+%     %refline(1);
+%     grid on;
+%     text_legend='measured';
+%     text_legend=strcat(text_legend,'\n \n','Log Pearson R Wert = ',num2str(R_Pearson_log(k,1)));   
+%     text_legend=strcat(text_legend,'   Log Pearson p-Wert = ',num2str(p_Pearson_log(k,1))); 
+%     text_legend=strcat(text_legend,'\n','Log Spearman R Wert = ',num2str(R_Spearman_log(k,1)));
+%     text_legend=sprintf(strcat(text_legend,'   Log Spearman p-Wert = ',num2str(p_Spearman_log(k,1))));
+%     own_xlabel=xlabel(text_legend);ylabel('simulated');
+%     set(own_xlabel, 'FontSize', fontsizelegend) 
+%     %sqrt data -------------- %%%%%%%%%%%%%%%%%
+%     ax2=subplot(3,1,3);
+%     plot(x_plot(:,1),y_plot_sqrt(:,1),'bo');
+%     filename_plot=char(CA1{k,1}(1,1));
+%     title(strcat(filename_plot,' Sqrt'));
+%     %refline(1);
+%     grid on;
+%     text_legend='measured';
+%     text_legend=strcat(text_legend,'\n \n','Sqrt Pearson R Wert = ',num2str(R_Pearson_sqrt(k,1)));   
+%     text_legend=strcat(text_legend,'   Sqrt Pearson p-Wert = ',num2str(p_Pearson_sqrt(k,1))); 
+%     text_legend=strcat(text_legend,'\n','Sqrt Spearman R Wert = ',num2str(R_Spearman_sqrt(k,1)));
+%     text_legend=sprintf(strcat(text_legend,'   Sqrt Spearman p-Wert = ',num2str(p_Spearman_sqrt(k,1))));
+%     own_xlabel=xlabel(text_legend);ylabel('simulated');
+%     set(own_xlabel, 'FontSize', fontsizelegend) 
+    %pdf-setttings
     set(h,'Units','Inches');
     pos = get(h,'Position');
-    set(h,'PaperPositionMode','Auto','PaperUnits','Inches','PaperSize',[pos(3), pos(4)])
-    text_legend='measured';
-    text_legend=strcat(text_legend,'\n','K-Smirnov-Test p-Wert = ',num2str(p_nd_test(k,1)));
-    text_legend=strcat(text_legend,'   K-Smirnov-Test H-Wert = ',num2str(h_nd_test(k,1)));
-    text_legend=strcat(text_legend,'\n','t-Test p-Wert = ',num2str(p_t_test(k,1)));
-    text_legend=strcat(text_legend,'\n','Wilcoxon signrank p-Wert = ',num2str(p_wilcoxon(k,1)));
-    text_legend=strcat(text_legend,'\n','Friedman p-Wert = ',num2str(p_friedman(k,1)));
-    text_legend=strcat(text_legend,'\n','Pearson R Wert = ',num2str(R_Pearson(k,1)));   
-    text_legend=strcat(text_legend,'\n','Pearson p-Wert = ',num2str(p_Pearson(k,1))); 
-    text_legend=strcat(text_legend,'\n','Spearman R Wert = ',num2str(R_Spearman(k,1)));
-    text_legend=sprintf(strcat(text_legend,'\n','Spearman p-Wert = ',num2str(p_Spearman(k,1))));
-    %Log_data
-    text_legend=strcat(text_legend,'\n','Log Pearson R Wert = ',num2str(R_Pearson_log(k,1)));   
-    text_legend=strcat(text_legend,'\n','Log Pearson p-Wert = ',num2str(p_Pearson_log(k,1))); 
-    text_legend=strcat(text_legend,'\n','Log Spearman R Wert = ',num2str(R_Spearman_log(k,1)));
-    text_legend=sprintf(strcat(text_legend,'\n','Log Spearman p-Wert = ',num2str(p_Spearman_log(k,1))));
-    xlabel(text_legend);ylabel('simulated');
-    print(h,filename_plot,'-dpdf','-r0')
+    %set(h,'position',[pos(1:2)/4 pos(3:4)*5])
+    set(h, 'Units', 'normalized', 'Position', [0.3, 0.2, 0.5, 0.5]);
+    %set(h,'PaperPositionMode','Auto','PaperUnits','Inches','PaperSize',[pos(3), pos(4)])
+    print(h,filename_plot,'-bestfit','-dpdf','-r0') %,'-bestfit'
 end
-
