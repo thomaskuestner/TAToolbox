@@ -1,6 +1,7 @@
 %%Prework
 %filename_to_extract=uigetfile;
 clear all;clc;
+load('Zuordnung-TFs-to-Number.mat');
 filename_to_extract='summarized_data_of_all_Patients_ROI2.mat';
 file_to_extract=load(filename_to_extract);
 file=file_to_extract.data;
@@ -31,6 +32,6 @@ for q=1:length_of_TFV
     %calculate lme and save the result
     TFX=cell2dataset(TFX);
     lme_TFX = fitlme(TFX,'TF_Value ~ 1 + StrengthOfDose + (1|Identification_ID)');
-    outputname=strcat('ROI2_lme_TF_',num2str(q));
+    outputname=strcat('ROI2_lme_TF_',num2TF_assignment(q));
     save(outputname,'lme_TFX');
 end

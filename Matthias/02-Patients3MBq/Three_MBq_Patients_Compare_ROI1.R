@@ -55,7 +55,7 @@ for(i in 1:42){
   vv<-temp$value
   iqr<-(quantile(vv, 0.75) -  quantile(vv, 0.25))
   
-  temp<-unique(temp[which(vv> quantile(vv, 0.75)+1.5*iqr  | vv < quantile(vv, 0.25) - 1.5*iqr),"PID"])
+  temp<-unique(temp[which(vv> quantile(vv, 0.75)+1.0*iqr  | vv < quantile(vv, 0.25) - 1.0*iqr),"PID"])
   outlierdf<-rbind(outlierdf, data.frame(TF=rep(i, length(outliers)), PID=outliers))
 }
 
