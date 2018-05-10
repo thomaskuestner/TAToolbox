@@ -17,14 +17,16 @@ clear all;clc; close all;
 %% Prework
 space=' ';
 doublespace='  ';
+
 if ROIX == 1
     filename_to_extract='summarized_data_of_all_Patients_ROI1.mat';
     if outlier_included==true
         number_of_patient=[01,03,06,09,10,13,14,17,18,19,20,21,22,24,25,26,27,28,29]; %complete dataset 3MBqpatients
         smallerthen10=4; %to be improved
     else
-        number_of_patient=[01,03,06,10,13,14,17,18,19,20,22,24,25,26,27,28,29];
-        smallerthen10=3; %to be improved
+        % first
+        number_of_patient=[01,03,06,09,10,13,14,17,19,20,25,26,27,28,29]; %
+        smallerthen10=4; %to be improved
     end
     
 else %ROIX=2
@@ -33,8 +35,8 @@ else %ROIX=2
         number_of_patient=[01,03,06,09,10,13,14,17,18,19,20,21,22,24,25,26,27,28,29]; %complete dataset 3MBqpatients
         smallerthen10=4; %to be improved
     else
-        number_of_patient=[01,03,06,09,10,14,17,18,19,20,21,24,25,26,27,28,29];
-        smallerthen10=4; %to be improved
+        number_of_patient=[01,03,06,10,14,17,19,20,21,24,25,26,27,28,29];
+        smallerthen10=3; %to be improved
     end
 end
 
@@ -82,15 +84,15 @@ for q=1:length_of_TFV
 end
 % savefile yes or no?
 if savefile==true
-    save('ROI1_comp_coef_var_TFX','TF');
+    save('ROI2_comp_coef_var_TFX','TF');
 end
 
 
 %% plots
 if outlier_included==true
-    add2figure_title_name=' with outlier (ROI-Size)';
+    add2figure_title_name=' with outlier ()';
 else
-    add2figure_title_name=' without outlier (ROI-Size)';
+    add2figure_title_name=' without the strongest 4 outlier';
 end
 if ROIX==1
     rOIname=' ROI1_ ';
