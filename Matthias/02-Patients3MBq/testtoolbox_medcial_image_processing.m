@@ -1,1 +1,0 @@
-test=niftiread('Maske 100.nii');
