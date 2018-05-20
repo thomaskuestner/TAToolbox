@@ -1,4 +1,0 @@
-1) levene test auf je die drei features anwenden und nicht auf alle 42 features in den 3 aufnahmesequnezen!
-1*) Hierfuer probieren ob und wie daten auf die Weise in 1) vorgeschlagen von varestn verarbeitet werden (originaldaten oder varianzen einlesen)
-2) Thomas fragen ob und verhaeltnisse und Differenzen zwischen den 3 Populationen wichtig sind/ bzw interpretiert werden koennen und sollen
-3) Friedmann test auf alle drei populationen anwenden
