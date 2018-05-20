@@ -1,6 +1,0 @@
-[dImg, infoImg] = fReadDICOM(uigetfile()); % Get File
-[lMask, infoMask] = fReadDICOM(uigetfile()); % Get Mask
-
-if(infoMask.PerFrameFunctionalGroupsSequence(1).Item_1(1).PlanePositionSequence.Item_1.ImagePositionPatient(3) ~= infoImg(1).STag.SliceLocation)
-   lMask = flipdim(lMask,3);
-end
