@@ -4,7 +4,7 @@ and the intending was never a versatile, useable and robust usage.
 My advice is to do your own statistical script and just copy some code lines from this files.
 *********!!!!*********
 
-All of these scripts are just programmed as workarounds or litte step helper. They proably not important for you.
+All of these scripts are just programmed as workarounds or little step helper. They proably not important for you.
 You may find some useful lines in it.
 
 1.
