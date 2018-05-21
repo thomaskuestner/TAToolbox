@@ -4,7 +4,7 @@ clear all;clc; close all;
     %which ROI dou you need 1 or 2?
         ROIX=2;
    %do you want outliers? 
-        outlier_included=false;
+        outlier_included=false; % 4 "worst (TF-value-outlier)" datasets will be excluded
    %do you want plots?  
         plots=true;
         aspdf=true;

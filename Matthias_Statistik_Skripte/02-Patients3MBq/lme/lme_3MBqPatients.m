@@ -1,7 +1,7 @@
 clear all;clc;
 %% choose
-ROIX=2;
-outlier_included=false; %outlier are the worst four ones in ranking
+ROIX=1;
+outlier_included=false; %outlier are the worst 4 ones in ranking
 transformed_by_log=true;
 %%%%%%%%%
 
@@ -71,7 +71,9 @@ for q=1:length_of_TFV
             outputname=strcat('ROI2_lme_TF_log_',num2TF_assignment(q));
     end
 
+    %output  .mat-files
     save(outputname,'lme_TFX');
+    %output  plot-files
 %     h= figure(q);
 %     set(h,'units','normalized','outerposition',[0 0 1 1]);
 %     set(h,'Name',num2TF_assignment(q));
