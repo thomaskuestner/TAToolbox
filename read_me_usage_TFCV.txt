@@ -16,5 +16,4 @@
 16. Give a name to your calculated dataset and click ok
 17. Click "yes" give a name to the .mat file in which the dataset is stored
 (18. Sometimes the TFCV is buggy and you have to do the step 16. and 17. more than once)
-
-
+19. you should do the statistics with your own scripts, therefore it is recommendable to extract the relevant data from the struct (thesis lindner) and save it in a own small file
