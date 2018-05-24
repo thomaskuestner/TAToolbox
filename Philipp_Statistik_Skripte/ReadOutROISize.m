@@ -1,4 +1,4 @@
-function [dicom_ROI_sizes,corr_ROI_sizes,gated_ROI_sizes] = ReadOutROISize()
+function [dicom_ROI_sizes,corr_ROI_sizes,gated_ROI_sizes,var_all_sizes] = ReadOutROISize()
 files_to_extract = uigetfile_n_dir();
 number_of_files_to_extract = length(files_to_extract);
 name={};
@@ -19,4 +19,5 @@ for p=1:number_of_files_to_extract
     gated_ROI_sizes(counter) = length(pos_gated_indices); % = Matrix/Vektor mit ROI-Voxal-Anzahl
     counter = counter + 1;
 end
+var_all_sizes = [dicom_ROI_sizes,corr_ROI_sizes,gated_ROI_sizes];
 end
