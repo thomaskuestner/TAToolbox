@@ -1,7 +1,7 @@
 %% prework
 clear all;clc;
 %% UI
-which_outlier='TF_Value'; %'TF_Value' or 'ROI_Size'
+which_outlier='ROI_Size'; %'TF_Value' or 'ROI_Size'
 
 %% ROI Sizes
 switch which_outlier
@@ -17,7 +17,7 @@ switch which_outlier
         end
         ax1=subplot(1,2,i);
         hold on;
-        roi_sizes=rawdata.data.all_Patients_ROI_sizes;
+        roi_sizes=rawdata.data.all_Patients_ROI_sizes*15.964;
         roi_bp=boxplot(roi_sizes,'Whisker',1,'Labels','-');
         median_ROIX = median(roi_sizes);
         mean_ROIX=mean(roi_sizes);
@@ -32,23 +32,24 @@ switch which_outlier
         grid minor;
 
         if ROI==1
-            ylim([1800 7500]);
-            set(gca,'YTick',0:500:10000);
+            ylim([1800*15.96 7500*15.96]);
+            set(gca,'YTick',0:500*15.96:10000*15.96);
             title('ROI 1 - rechter Leberlappen')
         else
-            ylim([50 300]);
-            set(gca,'YTick',0:20:500);
+            ylim([50*15.96 300*15.96]);
+            set(gca,'YTick',0:20*15.96:500*15.96);
             title('ROI 2 - linker Leberlappen')
         end
-        x_text_label=strcat('Median = ',num2str(median_ROIX), ' Voxel');
-        x_text_label=strcat(x_text_label,'\r\n','Standardabweichung = ', num2str(std_ROIX), ' Voxel');
+        x_text_label=strcat('Median = ',num2str(median_ROIX), ' mm^3');
+        x_text_label=strcat(x_text_label,'\r\n','Standardabweichung = ', num2str(std_ROIX), ' mm^3');
         x_text_label=strcat(x_text_label,'\r\n','Variationskoeffizient = ', num2str(var_coeff_ROIX));
         x_text_label=strcat(x_text_label,'\r\n','Ausreiﬂeranzahl = ', num2str(num_outlier_ROIX));
         x_text_label=sprintf(x_text_label);
         xlabel(x_text_label);
         end 
-        print(h,'Outlier_Boxplot_ROI_Sizes','-dpng','-r800')
-        %print(h,filename_plot,'-bestfit','-dpdf','-r0') % ,'-bestfit'
+        set(h, 'Units', 'normalized', 'Position', [0.2, 0.1, 0.7, 0.7]); 
+        %print(h,'Outlier_Boxplot_ROI_Sizes','-dpng','-r800')
+        print(h,filename_plot,'-bestfit','-dpdf','-r0') % ,'-bestfit'
 
         %%%%%% TF-Value outliers%%%%%%
          case 'TF_Value'
@@ -129,6 +130,7 @@ switch which_outlier
 %              end
 %              count_number_of_outlier{i}=count_your_depts;
 %              clear count_your_depts;
+
             end   
              
     otherwise
