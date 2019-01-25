@@ -297,7 +297,11 @@ function loadStudy(~,~)
     
     for i=1:length(dir)
         temp = load(dir{i});
-        bekannteStudien = [bekannteStudien temp.bekannteStudien];
+        if isfield(temp, 'bekannteStudien')
+            bekannteStudien = [bekannteStudien temp.bekannteStudien];
+        else
+            bekannteStudien = [bekannteStudien temp];
+        end
     end
     % find empty elements (should be at least element 1)
     emptyIndex = find(arrayfun(@(x) isempty(x.ROI),bekannteStudien));
@@ -341,15 +345,19 @@ function save_newStudy(~,~,manually,answer,save_name)
 %     end
     bekannteStudien.features.PORTS = strct.features.PORTS.array;
     bekannteStudien.features.radiomics = strct.features.radiomics.array;
-    [~,idx1,~] = intersect(strct.features.feature_list.feature_list_PORTS,strct.features.PORTS.featureNames);
-    [~,idx2,~] = intersect(strct.features.feature_list.feature_list_radiomics,strct.features.radiomics.featureNames);
+    [~,idx1,~] = intersect(strct.features.feature_list.feature_list_PORTS,strct.features.PORTS.featureNames, 'stable');
+    [~,idx2,~] = intersect(strct.features.feature_list.feature_list_radiomics,strct.features.radiomics.featureNames, 'stable');
     bekannteStudien.selectedFeatures{1}  = idx1;
     bekannteStudien.selectedFeatures{2} = idx2;
     % = = = = = = = = = = = = = = = = = 
 
+    %%% Fixes bug (waitbar now shows progress of loading data)
     % get 3D matrices from images and the dicominfo
     sPathImg = bekannteStudien.directories;
     for i=1:numel(sPathImg)
+        waitbar(i/numel(sPathImg), hLoad);
+        
+        % Fixes bug (ReadDICOM now generates correct(sorted) volume image) 
         [dImg{i},dicominfo{i}] = ReadDICOM(sPathImg{i});
     end
 
@@ -404,7 +412,19 @@ function save_newStudy(~,~,manually,answer,save_name)
             end
         end
         hLoad = showWaitbar_loadData([],1,'Speichere neues struct ...');
-        save(save_name,'bekannteStudien','-v7.3')
+%         save(save_name, '-struct', 'bekannteStudien','-v7.3')
+        m = matFile(save_name, 'Writable', true);
+        m.ROI = bekannteStudien.ROI;
+        m.ROIdirectories = bekannteStudien.ROIdirectories;
+        m.ROInames = bekannteStudien.names;
+        
+        m.data = bekannteStudien.data;
+        m.dicominfo = bekannteStudien.dicominfo;
+        m.directories = bekannteStudien.directories;
+        
+        m.features = bekannteStudien.features;
+        m.name = bekannteStudien.name;
+        m.selectedFeatures = bekannteStudien.selectedFeatures;
         
         bekannteStudienNeu = bekannteStudien;
         global bekannteStudien
@@ -485,6 +505,10 @@ function get_listboxSelection(object,~)
     object.UserData = object.String(object.Value);
 end
 
+%%% Fixes bug (folder selection now works regardles of folder name, as long
+%%%            as there is .ima or .dcm files inside the subfolders. 
+%%%            Before, error is thrown if folder name is less than or equal
+%%%            to 3 characters long)
 function getfolder(varargin)
     global handles                  %opens OS interface tool of matlab
     folder_names=uigetfile_n_dir;
@@ -510,7 +534,7 @@ function getfolder(varargin)
         cNames = [];    %contentNames
         for i=1:numel(dirs)
             SFiles{i} = dir(dirs{i});
-            cNames{i} = {SFiles{i}(:).name};
+            cNames{i} = {SFiles{i}(~[SFiles{i}.isdir]).name};
             lInd = cellfun(@(x) any(strcmpi(x(end-3:end),{'.ima','.dcm'})), cNames{i}(3:end)); % skip unwanted files
             list_dcm = cNames{i}(lInd);
             if strfind(dirs{i},'localizer')
@@ -530,8 +554,11 @@ function getfolder(varargin)
     end
 end
 
+% Fixes bug (list's data sometimes not cleared, thus produces problem
+%            during new data import)
 function clearlist(~,~,listbox)
     global strct
+    listbox.Value = [];
     listbox.String = [];  
     listbox.UserData = [];
 end
@@ -551,11 +578,14 @@ function load_Extern3Dmask(varargin)
         return;
     end
     if ischar(file_mask), file_mask = cellstr(file_mask); end
-    handles.list_ROI2.String = vertcat(handles.list_ROI2.String, fullfile(pathname,file_mask));
+    %%% Fixes bug (masks can now be added regardless of empty or filled
+    %%%            list)
+    handles.list_ROI2.String = vertcat(handles.list_ROI2.String, fullfile(pathname,file_mask)');
     handles.list_ROI2.Value = 1:length(handles.list_ROI2.String);
 end
 
-function [ROI,ROInames,iROIassign] = assign_MaskToData(~,~,input_data, input_ROI, tabSpec)
+% Added input argument to allow pairing to be selected via script 
+function [ROI,ROInames,iROIassign] = assign_MaskToData(~,~,input_data, input_ROI, tabSpec, autoPair)
 %     try showWaitbar_loadData(hLoad,0); end
     global handles
     global strct
@@ -570,10 +600,11 @@ function [ROI,ROInames,iROIassign] = assign_MaskToData(~,~,input_data, input_ROI
     list_data = uicontrol('Parent',m,'Style','popupmenu','units','pixel','Position',[5 255 290 20],'Callback',@dataSelection);
     list_ROI = uicontrol('Parent',m,'Style','listbox','units','pixel','Position',[305 5 290 270],'Min',0,'Max',2,'Callback',@getROIassignment);
     txt_dataAll = uicontrol('Parent',m,'Style','text','Position',[5 180 290 70],'HorizontalAlignment','left','FontSize',10);
-    p_vor = uicontrol('Parent',m,'Style','pushbutton','units','pixel','Position',[55 150 70 20],'String','zurueck','Callback',@dataSelection); 
-    p_back = uicontrol('Parent',m,'Style','pushbutton','units','pixel','Position',[130 150 70 20],'String','vor','Callback',@dataSelection); 
-    c_allSelection = uicontrol('Parent',m,'Style','checkbox','units','pixel','Position',[55 100 240 30],'String','<html>Alle verfuegbaren ROIs fuer alle <br>Daten auswaehlen','Callback',@set_allSelection);
-    c_sameSelection = uicontrol('Parent',m,'Style','checkbox','units','pixel','Position',[55 60 240 30],'String','<html>Diese Auswahl fuer alle anderen <br>Aufnahmen uebernehmen','Callback',@set_SameROIassignment);
+    p_vor = uicontrol('Parent',m,'Style','pushbutton','units','pixel','Position',[55 170 70 20],'String','zurueck','Callback',@dataSelection); 
+    p_back = uicontrol('Parent',m,'Style','pushbutton','units','pixel','Position',[130 170 70 20],'String','vor','Callback',@dataSelection); 
+    c_allSelection = uicontrol('Parent',m,'Style','checkbox','units','pixel','Position',[55 130 250 30],'String','<html>Alle verfuegbaren ROIs fuer alle <br>Daten auswaehlen','Callback',@set_allSelection);
+    c_sameSelection = uicontrol('Parent',m,'Style','checkbox','units','pixel','Position',[55 95 250 30],'String','<html>Diese Auswahl fuer alle anderen <br>Aufnahmen uebernehmen','Callback',@set_SameROIassignment);
+    c_pairingSelection = uicontrol('Parent',m,'Style','checkbox','units','pixel','Position',[55 60 250 30],'String','<html>Je i-ten Aufnahme mit i-ten ROI <br>einordnen','Callback',@set_pairingSelection);
     txt_data = uicontrol('Parent',m,'Style','text','Position',[5 278 100 17],'HorizontalAlignment','left','String','Aufnahmen','FontSize',11);  
     txt_ROI = uicontrol('Parent',m,'Style','text','Position',[305 278 100 17],'HorizontalAlignment','left','String','ROIs','FontSize',11);
     p_confirm = uicontrol('Parent',m,'Style','pushbutton','units','pixel','Position',[55 20 190 30],'String','Bestaetigen','Callback',@close_ROIAssignment);  
@@ -594,8 +625,15 @@ function [ROI,ROInames,iROIassign] = assign_MaskToData(~,~,input_data, input_ROI
     ROIassign.val = []; ROIassign.String = []; ROIassign.iROIassign = [];
     ROIassign(length(list_data.String)).val = []; % initialize struct to right size
     ROI = 0; ROInames = 0; iROIassign = [];
-
-    uiwait(m);
+    
+    % Added feature to allow pairing selection via script
+    if nargin == 6 && autoPair
+        c_pairingSelection.Value = 1;
+        set_pairingSelection(c_pairingSelection, [])
+        close_ROIAssignment(p_confirm, [])
+    else
+        uiwait(m);
+    end
     
     function dataSelection(hObject,~) 
         if strcmp(hObject.String,'vor')
@@ -659,8 +697,9 @@ function [ROI,ROInames,iROIassign] = assign_MaskToData(~,~,input_data, input_ROI
             if tabSpec == 2 || tabSpec == 3
                 ROIassign(i).iROIassign = 1;
             end
-        list_ROI.Value = 1:ROIassign(i).val;
+        ROIassign(i).val = input_ROI.Value;
         end
+        list_ROI.Value = input_ROI.Value;
     end
 
     function set_SameROIassignment(hObject,~)
@@ -675,6 +714,32 @@ function [ROI,ROInames,iROIassign] = assign_MaskToData(~,~,input_data, input_ROI
         [ROIassign.String] = deal(list_ROI.String(list_ROI.Value));
         if tabSpec == 1
             handles.list_ROI2.Value = list_ROI.Value;
+        end
+    end
+    
+    % Added feature to pair i-th image with i-th ROI
+    function set_pairingSelection(hObject,~)
+        if hObject.Value == 0
+            set(c_allSelection,'Enable','on');
+            set(c_sameSelection,'Enable','on');
+        else
+            set(c_allSelection,'Enable','off');
+            set(c_sameSelection,'Enable','off');
+        end
+        
+        f = [];
+        if numel(list_ROI.String) ~= numel(list_data.String)
+            f = errordlg(['Fehler! Die Anzahl der verfuegbaren ROIs stimmt'...
+                ' nicht mit der Anzahl aller Aufnahmen ueberein.']);
+            hObject.Value = 0;
+            return
+        else
+            for i = 1:numel(list_ROI.String)
+                ROIassign(i).val = i;
+                ROIassign(i).String = list_ROI.String(i);
+            end
+            
+            list_ROI.Value = ROIassign(list_data.Value).val;
         end
     end
 
@@ -714,7 +779,8 @@ function [ROI,ROInames,iROIassign] = assign_MaskToData(~,~,input_data, input_ROI
             else
                 strct.ROI.sameROIs = 0;
             end
-            handles.list_ROI2.Value = unique(horzcat(ROIassign.val));
+            [~,val,~] = intersect(input_ROI.String, vertcat(ROIassign.String), 'stable');
+            handles.list_ROI2.Value = unique(val);
         elseif tabSpec == 2 || tabSpec == 3
             for i = 1:length(ROIassign)
                 ROI{i} = strct.ROI.lMask{input_data.Value(i)}(ROIassign(i).val);
@@ -781,7 +847,7 @@ function [feat_names, idx_order] = get_realFeatureNames(category,toolbox_tag)
                 end
             end
     end
-    idx_order = idx_order(2:end); % delete zero from intialization   
+    idx_order = idx_order(2:end); % delete zero from intialization
 end
 
 function names = findCategoriesInList(list,tag)
@@ -887,8 +953,14 @@ function calculateFeature(varargin)
         strct.features.radiomics.array = bekannteStudien(idx).features.radiomics(l2.Value,ROI.Value,data.Value); 
         strct.features.radiomics.featureNames = strct.features.feature_list.feature_list_radiomics(l2.Value);        
     else
-        % komplexer, Masken muessen erst berechnet werden aus *.mha Files und dann muessen auch die Features berechnet werden
-        [default1, default2,~] = assign_MaskToData([],[],[handles.list_data1; handles.list_data2],handles.list_ROI2,1); %
+        %%% komplexer, Masken muessen erst berechnet werden aus *.mha Files und dann muessen auch die Features berechnet werden
+        % Added if function to maintain compatibility if calculte function
+        % is not called via script
+        if nargin == 3 && varargin{3} == 1
+            [default1, default2,~] = assign_MaskToData([],[],[handles.list_data1; handles.list_data2],handles.list_ROI2,1,1);
+        else
+            [default1, default2,~] = assign_MaskToData([],[],[handles.list_data1; handles.list_data2],handles.list_ROI2,1);
+        end
         if isequal(default1,0) && isequal(default2,0), showWaitbar_loadData(hLoad,0); return; end             
             % strct.ROI.sameROIs                already assigned in the function assign_MaskToData
             % strct.data
@@ -922,9 +994,15 @@ function calculateFeature(varargin)
              
                         case '.nii'
                             lMask{i}{j} = read_single_nii(maskFile{i}{j});
-                            %Orientierungscheck fehlt bisher!?!HardCodiert!
+                            %Orientierungscheck fehlt bisher!?!HardCodiert!                             
+%                             lMask{i}{j} = flip(lMask{i}{j}, 3);
+%                             lMask{i}{j} = rot90(lMask{i}{j});
+%                             lMask{i}{j} = flip(lMask{i}{j}, 2);
+
+                            % Fixes bug (orientation of mask corrected)
                             lMask{i}{j} = rot90(lMask{i}{j});
-                            lMask{i}{j} = rot90(lMask{i}{j});
+                            lMask{i}{j} = flip(lMask{i}{j}, 2);
+
                     end
                     
                 end
@@ -960,7 +1038,7 @@ function calculateFeature(varargin)
                 feat_PORTS = cell(numel(feat_names_PORTS),numel(ROI_array),numel(data_array));
                 for i=1:numel(data_array)
                     temp_feat_PORTS = [];
-                    [~,idx,~] = intersect(ROI.String(ROI.Value),strct.ROI.names{i});    
+                    [~,idx,~] = intersect(ROI.String(ROI.Value),strct.ROI.names{i},'stable');    
                     for j=1:numel(ROI_array{1})
                         temp_feat_PORTS = run_PORTS(char(data_array{i}),ROI_array{i}{j},category);
                         feat_PORTS(:,idx(j),i) = temp_feat_PORTS;
@@ -976,8 +1054,10 @@ function calculateFeature(varargin)
                 [feat_names_radiomics,idx_order] = get_realFeatureNames(category,char('radiomics'));
                 feat_radiomics = cell(numel(feat_names_radiomics),numel(ROI_array{1,1}),numel(data_array));
                 for i=1:numel(data_array)
-                    [~,idx,~] = intersect(ROI.String(ROI.Value),strct.ROI.names{i});  
+                    [~,idx,~] = intersect(ROI.String(ROI.Value),strct.ROI.names{i},'stable');  
                     for j=1:numel(ROI_array{i})  
+                        % Fixes bug (feature values are now sorted
+                        %            according to the listed feature name)
                         feat_radiomics(:,idx(j),i) = run_radiomics(char(data_array{i}),ROI_array{i}{j},category);
 
                         count=count+1;
@@ -1616,10 +1696,10 @@ function visualizeFeature(varargin)
                 for k=1:numel(comp_strct(val).plots.maskOverlay.lMask{j})
                     sizeImg = size(comp_strct(val).plots.maskOverlay.img{j});
                     if ~isequal(size(comp_strct(val).plots.maskOverlay.lMask{j}{k}),sizeImg)
-                        size3 = size(comp_strct(val).plots.maskOverlay.lMask{j}{k},3);
-    %                     comp_strct(val).plots.maskOverlay.lMask{j}{k}(:,:,size3+1:128) = zeros(size(comp_strct(val).plots.maskOverlay.lMask{j}{k},1), size(comp_strct(val).plots.maskOverlay.lMask{j}{k},1), 128-size3);
-                        comp_strct(val).plots.maskOverlay.lMask{j}{k}(:,:,(sizeImg(3)-size3+1):sizeImg(3))  =  comp_strct(val).plots.maskOverlay.lMask{j}{k};
-                        comp_strct(val).plots.maskOverlay.lMask{j}{k}(:,:,1:(sizeImg(3)-size3)) = zeros(size(comp_strct(val).plots.maskOverlay.lMask{j}{k},1), size(comp_strct(val).plots.maskOverlay.lMask{j}{k},1), sizeImg(3)-size3);
+                        sizeMask = size(comp_strct(val).plots.maskOverlay.lMask{j}{k});
+                        %comp_strct(val).plots.maskOverlay.lMask{j}{k}(:,:,size3+1:128) = zeros(size(comp_strct(val).plots.maskOverlay.lMask{j}{k},1), size(comp_strct(val).plots.maskOverlay.lMask{j}{k},1), 128-size3);                       
+                        comp_strct(val).plots.maskOverlay.lMask{j}{k}((sizeImg(1)-sizeMask(1)+1):sizeImg(1), (sizeImg(2)-sizeMask(2)+1):sizeImg(2), (sizeImg(3)-sizeMask(3)+1):sizeImg(3))  =  comp_strct(val).plots.maskOverlay.lMask{j}{k};
+                        comp_strct(val).plots.maskOverlay.lMask{j}{k}(1:(sizeImg(1)-sizeMask(1)),1:(sizeImg(2)-sizeMask(2)),1:(sizeImg(3)-sizeMask(3))) = zeros(sizeImg(1)-sizeMask(1), sizeImg(2)-sizeMask(2), sizeImg(3)-sizeMask(3));
                         warn=warn+1;
                         if warn==1
                             warning('Mask-Dimension wurde veraendert!')
