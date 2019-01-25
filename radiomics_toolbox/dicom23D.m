@@ -30,7 +30,14 @@
  
 
 
-
+%%% Added default dicom fields to include RescaleIntercept, RescaleSlope
+%%% and Modality
+%%% Added feature to take into account RescaleSlope in processing of raw
+%%% data into real value
+%%% Added field to image_meta_data to include image modality
+%%% Fixes bug (fix SliceThickness to match actual thickness, instead of
+%%%            relying on dicominfo)
+%%% Fixes bug (return volume image as double instead of uint16)
 function [volume_image, slice_data, image_meta_data] = ...
         dicom23D(dicom_directory, dicom_fields, save_format)
     
@@ -63,6 +70,9 @@ function [volume_image, slice_data, image_meta_data] = ...
     %                 'ImagePositionPatient',...
     %                 'ImageOrientationPatient',...
     %                 'FrameOfReferenceUID',...
+    %                 'RescaleIntercept', ...
+    %                 'RescaleSlope', ...
+    %                 'Modality', ...
     %                 };
     %
     %      "save_format" (optional)  -  Not yet implemented.  Will save the
@@ -90,6 +100,7 @@ function [volume_image, slice_data, image_meta_data] = ...
     %                 'PhysicalAspectRatio'... % Aspect ratio of image as a whole :=
     %                       [PhysicalWidth, PhysicalHeight,
     %                       SliceThickness*NumberOfSlices]
+    %                 'Modality'... % Image modality
     %                 }
     
     default_dicom_fields = {...
@@ -105,6 +116,9 @@ function [volume_image, slice_data, image_meta_data] = ...
         'ImagePositionPatient',...
         'ImageOrientationPatient',...
         'FrameOfReferenceUID',...
+        'RescaleIntercept', ...
+        'RescaleSlope', ...
+        'Modality', ...
         };
     
     % We need these checks because to calculate the "extra_fields", we
@@ -124,7 +138,8 @@ function [volume_image, slice_data, image_meta_data] = ...
     image_meta_data = struct(...
         'PhysicalTotalZ',[],... % Total extent of image in Z direction
         'NumberOfSlices',[],... % Number of slices
-        'PhysicalAspectRatio',[]);... % Aspect ratio of image as a whole :=
+        'PhysicalAspectRatio',[],... % Aspect ratio of image as a whole :=
+        'Modality',[]); % Type of scan
         %  [PhysicalWidth, PhysicalHeight, SliceThickness*NumberOfSlices]
     
     if nargin<1
@@ -190,10 +205,7 @@ function [volume_image, slice_data, image_meta_data] = ...
     
     for i = 3:length(listing) % loop through directory listing, but skip '.' and '..'
         filename = listing(i).name;
-        [dummy_path, just_the_name, extension] = fileparts(filename);
         full_path = fullfile(dicom_directory, filename);
-        
-        goodfile = false;
         
         % Check for good dicom file
         if isdicom(full_path)
@@ -208,7 +220,7 @@ function [volume_image, slice_data, image_meta_data] = ...
                 if isfield(header, current_field)
                     slice_data(true_index).(current_field) = header.(current_field);
                 else
-                    ['header did not contain the field ' current_field]
+                    %['header did not contain the field ' current_field]
                 end %if
                 
             end % loop through dicom field names
@@ -252,7 +264,7 @@ function [volume_image, slice_data, image_meta_data] = ...
     
     % Check that some dicom slice was found
     if true_index < 1
-        'No dicom slices found...returning empty'
+        disp('No dicom slices found...returning empty')
         volume_image = [];
         slice_data = [];
         image_meta_data = [];
@@ -262,8 +274,19 @@ function [volume_image, slice_data, image_meta_data] = ...
     % If SliceLocation is known, sort by that.  This is deemed more
     % accurate than going by filename order (or file number).
     if isfield(slice_data(1), 'SliceLocation')
-        [S,I] = sort([slice_data.SliceLocation]);
+        [~,I] = sort([slice_data.SliceLocation]);
         slice_data = slice_data(I);
+    end
+    
+    % Fix SliceThickness data if necessary
+    if any(slice_data.SliceThickness ~= (abs(slice_data(1).SliceLocation) - ...
+            slice_data(end).SliceLocation) / length(slice_data))
+        for i = 1:length(slice_data)
+            slice_data(i).SliceThickness = (abs(slice_data(1).SliceLocation) - ...
+                slice_data(end).SliceLocation) / length(slice_data);
+            slice_data(i).PixelSliceThickness = ...
+                slice_data(i).SliceThickness / mean(slice_data(i).PixelSpacing);
+        end
     end
     
     % Pre-allocate volume image array
@@ -274,7 +297,7 @@ function [volume_image, slice_data, image_meta_data] = ...
     h = waitbar(0,'Writing slice images to volume image array...','WindowStyle','modal');
     for i = 1:length(slice_data)
         waitbar(i/N,h);
-        volume_image(:,:,i) = slice_data(i).SliceData;
+        volume_image(:,:,i) = double(slice_data(i).SliceData)*slice_data(i).RescaleSlope;
     end
     close(h);
     
@@ -296,6 +319,7 @@ function [volume_image, slice_data, image_meta_data] = ...
             slice_data(1).SliceThickness...
             ];
     end
+    image_meta_data.Modality = slice_data(1).Modality;
     
     % Save the data to the dicom directory.
     h = waitbar(0, 'Saving mat files...', 'WindowStyle', 'modal');
