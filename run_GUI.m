@@ -297,6 +297,8 @@ function loadStudy(~,~)
     
     for i=1:length(dir)
         temp = load(dir{i});
+        %%% Added if to enable backward compatibility if 'bekannteStudien'
+        %%% is saved with old format
         if isfield(temp, 'bekannteStudien')
             bekannteStudien = [bekannteStudien temp.bekannteStudien];
         else
@@ -412,8 +414,14 @@ function save_newStudy(~,~,manually,answer,save_name)
             end
         end
         hLoad = showWaitbar_loadData([],1,'Speichere neues struct ...');
+        
+        %%% Save .mat as struct to enable individual load of field, instead
+        %%% of having to load all of them (better memory allocation)
 %         save(save_name, '-struct', 'bekannteStudien','-v7.3')
-        m = matFile(save_name, 'Writable', true);
+        
+        %%% Struct saving uses matfile instead of save for better memory
+        %%% allocation
+        m = matfile(save_name, 'Writable', true);
         m.ROI = bekannteStudien.ROI;
         m.ROIdirectories = bekannteStudien.ROIdirectories;
         m.ROInames = bekannteStudien.names;
@@ -1696,6 +1704,8 @@ function visualizeFeature(varargin)
                 for k=1:numel(comp_strct(val).plots.maskOverlay.lMask{j})
                     sizeImg = size(comp_strct(val).plots.maskOverlay.img{j});
                     if ~isequal(size(comp_strct(val).plots.maskOverlay.lMask{j}{k}),sizeImg)
+                        %%% Fixes bug (mask resize now doesn't result in
+                        %%%            error)
                         sizeMask = size(comp_strct(val).plots.maskOverlay.lMask{j}{k});
                         %comp_strct(val).plots.maskOverlay.lMask{j}{k}(:,:,size3+1:128) = zeros(size(comp_strct(val).plots.maskOverlay.lMask{j}{k},1), size(comp_strct(val).plots.maskOverlay.lMask{j}{k},1), 128-size3);                       
                         comp_strct(val).plots.maskOverlay.lMask{j}{k}((sizeImg(1)-sizeMask(1)+1):sizeImg(1), (sizeImg(2)-sizeMask(2)+1):sizeImg(2), (sizeImg(3)-sizeMask(3)+1):sizeImg(3))  =  comp_strct(val).plots.maskOverlay.lMask{j}{k};
