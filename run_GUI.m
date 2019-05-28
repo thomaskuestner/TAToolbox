@@ -14,8 +14,9 @@ clear features;
 % ----- create GUI ------------
 % -----------------------------
 handles.f = figure('Visible','Off','units','pixel','Position',[0 50 1300 570]);
-handles.f.Name = 'MainGUI';
-% create tabs
+handles.f.Name = 'TFCV';
+handles.f.CloseRequestFcn = @saveclosereq;
+% create the three main tabs %%% Here we can insert our augmentations
 handles.tgroup = uitabgroup('Parent', handles.f);
 handles.tab1 = uitab('Parent',handles.tgroup, 'Title', 'Settings');
 handles.tab2 = uitab('Parent',handles.tgroup, 'Title', 'Subsets');
@@ -32,11 +33,12 @@ handles.tgroup_data = uitabgroup('Parent', handles.tab1,'units','pixel','Positio
 handles.tab_SpezData = uitab('Parent',handles.tgroup_data, 'Title', 'bekannte Studien');
 handles.tab_Alldata = uitab('Parent',handles.tgroup_data, 'Title', '+');
 handles.txt_info = uicontrol('Parent',handles.tab1,'Style','text','Position',[150 525 300 15],'HorizontalAlignment','left','ForegroundColor','red','String','Items abwaehlen mit Strg','FontSize',10);
-handles.popup_studies = uicontrol('Parent',handles.tab_SpezData,'Style','popupmenu','units','normalized','Position',[0.01 0.9 0.3 0.07],'String',{bekannteStudien.name},'Callback', @set_StudyData);
-handles.p_loadStudies = uicontrol('Parent',handles.tab_SpezData,'Style','pushbutton','units','normalized','String','<html>Lade weitere<br>Studien ein','Position',[0.01 0.05 0.3 0.1],'Callback',@loadStudy);
-
-
-
+handles.p_loadStudies = uicontrol('Parent',handles.tab_SpezData,'Style','pushbutton','units','normalized','String','<html>Lade weitere<br>schon berechnete<br>Studien ein','Position',[0.01 0.05 0.3 0.1],'Callback',@loadStudy);
+try
+    handles.popup_studies = uicontrol('Parent',handles.tab_SpezData,'Style','popupmenu','units','normalized','Position',[0.01 0.9 0.3 0.07],'String',{bekannteStudien.name},'Callback', @set_StudyData);
+catch
+    handles.popup_studies = uicontrol('Parent',handles.tab_SpezData,'Style','popupmenu','units','normalized','Position',[0.01 0.9 0.3 0.07],'String',{},'Callback', @set_StudyData);     %handles.popup_studies = []; % error with that there is no gui-popup
+end
 handles.bg_dataMS = uibuttongroup('Parent',handles.tab_SpezData,'Position',[0 0.4 0.3 0.4]);    
 handles.r_dataAll = uicontrol('Parent',handles.bg_dataMS,'Style','radiobutton','units','normalized','String','alle','Position',[0 0.8 1 0.2],'Callback' , @select_allData);
 handles.r_dataSpez = uicontrol('Parent',handles.bg_dataMS,'Style','radiobutton','units','normalized','String','Spezifische','Position',[0 0.6 1 0.2],'Callback' , @select_spezData);
@@ -47,11 +49,16 @@ handles.r_T1space = uicontrol('Parent',handles.bg_dataSpez,'Style','radiobutton'
 handles.r_T1mprage.Value = 0;
 
 handles.list_data1 = uicontrol('Parent',handles.tab_SpezData,'Style','listbox','units','normalized','Position',[0.32 0 0.67 0.99],'Min',0,'Max',50,'Tag','list_data1','Callback',@get_listboxSelection);
-handles.list_data1.String = bekannteStudien(1).directories;
-handles.list_data1.Value =  []; % 1:numel(handles.list_data1.String);
-handles.list_data1.UserData = bekannteStudien(1).directories;
-
-handles.p_data = uicontrol('Parent',handles.tab_Alldata,'Style','pushbutton','units','normalized','String','Waehle die gewuenschten Datensaetze aus','Position',[0.1 0.88 0.8 0.1],'Callback',@getfolder);
+try
+    handles.list_data1.String = bekannteStudien(1).directories;
+    handles.list_data1.Value =  []; % 1:numel(handles.list_data1.String);
+    handles.list_data1.UserData = bekannteStudien(1).directories;
+catch
+    handles.list_data1.String = [];                                         %try to catch the error
+    handles.list_data1.Value =  []; % 1:numel(handles.list_data1.String);   %try to catch the error
+    handles.list_data1.UserData = [];                                       %try to catch the error
+end
+handles.p_data = uicontrol('Parent',handles.tab_Alldata,'Style','pushbutton','units','normalized','String','W�hle die gew�nschten Datensaetze aus','Position',[0.1 0.88 0.8 0.1],'Callback',@getfolder);
 handles.list_data2 = uicontrol('Parent',handles.tab_Alldata,'Style','listbox','units','normalized','Position',[0.1 0.15 0.8 0.69],'String',[],'Value', [], 'Min',0,'Max',50,'Tag','list_data2','Callback',@get_listboxSelection);
 handles.p_clearlist = uicontrol('Parent',handles.tab_Alldata,'Style','pushbutton','units','normalized','String','Listbox leeren','Position',[0.1 0.1 0.8 0.05],'Callback',{@clearlist,handles.list_data2});
 % ------------------------------------------------------------------------------------------------------------------
@@ -65,7 +72,12 @@ handles.tab_ROI = uitab('Parent',handles.tgroup_ROI, 'Title', 'ROI laden');
  
 handles.p_MuscleAll = uicontrol('Parent',handles.tab_muscle,'Style','pushbutton','units','normalized','String','alle','Position',[0.01 0.8 0.3 0.075],'Callback' , @select_allMuscle);
 handles.list_ROI1 = uicontrol('Parent',handles.tab_muscle,'Style','listbox','units','normalized','Position',[0.32 0.6 0.67 0.39],'Min',0,'Max',6,'Tag','list_ROI1','Callback',@get_listboxSelection);
-handles.list_ROI1.String = unique( vertcat(bekannteStudien(1).ROInames{:}));
+try
+    handles.list_ROI1.String = unique( vertcat(bekannteStudien(1).ROInames{:}));
+catch
+    handles.list_ROI1.String = []; %try to catch the error
+end
+
 handles.list_ROI1.UserData = handles.list_ROI1.String;
 handles.txt_Muscleinfo = uicontrol('Parent',handles.tab_muscle,'Style','text','units','normalized','Position',[0.01 0.35 1 0.15],'HorizontalAlignment','left',...
     'String','Fuer die Daten der bekannten Studien sind die Textur-Features bereits berechnet. Sie muessen nur extrahiert werden.','FontSize',10);
@@ -193,7 +205,7 @@ handles.list_comps3 = uicontrol('Parent',handles.tab3,'Style','listbox','Positio
 % ------------------------------------------------------------------------------------------------------------------
 
 handles.panel_vis = uipanel('Parent',handles.tab3,'unit','pixel','Position',[520 150 220 390],'Title','Visualisierung');   
-handles.c_maskOverlay = uicontrol('Parent',handles.panel_vis,'Style','checkbox','String','Bild mit Masken-Overlay','Position',[5 350 200 15],'Tag','MaskenOverlay','Callback',@get_visualisationSelection);
+handles.c_maskOverlay = uicontrol('Parent',handles.panel_vis,'Style','checkbox','String','Bild mit Masken-Overlay','Position',[5 350 200 15],'Tag','MaskenOverlay','Callback',@sationSelection);
 handles.c_histo = uicontrol('Parent',handles.panel_vis,'Style','checkbox','String','Histogramm','Position',[5 330 200 15],'Tag','Histogramm','Callback',@get_visualisationSelection);
 handles.c_boxplot = uicontrol('Parent',handles.panel_vis,'Style','checkbox','String','Boxplot','Position',[5 310 200 15],'Tag','Boxplot','Callback',@get_visualisationSelection);
 handles.c_featspace = uicontrol('Parent',handles.panel_vis,'Style','checkbox','String','Feature Space Plot','Position',[5 290 200 15],'Tag','FeatureSpace','Callback',@get_visualisationSelection);
@@ -225,8 +237,22 @@ end
 % * * = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 % * * 
 % = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+% 
+function my_closereq(src,callbackdata)
+% Close request function 
+% to display a question dialog box 
+   selection = questdlg('Close This Figure?',...
+      'MainGUI',...
+      'Yes','No','Yes'); 
+   switch selection
+      case 'Yes'
+         delete(gcf)
+      case 'No'
+      return 
+   end
+end
 
-function set_StudyData(hObject,~)
+function set_StudyData(hObject,~) %KRITISCH
     global bekannteStudien
     global handles
     global strct
@@ -257,22 +283,32 @@ function set_StudyData(hObject,~)
 end
 
 function loadStudy(~,~)
+    global handles
     global bekannteStudien
+    duplicate = 0;
+    a = 1;
     [file,path] = uigetfile('*.mat','Lade alle bekannten Studien','MultiSelect', 'on');
     dir = fullfile(path,file);
     if ~iscell(dir) % then only 1 input
-        dir = cellstr(dir);
+        dir = cellstr(dir); 
     end
+    
     hLoad = showWaitbar_loadData([],1,'Lade "bekannteStudien.mat" ...');
+    
     for i=1:length(dir)
         temp = load(dir{i});
-        bekannteStudien = [bekannteStudien temp.bekannteStudien];
+        %%% Added if to enable backward compatibility if 'bekannteStudien'
+        %%% is saved with old format
+        if isfield(temp, 'bekannteStudien')
+            bekannteStudien = [bekannteStudien temp.bekannteStudien];
+        else
+            bekannteStudien = [bekannteStudien temp];
+        end
     end
     % find empty elements (should be at least element 1)
     emptyIndex = find(arrayfun(@(x) isempty(x.ROI),bekannteStudien));
     bekannteStudien(emptyIndex) = [];
     showWaitbar_loadData(hLoad,0);
-    
     handles.popup_studies.String = {bekannteStudien.name};
 end
 
@@ -311,15 +347,19 @@ function save_newStudy(~,~,manually,answer,save_name)
 %     end
     bekannteStudien.features.PORTS = strct.features.PORTS.array;
     bekannteStudien.features.radiomics = strct.features.radiomics.array;
-    [~,idx1,~] = intersect(strct.features.feature_list.feature_list_PORTS,strct.features.PORTS.featureNames);
-    [~,idx2,~] = intersect(strct.features.feature_list.feature_list_radiomics,strct.features.radiomics.featureNames);
+    [~,idx1,~] = intersect(strct.features.feature_list.feature_list_PORTS,strct.features.PORTS.featureNames, 'stable');
+    [~,idx2,~] = intersect(strct.features.feature_list.feature_list_radiomics,strct.features.radiomics.featureNames, 'stable');
     bekannteStudien.selectedFeatures{1}  = idx1;
     bekannteStudien.selectedFeatures{2} = idx2;
     % = = = = = = = = = = = = = = = = = 
 
+    %%% Fixes bug (waitbar now shows progress of loading data)
     % get 3D matrices from images and the dicominfo
     sPathImg = bekannteStudien.directories;
     for i=1:numel(sPathImg)
+        waitbar(i/numel(sPathImg), hLoad);
+        
+        % Fixes bug (ReadDICOM now generates correct(sorted) volume image) 
         [dImg{i},dicominfo{i}] = ReadDICOM(sPathImg{i});
     end
 
@@ -374,7 +414,25 @@ function save_newStudy(~,~,manually,answer,save_name)
             end
         end
         hLoad = showWaitbar_loadData([],1,'Speichere neues struct ...');
-        save(save_name,'bekannteStudien','-v7.3')
+        
+        %%% Save .mat as struct to enable individual load of field, instead
+        %%% of having to load all of them (better memory allocation)
+%         save(save_name, '-struct', 'bekannteStudien','-v7.3')
+        
+        %%% Struct saving uses matfile instead of save for better memory
+        %%% allocation
+        m = matfile(save_name, 'Writable', true);
+        m.ROI = bekannteStudien.ROI;
+        m.ROIdirectories = bekannteStudien.ROIdirectories;
+        m.ROInames = bekannteStudien.names;
+        
+        m.data = bekannteStudien.data;
+        m.dicominfo = bekannteStudien.dicominfo;
+        m.directories = bekannteStudien.directories;
+        
+        m.features = bekannteStudien.features;
+        m.name = bekannteStudien.name;
+        m.selectedFeatures = bekannteStudien.selectedFeatures;
         
         bekannteStudienNeu = bekannteStudien;
         global bekannteStudien
@@ -445,47 +503,70 @@ function set_sequenz(object,~)
     else
         h.Value = [];
     end
-    get_listboxSelection(h,[])
+    try
+        get_listboxSelection(h,[])
+    catch
+    end
 end
 
 function get_listboxSelection(object,~)
     object.UserData = object.String(object.Value);
 end
 
+%%% Fixes bug (folder selection now works regardles of folder name, as long
+%%%            as there is .ima or .dcm files inside the subfolders. 
+%%%            Before, error is thrown if folder name is less than or equal
+%%%            to 3 characters long)
 function getfolder(varargin)
-    global handles
-    folder_name = uigetdir(handles.list_data1.String{1});
-    dirs = regexp(genpath(folder_name),'[^:]*','match');
-   
-    hLoad = showWaitbar_loadData([],1);
-    % check if folders contain dicom images
-%     if no: don't display them in listbox
-    SFiles = [];
-    cNames = [];
-    for i=1:numel(dirs)
-        SFiles{i} = dir(dirs{i});
-        cNames{i} = {SFiles{i}(:).name};
-        lInd = cellfun(@(x) any(strcmpi(x(end-3:end),{'.ima','.dcm'})), cNames{i}(3:end)); % skip unwanted files
-        list_dcm = cNames{i}(lInd);
-        if strfind(dirs{i},'localizer')
-            dirs{i} = [];
+    global handles                  %opens OS interface tool of matlab
+    folder_names=uigetfile_n_dir;
+    dir_number=length(folder_names);
+      
+    for count_dir=1:dir_number
+        folder_name=folder_names{count_dir};
+        %folder_name = uigetdir(handles.list_data1.String{1});   % opens OS
+        %window folder open - JANA
+        %Select right OS-PathCode
+            if ismac
+            msgbox('Operating System is not supported');return;     % toDo!
+            elseif isunix
+            dirs = regexp(genpath(folder_name),'[^:]*','match');
+            elseif ispc
+            dirs = regexp(genpath(folder_name),'[^;]*','match');
+            else
+            msgbox('Operating System is not supported');return;
+            end   
+        hLoad = showWaitbar_loadData([],1); %shows loadwindow 
+        % check if folders contain dicom images - if not: don't display them in listbox
+        SFiles = [];    %
+        cNames = [];    %contentNames
+        for i=1:numel(dirs)
+            SFiles{i} = dir(dirs{i});
+            cNames{i} = {SFiles{i}(~[SFiles{i}.isdir]).name};
+            lInd = cellfun(@(x) any(strcmpi(x(end-3:end),{'.ima','.dcm'})), cNames{i}(3:end)); % skip unwanted files
+            list_dcm = cNames{i}(lInd);
+            if strfind(dirs{i},'localizer')
+                dirs{i} = [];
+            end
+            if isempty(list_dcm)
+                dirs{i} = [];
+            end
         end
-        if isempty(list_dcm)
-            dirs{i} = [];
-        end
+        list = dirs(~cellfun('isempty',dirs))';
+
+        out = list;
+        h = findobj(handles.f,'Tag','list_data2');
+        h.String = [h.String; out];
+        get_listboxSelection(h,[]);
+        showWaitbar_loadData(hLoad,0);
     end
-    list = dirs(~cellfun('isempty',dirs))';
-
-    out = list;
-    h = findobj(handles.f,'Tag','list_data2');
-    h.String = [h.String; out];
-
-    get_listboxSelection(h,[]);
-    showWaitbar_loadData(hLoad,0);
 end
 
+% Fixes bug (list's data sometimes not cleared, thus produces problem
+%            during new data import)
 function clearlist(~,~,listbox)
     global strct
+    listbox.Value = [];
     listbox.String = [];  
     listbox.UserData = [];
 end
@@ -499,17 +580,20 @@ end
 function load_Extern3Dmask(varargin)
     global handles
     warning('Achte auf die Masken-Orientierung. Musss sie gedreht/gespiegelt werden?')
-    path_img = '/net/linse8-sn/no_backup_00/med_data/Texture/TA_Muscle/MSStudie/';
-    [file_mask, pathname] = uigetfile({'*.mha;*.mhd','Meta-Images'; '*.*','All Files'},'Select mask file',path_img,'MultiSelect','on');
+    path_img = '/net/linse8-sn/no_backup_00/med_data/Texture/TA_Muscle/MSStudie/'; %hard coded? why?
+    [file_mask, pathname] = uigetfile({'*.mha;*.mhd;*.nii','Meta-Images'; '*.*','All Files'},'Select mask file',path_img,'MultiSelect','on'); %no differnece of different os's
     if isequal(pathname,0)
         return;
     end
     if ischar(file_mask), file_mask = cellstr(file_mask); end
-    handles.list_ROI2.String = vertcat(handles.list_ROI2.String, fullfile(pathname,file_mask));
+    %%% Fixes bug (masks can now be added regardless of empty or filled
+    %%%            list)
+    handles.list_ROI2.String = vertcat(handles.list_ROI2.String, fullfile(pathname,file_mask)');
     handles.list_ROI2.Value = 1:length(handles.list_ROI2.String);
 end
 
-function [ROI,ROInames,iROIassign] = assign_MaskToData(~,~,input_data, input_ROI, tabSpec)
+% Added input argument to allow pairing to be selected via script 
+function [ROI,ROInames,iROIassign] = assign_MaskToData(~,~,input_data, input_ROI, tabSpec, autoPair)
 %     try showWaitbar_loadData(hLoad,0); end
     global handles
     global strct
@@ -524,10 +608,11 @@ function [ROI,ROInames,iROIassign] = assign_MaskToData(~,~,input_data, input_ROI
     list_data = uicontrol('Parent',m,'Style','popupmenu','units','pixel','Position',[5 255 290 20],'Callback',@dataSelection);
     list_ROI = uicontrol('Parent',m,'Style','listbox','units','pixel','Position',[305 5 290 270],'Min',0,'Max',2,'Callback',@getROIassignment);
     txt_dataAll = uicontrol('Parent',m,'Style','text','Position',[5 180 290 70],'HorizontalAlignment','left','FontSize',10);
-    p_vor = uicontrol('Parent',m,'Style','pushbutton','units','pixel','Position',[55 150 70 20],'String','zurueck','Callback',@dataSelection); 
-    p_back = uicontrol('Parent',m,'Style','pushbutton','units','pixel','Position',[130 150 70 20],'String','vor','Callback',@dataSelection); 
-    c_allSelection = uicontrol('Parent',m,'Style','checkbox','units','pixel','Position',[55 100 240 30],'String','<html>Alle verfuegbaren ROIs fuer alle <br>Daten auswaehlen','Callback',@set_allSelection);
-    c_sameSelection = uicontrol('Parent',m,'Style','checkbox','units','pixel','Position',[55 60 240 30],'String','<html>Diese Auswahl fuer alle anderen <br>Aufnahmen uebernehmen','Callback',@set_SameROIassignment);
+    p_vor = uicontrol('Parent',m,'Style','pushbutton','units','pixel','Position',[55 170 70 20],'String','zurueck','Callback',@dataSelection); 
+    p_back = uicontrol('Parent',m,'Style','pushbutton','units','pixel','Position',[130 170 70 20],'String','vor','Callback',@dataSelection); 
+    c_allSelection = uicontrol('Parent',m,'Style','checkbox','units','pixel','Position',[55 130 250 30],'String','<html>Alle verfuegbaren ROIs fuer alle <br>Daten auswaehlen','Callback',@set_allSelection);
+    c_sameSelection = uicontrol('Parent',m,'Style','checkbox','units','pixel','Position',[55 95 250 30],'String','<html>Diese Auswahl fuer alle anderen <br>Aufnahmen uebernehmen','Callback',@set_SameROIassignment);
+    c_pairingSelection = uicontrol('Parent',m,'Style','checkbox','units','pixel','Position',[55 60 250 30],'String','<html>Je i-ten Aufnahme mit i-ten ROI <br>einordnen','Callback',@set_pairingSelection);
     txt_data = uicontrol('Parent',m,'Style','text','Position',[5 278 100 17],'HorizontalAlignment','left','String','Aufnahmen','FontSize',11);  
     txt_ROI = uicontrol('Parent',m,'Style','text','Position',[305 278 100 17],'HorizontalAlignment','left','String','ROIs','FontSize',11);
     p_confirm = uicontrol('Parent',m,'Style','pushbutton','units','pixel','Position',[55 20 190 30],'String','Bestaetigen','Callback',@close_ROIAssignment);  
@@ -548,8 +633,15 @@ function [ROI,ROInames,iROIassign] = assign_MaskToData(~,~,input_data, input_ROI
     ROIassign.val = []; ROIassign.String = []; ROIassign.iROIassign = [];
     ROIassign(length(list_data.String)).val = []; % initialize struct to right size
     ROI = 0; ROInames = 0; iROIassign = [];
-
-    uiwait(m);
+    
+    % Added feature to allow pairing selection via script
+    if nargin == 6 && autoPair
+        c_pairingSelection.Value = 1;
+        set_pairingSelection(c_pairingSelection, [])
+        close_ROIAssignment(p_confirm, [])
+    else
+        uiwait(m);
+    end
     
     function dataSelection(hObject,~) 
         if strcmp(hObject.String,'vor')
@@ -613,8 +705,9 @@ function [ROI,ROInames,iROIassign] = assign_MaskToData(~,~,input_data, input_ROI
             if tabSpec == 2 || tabSpec == 3
                 ROIassign(i).iROIassign = 1;
             end
-        list_ROI.Value = 1:ROIassign(i).val;
+        ROIassign(i).val = input_ROI.Value;
         end
+        list_ROI.Value = input_ROI.Value;
     end
 
     function set_SameROIassignment(hObject,~)
@@ -629,6 +722,32 @@ function [ROI,ROInames,iROIassign] = assign_MaskToData(~,~,input_data, input_ROI
         [ROIassign.String] = deal(list_ROI.String(list_ROI.Value));
         if tabSpec == 1
             handles.list_ROI2.Value = list_ROI.Value;
+        end
+    end
+    
+    % Added feature to pair i-th image with i-th ROI
+    function set_pairingSelection(hObject,~)
+        if hObject.Value == 0
+            set(c_allSelection,'Enable','on');
+            set(c_sameSelection,'Enable','on');
+        else
+            set(c_allSelection,'Enable','off');
+            set(c_sameSelection,'Enable','off');
+        end
+        
+        f = [];
+        if numel(list_ROI.String) ~= numel(list_data.String)
+            f = errordlg(['Fehler! Die Anzahl der verfuegbaren ROIs stimmt'...
+                ' nicht mit der Anzahl aller Aufnahmen ueberein.']);
+            hObject.Value = 0;
+            return
+        else
+            for i = 1:numel(list_ROI.String)
+                ROIassign(i).val = i;
+                ROIassign(i).String = list_ROI.String(i);
+            end
+            
+            list_ROI.Value = ROIassign(list_data.Value).val;
         end
     end
 
@@ -668,7 +787,8 @@ function [ROI,ROInames,iROIassign] = assign_MaskToData(~,~,input_data, input_ROI
             else
                 strct.ROI.sameROIs = 0;
             end
-            handles.list_ROI2.Value = unique(horzcat(ROIassign.val));
+            [~,val,~] = intersect(input_ROI.String, vertcat(ROIassign.String), 'stable');
+            handles.list_ROI2.Value = unique(val);
         elseif tabSpec == 2 || tabSpec == 3
             for i = 1:length(ROIassign)
                 ROI{i} = strct.ROI.lMask{input_data.Value(i)}(ROIassign(i).val);
@@ -735,7 +855,7 @@ function [feat_names, idx_order] = get_realFeatureNames(category,toolbox_tag)
                 end
             end
     end
-    idx_order = idx_order(2:end); % delete zero from intialization   
+    idx_order = idx_order(2:end); % delete zero from intialization
 end
 
 function names = findCategoriesInList(list,tag)
@@ -797,7 +917,7 @@ function calculateFeature(varargin)
     data_tab = handles.tgroup_data.SelectedTab;         
     str_data = char(data_tab.Title);
     data = findobj(data_tab,'Style','listbox');
-    data_array = [handles.list_data1.UserData; handles.list_data2.UserData];
+    data_array = [handles.list_data1.UserData; handles.list_data2.UserData]; %KRITISCH
     if isempty(data_array)
         error('Keine Daten ausgewaehlt - keine Berechnung moeglich.');
     end
@@ -841,8 +961,14 @@ function calculateFeature(varargin)
         strct.features.radiomics.array = bekannteStudien(idx).features.radiomics(l2.Value,ROI.Value,data.Value); 
         strct.features.radiomics.featureNames = strct.features.feature_list.feature_list_radiomics(l2.Value);        
     else
-        % komplexer, Masken muessen erst berechnet werden aus *.mha Files und dann muessen auch die Features berechnet werden
-        [default1, default2,~] = assign_MaskToData([],[],[handles.list_data1; handles.list_data2],handles.list_ROI2,1);
+        %%% komplexer, Masken muessen erst berechnet werden aus *.mha Files und dann muessen auch die Features berechnet werden
+        % Added if function to maintain compatibility if calculte function
+        % is not called via script
+        if nargin == 3 && varargin{3} == 1
+            [default1, default2,~] = assign_MaskToData([],[],[handles.list_data1; handles.list_data2],handles.list_ROI2,1,1);
+        else
+            [default1, default2,~] = assign_MaskToData([],[],[handles.list_data1; handles.list_data2],handles.list_ROI2,1);
+        end
         if isequal(default1,0) && isequal(default2,0), showWaitbar_loadData(hLoad,0); return; end             
             % strct.ROI.sameROIs                already assigned in the function assign_MaskToData
             % strct.data
@@ -856,18 +982,37 @@ function calculateFeature(varargin)
             maskFile = ROI.UserData;
             for i = 1:numel(data_array)
                 for j=1:numel(maskFile{i})
-                    isMatFile = strfind(maskFile{i}{j},'.mat');
-                    if isempty(isMatFile)
-                        lMask{i}{j} = main_read_mask(maskFile{i}{j});  
+                    [~,~,datatype_of_mask]=fileparts(maskFile{i}{j});
+                    which_file_type = strfind(maskFile{i}{j},'.mat'); %isMatFile hat Jana als Variable benutzt
+                    switch datatype_of_mask
+                        case '.mat'
+                            temp = load(maskFile{i}{j});
+                            fn = fieldnames(temp);
+                            lMask{i}{j} = temp.(fn{1});
+                       
+                        case '.mha'
+                            lMask{i}{j} = main_read_mask(maskFile{i}{j});
+%                             Orientierungscheck fehlt bisher!?!
+%                             lMask{i}{j} = permute(lMask{i}{j},[3 1 2]); % permute matrix to flip matrix along 3rd dimension
+%                             lMask{i}{j}= flipud(lMask{i}{j});
+%                             lMask{i}{j} = permute(lMask{i}{j},[3 2 1]); % permute 3rd dimension back and change swap 1st and 2nd dimensions
+                            
+                        case '.mhd'
+                            lMask{i}{j} = main_read_mask(maskFile{i}{j});  
+             
+                        case '.nii'
+                            lMask{i}{j} = read_single_nii(maskFile{i}{j});
+                            %Orientierungscheck fehlt bisher!?!HardCodiert!                             
+%                             lMask{i}{j} = flip(lMask{i}{j}, 3);
+%                             lMask{i}{j} = rot90(lMask{i}{j});
+%                             lMask{i}{j} = flip(lMask{i}{j}, 2);
 
-                        lMask{i}{j} = permute(lMask{i}{j},[3 1 2]); % permute matrix to flip matrix along 3rd dimension
-                        lMask{i}{j}= flipud(lMask{i}{j});
-                        lMask{i}{j} = permute(lMask{i}{j},[3 2 1]); % permute 3rd dimension back and change swap 1st and 2nd dimensions
-                    else
-                        temp = load(maskFile{i}{j});
-                        fn = fieldnames(temp);
-                        lMask{i}{j} = temp.(fn{1});
+                            % Fixes bug (orientation of mask corrected)
+                            lMask{i}{j} = rot90(lMask{i}{j});
+                            lMask{i}{j} = flip(lMask{i}{j}, 2);
+
                     end
+                    
                 end
                 if strct.ROI.sameROIs
                     for i = 2:numel(data_array)
@@ -901,7 +1046,7 @@ function calculateFeature(varargin)
                 feat_PORTS = cell(numel(feat_names_PORTS),numel(ROI_array),numel(data_array));
                 for i=1:numel(data_array)
                     temp_feat_PORTS = [];
-                    [~,idx,~] = intersect(ROI.String(ROI.Value),strct.ROI.names{i});    
+                    [~,idx,~] = intersect(ROI.String(ROI.Value),strct.ROI.names{i},'stable');    
                     for j=1:numel(ROI_array{1})
                         temp_feat_PORTS = run_PORTS(char(data_array{i}),ROI_array{i}{j},category);
                         feat_PORTS(:,idx(j),i) = temp_feat_PORTS;
@@ -917,8 +1062,10 @@ function calculateFeature(varargin)
                 [feat_names_radiomics,idx_order] = get_realFeatureNames(category,char('radiomics'));
                 feat_radiomics = cell(numel(feat_names_radiomics),numel(ROI_array{1,1}),numel(data_array));
                 for i=1:numel(data_array)
-                    [~,idx,~] = intersect(ROI.String(ROI.Value),strct.ROI.names{i});  
+                    [~,idx,~] = intersect(ROI.String(ROI.Value),strct.ROI.names{i},'stable');  
                     for j=1:numel(ROI_array{i})  
+                        % Fixes bug (feature values are now sorted
+                        %            according to the listed feature name)
                         feat_radiomics(:,idx(j),i) = run_radiomics(char(data_array{i}),ROI_array{i}{j},category);
 
                         count=count+1;
@@ -1240,7 +1387,7 @@ function out = cut_nameDisplayed(names)
     catch
         out = cellfun(@(x) x,names,'UniformOutput',false); % x{end}
     end
-    out = cellfun(@(x) vertcat(x),out);
+    out = cellfun(@(x) vertcat(x),out,'UniformOutput',false);
 end
 
 function show_CompSelection(object,~)
@@ -1557,10 +1704,12 @@ function visualizeFeature(varargin)
                 for k=1:numel(comp_strct(val).plots.maskOverlay.lMask{j})
                     sizeImg = size(comp_strct(val).plots.maskOverlay.img{j});
                     if ~isequal(size(comp_strct(val).plots.maskOverlay.lMask{j}{k}),sizeImg)
-                        size3 = size(comp_strct(val).plots.maskOverlay.lMask{j}{k},3);
-    %                     comp_strct(val).plots.maskOverlay.lMask{j}{k}(:,:,size3+1:128) = zeros(size(comp_strct(val).plots.maskOverlay.lMask{j}{k},1), size(comp_strct(val).plots.maskOverlay.lMask{j}{k},1), 128-size3);
-                        comp_strct(val).plots.maskOverlay.lMask{j}{k}(:,:,(sizeImg(3)-size3+1):sizeImg(3))  =  comp_strct(val).plots.maskOverlay.lMask{j}{k};
-                        comp_strct(val).plots.maskOverlay.lMask{j}{k}(:,:,1:(sizeImg(3)-size3)) = zeros(size(comp_strct(val).plots.maskOverlay.lMask{j}{k},1), size(comp_strct(val).plots.maskOverlay.lMask{j}{k},1), sizeImg(3)-size3);
+                        %%% Fixes bug (mask resize now doesn't result in
+                        %%%            error)
+                        sizeMask = size(comp_strct(val).plots.maskOverlay.lMask{j}{k});
+                        %comp_strct(val).plots.maskOverlay.lMask{j}{k}(:,:,size3+1:128) = zeros(size(comp_strct(val).plots.maskOverlay.lMask{j}{k},1), size(comp_strct(val).plots.maskOverlay.lMask{j}{k},1), 128-size3);                       
+                        comp_strct(val).plots.maskOverlay.lMask{j}{k}((sizeImg(1)-sizeMask(1)+1):sizeImg(1), (sizeImg(2)-sizeMask(2)+1):sizeImg(2), (sizeImg(3)-sizeMask(3)+1):sizeImg(3))  =  comp_strct(val).plots.maskOverlay.lMask{j}{k};
+                        comp_strct(val).plots.maskOverlay.lMask{j}{k}(1:(sizeImg(1)-sizeMask(1)),1:(sizeImg(2)-sizeMask(2)),1:(sizeImg(3)-sizeMask(3))) = zeros(sizeImg(1)-sizeMask(1), sizeImg(2)-sizeMask(2), sizeImg(3)-sizeMask(3));
                         warn=warn+1;
                         if warn==1
                             warning('Mask-Dimension wurde veraendert!')
@@ -1609,4 +1758,21 @@ elseif startEnd == 0
         close(hLoad);
     end
 end
+end
+
+% -----------------------------
+% MOD from Phi and Math �
+% -----------------------------
+function saveclosereq(varargin)
+    % Close request function 
+% to display a question dialog box 
+   selection = questdlg('Soll TFCV geschlossen werden',...
+      'MainGUI',...
+      'Ja (Daten werden aus Workspace gel�scht)','Nein','Ja (Daten werden aus Workspace gel�scht)'); 
+   switch selection
+      case 'Ja (Daten werden aus Workspace gel�scht)'
+         delete(gcf), clear all; clc; clearvars; %Toggle Point %KRITISCH nur Daten von dem Framework
+      case 'Nein'
+      return 
+   end
 end

@@ -4,11 +4,9 @@ function main_runGUI()
 tmp = matlab.desktop.editor.getActive;
 cd(fileparts(tmp.Filename));
 
-currpath = fileparts(mfilename('fullpath'));
-if(isempty(currpath))
-    currpath = pwd;
-end
-addpath(genpath(currpath));
+%Do we need the following two lines they are hard coded?
+addpath(genpath(cd));
+addpath(genpath('/net/linse8-sn/home/s1216/doc/matlab_scripts_noetig'));
 
 global comp_strct
 comp_strct = struct('No',[],'features',[],'featureNames',[],'idxEndPORTS',[],'ROI',[],'ROINames',[],'data',[],'plots',[]);
@@ -17,13 +15,17 @@ comp_strct.featureNames = struct('PORTS',[],'radiomics',[]);
 global handles
 global bekannteStudien
 
-
-choice = questdlg('Sollen bekannte Studien eingeladen werden?','bekannteStudien laden','Ja','Nein, ist schon im Workspace','Nein, ist schon im Workspace');
+%Creating First Dialoge Window
+textButton_from_scratch='DICOM Rohdaten und zugeh�rige Masken';textButton_continue_work='Schon mit TFCV berechnete Datens�tze';
+options.Interpreter = 'tex'; options.Default = textButton_continue_work;
+choice = questdlg('Welche Daten m�chten Sie verabeiten?','Start TFCV - TexturFeature Calculator and Viewer',textButton_from_scratch,textButton_continue_work,options);
 switch choice
-    case 'Ja'
+    case 'Schon mit TFCV berechnete Datens�tze'
         [file,path] = uigetfile('*.mat','Lade alle bekannten Studien','MultiSelect', 'on');
         dir = fullfile(path,file);
-        if ~iscell(dir) % then only 1 input
+        if numel(dir)<4
+            return;
+        elseif ~iscell(dir) % then only 1 input
             dir = cellstr(dir);
         end
         hLoad = showWaitbar_loadData([],1,'Lade "bekannteStudien.mat" ...');
@@ -36,6 +38,10 @@ switch choice
         emptyIndex = find(arrayfun(@(x) isempty(x.ROI),bekannteStudien));
         bekannteStudien(emptyIndex) = [];
         showWaitbar_loadData(hLoad,0);
+    case 'DICOM Daten und zugeh�rige Masken'
+        %msgbox('Bitte f�gen Sie �ber .. Button im Windows-Explorer die Datein hinzu');
+    case ''
+        return;
     otherwise
 end
 

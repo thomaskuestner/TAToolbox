@@ -3,22 +3,22 @@
 % the geometric arrangement and algebraic characteristics are designed to
 % create a minimal entropy over the ROI (hyp.: entropy = 0)
 % Amerikaner is created as a default confirmation of 'entropy' in respecitve toolboxes 
-dummy = zeros(40,40);
+dummy_prae = zeros(40,40);
 M = 40;     
 
 for i = 1:M         % creation of the 2d- "Amerikaner"- structure
     for k=1:20
-        dummy(k,i) = 1;
+        dummy_prae(k,i) = 1;
     end
 end
 
-% imshow(dummy);    % if you want to see the image before 3d- stacking 
+imshow(dummy_prae);    % if you want to see the image before 3d- stacking 
                     % (all layers in z- direction are exact copies of this image)
-dummy = repmat(dummy,1,1,M);
-own_dummy = dummy;
-save('amerikaner.mat','own_dummy');
+dummy_prae = repmat(dummy_prae,1,1,M);
+own_dummy_american = dummy_prae;
+save('amerikaner.mat','own_dummy_american');
 
-% %%
+%%
 % "Schachbrett" Copie of Jana L.'s realisation of the checkersboard for freely selectable
 % periods
 % This is the opposite sample/ dummy - probe if one will - for maximal entropy (entropie = 1)
@@ -39,3 +39,7 @@ own_dummy_caro = repmat(own_dummy_caro,1,1,Nx/period);
 
 save('dummy_checkersboard.mat','own_dummy_caro');
 %%
+
+%%
+% Testkommentar
+% Gustav Gans ist eine COmicfigur
