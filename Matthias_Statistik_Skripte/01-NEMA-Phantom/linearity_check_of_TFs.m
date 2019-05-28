@@ -70,24 +70,6 @@ p_Spearman_mes_rel_sqrt=find(p_Spearman_mes_sqrt<0.05); p_Spearman_sim_rel_sqrt=
 %             R_Pearson_unrelevant(k,1) = p_Pearson(k,1);
 %         end
 
-%% % Graphical Output Korrektur
-%plot of all exact linearity values
-% close all;
-% hold on;
-% tf_numbers=1:1:42;
-% plot(tf_numbers,p_Spearman_sim_log,'bo');
-% text(tf_numbers-0.3, p_Spearman_sim_log+0.015, strcat(' ',num2str(round(R_Spearman_sim_log,2))), 'Fontsize', 9,'Color','m');
-% xticks(1:1:42);
-% yticks(0:0.05:1);
-% help_line=[0,42];
-% decision_value=[0.05,0.05];
-% plot(help_line,decision_value,'k--')
-% grid on;
-% %real_fig_legend=legend('Pearson-p-Value','Location','best');
-% string_for_x_label=sprintf('TFs substituted by numbers \n log simulated group');
-% xlabel(string_for_x_label,'FontSize', 15);
-% ylabel('Spearman-p-Value', 'FontSize',15);
-
 % %% Graphical Output - single plot
 % fontsizelegend = 12;
 % mark_size = 8;

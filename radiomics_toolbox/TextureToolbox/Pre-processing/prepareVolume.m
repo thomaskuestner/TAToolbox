@@ -128,6 +128,7 @@ end
 maskBox = mask(boxBound(1,1):boxBound(1,2),boxBound(2,1):boxBound(2,2),boxBound(3,1):boxBound(3,2));
 ROIbox = volume(boxBound(1,1):boxBound(1,2),boxBound(2,1):boxBound(2,2),boxBound(3,1):boxBound(3,2));
 
+
 % PRE-PROCESSING OF ROI BOX
 ROIbox = double(ROIbox);
 if strcmp(scanType,'PETscan') || strcmp(scanType,'PTscan')
@@ -175,6 +176,7 @@ elseif numel(size(ROIbox))==2
     end
 end
 ROIonly = ROIbox; ROIonly(~maskBox) = NaN; ROIonly(maskBox<0) = NaN;
+
 
 % QUANTIZATION
 if strcmp(textType,'Matrix')

@@ -18,24 +18,6 @@ for i=1:countvalue_pairs
     end
 end
 
-%% for all Features in one plot 
-% for i=1:39
-%     temp_sum=0;
-%     for k=1:4
-%         temp_sum=temp_sum+abs(differ_mes_vs_sim(i+3,k+1)); %spare the global features out
-%     end   
-%     differ_mes_vs_sim_in_procent(i)=temp_sum/4;
-% end
-% tf_numbers=4:1:42;
-% plot(tf_numbers, differ_mes_vs_sim_in_procent, 'bo','MarkerSize', 8);
-% xticks(4:1:42);
-% yticks(0:0.05:0.8);
-% xlabel('TFs substituted by numbers','FontSize', 15);
-% ylabel('absolute sum of procentual difference of the four pairs','FontSize', 15);
-% grid on;
-
-
-%%
 % First Try to sort the differences
 for k=1:CountTF
     [diff_max_v,diff_max_i] = max(abs(differ_mes_vs_sim(k,:)));
@@ -58,38 +40,6 @@ for i=1:4
     end
 end
 
-
-%exact value of greates change (+ / -)
-for k=1:CountTF
-%mes
-[indice_i_mes_exact,indice_j_mes_exact]=max(abs(diff_ingroup_mes(k,:)));
-diff_ingroup_mes_exact(k,1)=diff_ingroup_mes(k,indice_j_mes_exact);
-
-%sim
-[indice_i_sim_exact,indice_j_sim_exact]=max(abs(diff_ingroup_sim(k,:)));
-diff_ingroup_sim_exact(k,1)=diff_ingroup_sim(k,indice_j_sim_exact);
-end
-
-%plot the greatest changes
-% tf_numbers=1:1:42;
-% help_line=[0,42];
-% decision_value=[0.25,0.25];
-% hold on;
-% plot(tf_numbers, diff_ingroup_mes_exact, 'bo','MarkerSize', 8);
-% plot(tf_numbers, diff_ingroup_sim_exact, 'r*','MarkerSize', 8);
-% plot(help_line,decision_value,'k--')
-% plot(help_line,-decision_value,'k--')
-% xticks(1:1:42);
-% yticks(-1:0.25:6);
-% string_for_x_label=sprintf('TFs substituted by numbers');
-% xlabel(string_for_x_label,'FontSize', 15);
-% ylabel('maximum change in % of the 4 doses','FontSize', 15);
-% %real legend of dots
-% real_fig_legend=legend('measured','simulated','threshold +/- 25%','Location','best');
-% %end of text_legend
-% grid on;
-
-%bool-choice for siginificant change or not
 for k=1:CountTF
     if isempty(find(abs(diff_ingroup_mes(k,:))>0.25, 1))
         status=0; %'not significant';
@@ -105,7 +55,6 @@ for k=1:CountTF
     end
     diff_ingroup_sim(k,5)=status;
 end
-
 
 
 %% Statistcal-Tests on the differences
@@ -187,9 +136,6 @@ for k=1:CountTF
         [R_Spearman_sqrt(k,1),p_Spearman_sqrt(k,1)] = corr(x,y_sqrt,'Type','Spearman');
     %sqrt-Data%%%%%%%%%%%%%sqrt-Data%%%%%%%%%%%%%sqrt-Data
 end
-
-
-
 
 %% Graphical Output
 fontsizelegend = 12;
